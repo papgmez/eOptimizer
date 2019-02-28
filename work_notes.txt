@@ -1,0 +1,56 @@
+ANOTACIONES DURANTE EL TRABAJO EN EL PROYECTO
+=============================================
+
+28/2/19 - Obtencion de la relaccion entre las variables
+-------------------------------------------------------
+
+https://clickrenovables.com/blog/como-calcular-una-instalacion-solar-fotovoltaica-en-5-pasos/
+http://www.yubasolar.net/2015/08/potencia-pico-de-un-modulo-fotovoltaico.html
+
+Potencia Pico un modulo fotovoltaico: Es la potencia de salida, en Watios, que produce un panel fotovoltaico en condiciones de máxima iluminación solar, con una radiación de aproximadamente 1 kW/m2 (equivalente al valor :despejado [calcular conjunto difuso {0..1}]).
+	 Para calcular la current_power de un modulo fotovoltaico, CMP = HSP * PPM, siendo HSP cantidad de horas de sol pico, por lo tanto, el valor CMP vendrá determinado por por los valores del conjunto difuso de estados del tiempo.
+
+GESTION DE GENERADORES/CONSUMIDORES (tomando una hora de valores de variables  hasta el proximo cambio)
+
++ (EF) Generacion de Modulos Fotovoltaicos: Representa la potencia generada por parte de los modulos. Para calcular la energia que se obtendra con una determinada disposicion de placas (descender en el nivel de abstraccion para ver serie/paralelo), utilizaremos:
+  	  -----------------------------------------------------------------------
+      	  | EF = num_modulos * Rendimiento Trabajo * CMP (current module power) |
+      	  -----------------------------------------------------------------------
+		* Rendimiento Trabajo tiene en cuenta pérdidas producidas por el posible ensuciamiento y/o deterioramiento de los paneles fotovoltaicos (0,7 – 0,8)
+
++ (EB) Generacion proporcionada por Baterias: Representa la cantidad de energia que se puede obtener de la almacenada previamente en baterias.
+       		  -------------
+       		  |EB = y1 KWh|
+		  -------------
+
++ (ER) Generacion de compra a Red Electrica: Representa la cantidad de energia que se importa del intramercado SPOT a esa hora.
+       		    -------------
+  		    |ER = y2 KWh|
+  		    -------------
+
+- (CP) Consumo propio: Representa la estimacion de los consumos necesarios para cubrir las necesidades de la infraestructura en concreto (con un rendimiento de la instalacion del 100% se necesitaria generar x KWh para satisfacer la demanda de este consumo)
+       	       ---------------
+	       |CP =  x1 KWhh|
+	       ---------------
+
+- (CR) Consumo de vertido a Red Electrica: Representa la cantidad de energia que se vende en el intramercado SPOT a esa hora.
+       		    -------------
+  		    |CR = x2 KWh|
+  		    -------------
+
+- (CB) Consumo proporcionado por Baterias: Representa la cantidad de energia que se almacena en baterias.
+       		  -------------
+       		  |EB = x3 KWh|
+		  -------------
+- (CC) Consumo de vertido a Clientes: Representa la cantidad de energia que se vente al cliente por PVPC.
+       	       -------------
+       	       |CC = x4 KWh|
+	       -------------
+Cada una de las entradas (+) tendra dos vertientes, una asociada a satisfacer el CP, y otra a satisfacer los consumos que producen beneficio (CR,CB,CC), ya que la demanda de CP debe satisfacerse siempre.
+Visto lo anterior, y partiendo de la base de que toda la energia producida (+) debe ser consumida (-) [...], tenemos que:
+
+      	 	     	       	     	     	      	 	 E[+] = E[-]
+					------------------------------------------------------------
+					|EF + EB + ER = (%EF%EB&ER) CP + (%EF%EB&ER) (CR + CB + CC)|
+					------------------------------------------------------------
+					donde %EF, %EB y %ER son el tanto por ciento de las entradas destinado a cada consumo
