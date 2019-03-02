@@ -47,13 +47,7 @@ GESTION DE GENERADORES/CONSUMIDORES (tomando una hora de valores de variables  h
        	       |CC = x4 KWh|
 	       -------------
 Cada una de las entradas (+) tendra dos vertientes, una asociada a satisfacer el CP, y otra a satisfacer los consumos que producen beneficio (CR,CB,CC), ya que la demanda de CP debe satisfacerse siempre.
-Visto lo anterior, y partiendo de la base de que toda la energia producida (+) debe ser consumida (-) [...], tenemos que:
 
-      	 	     	       	     	     	      	 	 E[+] = E[-]
-					------------------------------------------------------------
-					|EF + EB + ER = (%EF%EB&ER) CP + (%EF%EB&ER) (CR + CB + CC)|
-					------------------------------------------------------------
-					donde %EF, %EB y %ER son el tanto por ciento de las entradas destinado a cada consumo
 
 28/2/19 - Creacion del conjunto difuso para el parseo de estados solares
 ------------------------------------------------------------------------
@@ -114,7 +108,7 @@ Paper de Carlos Gonzalez Morcillo: https://www.esi.uclm.es/www/cglez/downloads/d
 * 0 W 	   : 'Cubierto con tormenta y lluvia escasa'
 --------------------------------------------------------------------
 
-Se tomaran esos 10 conjuntos difusos, ya que los nulos quedan descartados por generar valores despreciables.
+Se tomaran esos 10 conjuntos difusos, ya que los nulos quedan descartados por generar valores despreciables de energia.
 
 *** Ver grafico Fuzzy Diagram ***
 
