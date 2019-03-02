@@ -8,7 +8,7 @@ https://clickrenovables.com/blog/como-calcular-una-instalacion-solar-fotovoltaic
 http://www.yubasolar.net/2015/08/potencia-pico-de-un-modulo-fotovoltaico.html
 
 Potencia Pico un modulo fotovoltaico: Es la potencia de salida, en Watios, que produce un panel fotovoltaico en condiciones de máxima iluminación solar, con una radiación de aproximadamente 1 kW/m2 (equivalente al valor :despejado [calcular conjunto difuso {0..1}]).
-	 Para calcular la current_power de un modulo fotovoltaico, CMP = HSP * PPM, siendo HSP cantidad de horas de sol pico, por lo tanto, el valor CMP vendrá determinado por por los valores del conjunto difuso de estados del tiempo.
+	 Para calcular la current_power de un modulo fotovoltaico, CMP, se tendra en cuenta el numero de modulos fotovoltaicos, el rendimiento del trabajo (aprox. 85%) debido a ensucimiento de placas etc * centroide del cojunto difuso actual.
 
 GESTION DE GENERADORES/CONSUMIDORES (tomando una hora de valores de variables  hasta el proximo cambio)
 
@@ -54,3 +54,86 @@ Visto lo anterior, y partiendo de la base de que toda la energia producida (+) d
 					|EF + EB + ER = (%EF%EB&ER) CP + (%EF%EB&ER) (CR + CB + CC)|
 					------------------------------------------------------------
 					donde %EF, %EB y %ER son el tanto por ciento de las entradas destinado a cada consumo
+
+28/2/19 - Creacion del conjunto difuso para el parseo de estados solares
+------------------------------------------------------------------------
+
+Paper de Carlos Gonzalez Morcillo: https://www.esi.uclm.es/www/cglez/downloads/docencia/2011_Softcomputing/LogicaDifusa.pdf
+
+-------------------------------------------------------------
+| Potencia  : Conjunto Difuso
+-------------------------------------------------------------
+* 45 ~ 50 W : 'Despejado'				(e10)
+* 40 ~ 46 W : 'Poco nuboso'				(e9)
+* 35 ~ 41 W : 'Nubes altas'				(e8)
+* 30 ~ 36 W : 'Intervalos nubosos'			(e7)
+* 25 ~ 31 W : 'Intervalos nubosos con lluvia escasa'	(e6)
+* 20 ~ 26 W : 'Intervalos nubosos con lluvia'		(e5)
+* 15 ~ 21 W : 'Nuboso'	  	      			(e4)
+* 10 ~ 16 W : 'Nuboso con lluvia escasa'		(e3)
+* 5 ~ 11 W  : 'Cubierto'  	 			(e2)
+* 0 ~ 6 W   : 'Cubierto con lluvia escasa' 		(e1)
+---------- nulos ---------------------------------------------
+* 0 W 	   : 'Nuboso noche'
+* 0 W 	   : 'Muy nuboso'
+* 0 W 	   : 'Nubes altas noche'
+* 0 W 	   : 'Intervalos nubosos con lluvia escasa noche'
+* 0 W 	   : 'Nuboso con lluvia escasa noche'
+* 0 W 	   : 'Muy nuboso con lluvia escasa'
+* 0 W 	   : 'Despejado noche'
+* 0 W 	   : 'Intervalos nubosos noche'
+* 0 W 	   : 'Poco nuboso noche'
+* 0 W 	   : 'Intervalos nubosos con lluvia noche'
+* 0 W 	   : 'Nuboso con lluvia'
+* 0 W 	   : 'Nuboso con lluvia noche'
+* 0 W 	   : 'Muy nuboso con lluvia'
+* 0 W 	   : 'Cubierto con lluvia'
+* 0 W 	   : 'Intervalos nubosos con nieve escasa'
+* 0 W 	   : 'Intervalos nubosos con nieve escasa noche'
+* 0 W 	   : 'Nuboso con nieve escasa'
+* 0 W 	   : 'Nuboso con nieve escasa noche'
+* 0 W 	   : 'Muy nuboso con nieve escasa'
+* 0 W 	   : 'Cubierto con nieve escasa'
+* 0 W 	   : 'Intervalos nubosos con nieve'
+* 0 W  	   : 'Intervalos nubosos con nieve noche'
+* 0 W 	   : 'Nuboso con nieve'
+* 0 W 	   : 'Nuboso con nieve noche'
+* 0 W 	   : 'Muy nuboso con nieve'
+* 0 W 	   : 'Cubierto con nieve'
+* 0 W 	   : 'Intervalos nubosos con tormenta'
+* 0 W 	   : 'Intervalos nubosos con tormenta noche'
+* 0 W 	   : 'Nuboso con tormenta'
+* 0 W 	   : 'Nuboso con tormenta noche'
+* 0 W 	   : 'Muy nuboso con tormenta'
+* 0 W 	   : 'Cubierto con tormenta'
+* 0 W 	   : 'Intervalos nubosos con tormenta y lluvia escasa'
+* 0 W 	   : 'Intervalos nubosos con tormenta y lluvia escasa noche'
+* 0 W 	   : 'Nuboso con tormenta y lluvia escasa'
+* 0 W 	   : 'Nuboso con tormenta y lluvia escasa noche'
+* 0 W 	   : 'Muy nuboso con tormenta y lluvia escasa'
+* 0 W 	   : 'Cubierto con tormenta y lluvia escas
+
+Se tomaran esos 10 conjuntos difusos, ya que los nulos quedan descartados por generar valores despreciables.
+
+Defuzzificación -> ¿ Que potencia pico se puede obtener si el estado del cielo es 'estadoCielo' ?
+
+Para ello se debe calcular el centroide difuso o centro de gravedad (COG en FuzzyCLIPS) de cada conjunto.
+Partimos del hipotetico caso en que los conjuntos difusos descienden ligeramente mas rapido que ascienden, debido al factor de adaptamiento de la placa al nuevo estado.
+(ejemplo: para una pertenecia de 1 al estado 'intervalos nubosos' la potencia que se puede obtener minima es 31,5 w, los valores 30-31,5 son tomados como el proceso por el cual la placa se adpata al nuevo estado y han de tenerse en cuenta)
+
+--------------------------------------
+|              Sum{a,n} ɲA(xn) xn    |
+| Centroide = ---------------------  |
+|	       Sum{a,n} ɲA(xn)       |
+--------------------------------------
+
+* Centroide e1 = (0x1+3x1+5x1+6x0)÷(1+1+1) = 2,66 W
+* Centroide e2 = (5×0+6,5×1+8×1+10×1+11×0)÷(1+1+1) = 8,16 W
+* Centroide e3 = (10*0+11,5*1+13*1+15*1+16*0)÷(1+1+1) = 13,16 W
+* Centroide e4 = 18,16 W
+* Centroide e5 = 23,16 W
+* Centroide e6 = 28,16 W
+* Centroide e7 = 33,16 W
+* Centroide e8 = 38,16 W
+* Centroide e9 = 43,16 W
+* Centroide e10 = (45*0+46,5*1+47,5*1+50*1)÷(1+1+1) =  48 W
