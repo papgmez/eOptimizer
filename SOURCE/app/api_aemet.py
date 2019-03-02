@@ -3,13 +3,11 @@
 import requests
 import time
 
-URL = 'https://opendata.aemet.es/opendata/api/prediccion/especifica/municipio/horaria/$CITY-CODE/?api_key=$API-KEY'
-API_KEY = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYWJsby5wYWxvbWlubzFAb3V0bG9vay5jb20iLCJqdGkiOiJmOGFhZTdiNi0yYWIzLTQzOTktYjU3Mi0zNDBlYWE2OGUwMDUiLCJpc3MiOiJBRU1FVCIsImlhdCI6MTU0ODU4NTE1NywidXNlcklkIjoiZjhhYWU3YjYtMmFiMy00Mzk5LWI1NzItMzQwZWFhNjhlMDA1Iiwicm9sZSI6IiJ9.4VGEUO4v-ncytcyWuaNwHBBvhhIAW5r-5Es0VAFiLr8'
-CR_CODE = '13034'
+import project_constants
 
-def aemet_cr_weather ():
+def aemet_weather ():
     weather_buffer = []
-    url = URL.replace('$CITY-CODE',CR_CODE).replace('$API-KEY',API_KEY)
+    url = project_constants.AEMET_URL.replace('$CITY-CODE',project_constants.CITY_CODE).replace('$API-KEY',project_constants.AEMET_KEY)
     response = requests.get(url)
     data = response.json()
 
@@ -41,8 +39,7 @@ def create_weather_buffer(data):
             buffer_size += 1
     return wb
 
-'''        
+
 if "__NAME__==__MAIN__":
     print("Weather buffer of the next 24 h:")
-    print(aemet_cr_weather())
-'''
+    print(aemet_weather())
