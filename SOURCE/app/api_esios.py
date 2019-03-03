@@ -1,43 +1,72 @@
 #!/usr/bin/python3
 # -*- coding: utf-8; mode: python -*-
 
-import time
+import datetime
 import requests
-import project_constants
+import project_constants as const
+import datetime as dt
+import statistics as st
 
 headers = {
           'Accept' : 'application/json; application/vnd.esios-api-v1+json',
           'Content-Type' : 'application/json',
           'Host' : 'api.esios.ree.es',
-          'Authorization' : 'Token token=\"' + project_constants.ESIOS_TOKEN + '\"'
+          'Authorization' : 'Token token=\"' + const.ESIOS_TOKEN + '\"'
           }
 
-def pvpc_price (start_date=time.strftime("20%y/%m/%d"),end_date=time.strftime("20%y/%m/%d")):
+def pvpc_price ():
     global headers
-
-    url = project_constants.ESIOS_URL.replace('$INDICATOR',project_constants.PVPC).replace('$START_DATE',start_date).replace('$END_DATE',end_date)
+    today = dt.datetime.today()
+    tomorrow = today+dt.timedelta(1)
+    url = const.ESIOS_URL.replace('$INDICATOR',const.PVPC).replace('$START_DATE',dt.datetime.strftime(today,'%Y/%m/%d')).replace('$END_DATE',dt.datetime.strftime(tomorrow,'%Y/%m/%d'))
     response = requests.get(url, headers=headers)
     if response.status_code == 200:
         data = response.json()
-        price = data['indicator']['values'][0]['value']/1000 # price in €/kwh
-        return price
+        price_buffer = create_price_buffer(data, today)
+        return price_buffer
     else:
         print("An error has occurred")
         return None
 
-def spot_price (start_date=time.strftime("20%y/%m/%d"),end_date=time.strftime("20%y/%m/%d")):
+def spot_price ():
     global headers
-
-    url = project_constants.ESIOS_URL.replace('$INDICATOR',project_constants.SPOT).replace('$START_DATE',start_date).replace('$END_DATE',end_date)
+    today = dt.datetime.today()
+    tomorrow = today+dt.timedelta(1)
+    url = const.ESIOS_URL.replace('$INDICATOR',const.SPOT).replace('$START_DATE',dt.datetime.strftime(today,'%Y/%m/%d')).replace('$END_DATE',dt.datetime.strftime(tomorrow,'%Y/%m/%d'))
     response = requests.get(url, headers=headers)
     if response.status_code == 200:
         data = response.json()
-        price = data['indicator']['values'][1]['value']/1000 # price in Spain(1) in €/kwh
-        return price
+        price_buffer = create_price_buffer(data,today)
+        return price_buffer
     else:
         print("An error has occurred")
         return None
 
+def create_price_buffer(data,today):
+    pb = []
+    pb_size = 0
+    price_per_hours = data['indicator']['values']
 
+    for price in price_per_hours:
+        price_date = dt.datetime.strptime(price['datetime'].split('.')[0], "%Y-%m-%dT%H:%M:%S")
+
+        if price['geo_name'] == 'España' and (price_date.date() > today.date() or (price_date.date() == today.date() and price_date.hour >= today.hour)):
+            pb.append(round(price['value']/1000,3)) # price in €/kwh
+            pb_size += 1
+
+        if pb_size >= 24: break
+
+    # at 20:20 in PVPC case and 17:00 in SPOT case the information of the day D+1 is published. If it is not available yet, then complete the remaining hours of the buffer with the high median value
+    while pb_size < 24:
+        pb.append(st.median_high(pb))
+        pb_size += 1
+
+    return pb
+
+'''
 if "__NAME__==__MAIN__":
-    print ("PVPC: {} €/kwh\nSPOT: {} €/kwh".format(pvpc_price(),spot_price()))
+    print ("PVPC of the next 24 h:")
+    print(pvpc_price())
+    print("SPOT price of the next 24 h:")
+    print(spot_price())
+'''
