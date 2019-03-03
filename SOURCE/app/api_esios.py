@@ -14,25 +14,12 @@ headers = {
           'Authorization' : 'Token token=\"' + const.ESIOS_TOKEN + '\"'
           }
 
-def pvpc_price ():
-    global headers
-    today = dt.datetime.today()
-    tomorrow = today+dt.timedelta(1)
-    url = const.ESIOS_URL.replace('$INDICATOR',const.PVPC).replace('$START_DATE',dt.datetime.strftime(today,'%Y/%m/%d')).replace('$END_DATE',dt.datetime.strftime(tomorrow,'%Y/%m/%d'))
-    response = requests.get(url, headers=headers)
-    if response.status_code == 200:
-        data = response.json()
-        price_buffer = create_price_buffer(data, today)
-        return price_buffer
-    else:
-        print("An error has occurred")
-        return None
 
-def spot_price ():
+def get_price (indicator):
     global headers
     today = dt.datetime.today()
     tomorrow = today+dt.timedelta(1)
-    url = const.ESIOS_URL.replace('$INDICATOR',const.SPOT).replace('$START_DATE',dt.datetime.strftime(today,'%Y/%m/%d')).replace('$END_DATE',dt.datetime.strftime(tomorrow,'%Y/%m/%d'))
+    url = const.ESIOS_URL.replace('$INDICATOR',indicator).replace('$START_DATE',dt.datetime.strftime(today,'%Y/%m/%d')).replace('$END_DATE',dt.datetime.strftime(tomorrow,'%Y/%m/%d'))
     response = requests.get(url, headers=headers)
     if response.status_code == 200:
         data = response.json()
@@ -66,7 +53,7 @@ def create_price_buffer(data,today):
 '''
 if "__NAME__==__MAIN__":
     print ("PVPC of the next 24 h:")
-    print(pvpc_price())
+    print(get_price(const.PVPC))
     print("SPOT price of the next 24 h:")
-    print(spot_price())
+    print(get_price(const.SPOT))
 '''

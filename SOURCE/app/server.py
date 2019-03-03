@@ -3,8 +3,9 @@
 
 from flask import Flask, make_response, abort, jsonify, request, redirect, flash, url_for, render_template
 
-from api_aemet import aemet_weather
-from api_esios import spot_price, pvpc_price
+import api_aemet as aemet
+import api_esios as esios
+import project_constants as const
 
 app = Flask(__name__)
 app.secret_key = "development"
@@ -16,30 +17,35 @@ def index():
 
 @app.route('/weather')
 def get_weather_buffer():
-    w_buffer = aemet_weather()
+    weather = aemet.get_weather()
 
-    if w_buffer is not None:
-        return make_response(jsonify({'buffer':w_buffer}),200)
-    abort(404)
+    if weather is None:
+       abort(404)
+
+    values = []
+    for state in weather:
+       # centroids of each weather state fuzzy set
+       values.append(const.FUZZY_SETS.get(state))
+
+    return make_response(jsonify({'weather_states':weather, 'weather_values':values}),200)
 
 @app.route('/price/<type>')
 def get_current_price(type):
     price = None
 
     if type == 'PVPC':
-       price = pvpc_price()
+       price = esios.get_price(const.PVPC)
     elif type == 'SPOT':
-        price = spot_price()
+        price = esios.get_price(const.SPOT)
 
     if price is not None:
-        return make_response(jsonify({'type':type, 'unit':'Kwh', 'price':price}),200)
+        return make_response(jsonify({'type':type, 'unit':'€/Kwh', 'price_buffer':price}),200)
     abort(404)
 
 
 @app.errorhandler(404)
 def not_found(error):
     return make_response(jsonify({'error':'Not found'}), 404)
-
 
 
 if __name__=="__main__":
