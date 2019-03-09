@@ -5,7 +5,7 @@ import datetime
 import requests
 import project_constants as const
 import datetime as dt
-import statistics as st
+import random as rd
 
 headers = {
           'Accept' : 'application/json; application/vnd.esios-api-v1+json',
@@ -43,9 +43,9 @@ def create_price_buffer(data,today):
 
         if pb_size >= 24: break
 
-    # at 20:20 in PVPC case and 17:00 in SPOT case the information of the day D+1 is published. If it is not available yet, then complete the remaining hours of the buffer with the high median value
+    # at 20:20 in PVPC case and 17:00 in SPOT case the information of the day D+1 is published. If it is not available yet, then complete the remaining hours of the buffer with a previous random value
     while pb_size < 24:
-        pb.append(st.median_high(pb))
+        pb.append(rd.choice(pb))
         pb_size += 1
 
     return pb

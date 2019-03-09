@@ -7,8 +7,7 @@ import project_constants as const
 
 def get_weather ():
     weather_buffer = []
-    url = const.AEMET_URL.replace('$CITY-CODE',const.CITY_CODE).replace('$API-KEY',const.AEMET_KEY)
-    response = requests.get(url)
+    response = requests.get(const.AEMET_URL)
     data = response.json()
 
     if data['estado'] == 200:

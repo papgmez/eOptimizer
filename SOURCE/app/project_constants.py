@@ -11,7 +11,7 @@ CITY_CODE = '13034' # Ciudad Real
 AEMET_KEY = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYWJsby5wYWxvbWlubzFAb3V0bG9vay5jb20iLCJqdGkiOiJmOGFhZTdiNi0yYWIzLTQzOTktYjU3Mi0zNDBlYWE2OGUwMDUiLCJpc3MiOiJBRU1FVCIsImlhdCI6MTU0ODU4NTE1NywidXNlcklkIjoiZjhhYWU3YjYtMmFiMy00Mzk5LWI1NzItMzQwZWFhNjhlMDA1Iiwicm9sZSI6IiJ9.4VGEUO4v-ncytcyWuaNwHBBvhhIAW5r-5Es0VAFiLr8'
 
 # url api AEMET OpenData
-AEMET_URL = 'https://opendata.aemet.es/opendata/api/prediccion/especifica/municipio/horaria/$CITY-CODE/?api_key=$API-KEY'
+AEMET_URL = 'https://opendata.aemet.es/opendata/api/prediccion/especifica/municipio/horaria/{}/?api_key={}'.format(CITY_CODE, AEMET_KEY)
 
 # --------- API Esios REE ---------
 # Token para la API de Esios (Red Electrica de España)
