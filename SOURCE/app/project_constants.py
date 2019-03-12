@@ -1,7 +1,13 @@
 #!/usr/bin/python3
 
+import random
+
 # Fichero de Constantes del Proyecto
 # ----------------------------------
+# Numero de modulos fotovoltaicos del Sistema.
+PV_MODULES = 125
+# Kw de consumo propio del Sistema. Valor que consume el sistema en una hora t y debe ser satisfecho siempre (aleatorio entre 10 y 12 Kwh)
+C = random.uniform(10,12)
 
 # --------- API Aemet OpenData ---------
 # Codigo de la API OpenData de AEMET

@@ -6,6 +6,7 @@ from flask import Flask, make_response, abort, jsonify, request, redirect, flash
 import api_aemet as aemet
 import api_esios as esios
 import project_constants as const
+import model
 
 app = Flask(__name__)
 app.secret_key = "development"
@@ -13,10 +14,10 @@ app.secret_key = "development"
 
 @app.route('/')
 def index():
-   return "Welcome"
+   return "Welcome to my TFG"
 
-@app.route('/weather')
-def get_weather_buffer():
+@app.route('/EF')
+def get_EF():
     weather = aemet.get_weather()
 
     if weather is None:
@@ -25,9 +26,9 @@ def get_weather_buffer():
     values = []
     for state in weather:
        # centroids of each weather state fuzzy set
-       values.append(const.FUZZY_SETS.get(state))
+       values.append(model.calculate_EF(const.FUZZY_SETS.get(state)))
 
-    return make_response(jsonify({'weather_states':weather, 'weather_values':values}),200)
+    return make_response(jsonify({'EF':values}),200)
 
 @app.route('/price/<type>')
 def get_current_price(type):
