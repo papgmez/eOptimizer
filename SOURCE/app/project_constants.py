@@ -3,11 +3,37 @@
 import random
 
 # Fichero de Constantes del Proyecto
-# ----------------------------------
-# Numero de modulos fotovoltaicos del Sistema.
-PV_MODULES = 125
-# Kw de consumo propio del Sistema. Valor que consume el sistema en una hora t y debe ser satisfecho siempre (aleatorio entre 10 y 12 Kwh)
-C = random.uniform(10,12)
+# ==================================
+
+# Constantes respecto a EF (energia fotovoltaica)
+# --------------------------------------------------
+# Numero de modulos fotovoltaicos empleados (PN=50W).
+PV_MODULES = <VALOR>
+# Precio de cada modulo fotovoltaico (€)
+MODULE_PRICE = 40
+# Produccion anual estimada de un modulo (KW)
+YEARLY_POWER_PH_ESTIMATE = 96
+# Numero de años en los que se desea amortizar la inversion de los modulos fotovoltaicos
+YEARS_TO_AMORTIZE_PH = <VALOR>
+
+# Constantes respecto a EB (energia de baterias)
+# -------------------------------------------------
+# Precio de la Baterías estacionaria (6 vasos, 12V) (€)
+BATTERY_PRICE = 7900
+# Profundidad de descarga
+DISCHARGE_DEPTH = 0.5
+# Capacidad de Almacenaje en Kw
+BATTERY_CAPACITY = 21
+# Numero de años en los que se desea amortizar la inversion de las baterias
+YEARS_TO_AMORTIZE_BATT = <VALOR>
+
+# Constantes respecto al Consumo
+# --------------------------------
+# Consumo del sistema por funcionamiento (4KW al dia) (KWh)
+C_INT = 0.166
+# Consumo propio del hogar. Valor que debe ser satisfecho siempre
+C = <VALOR>
+
 
 # --------- API Aemet OpenData ---------
 # Codigo de la API OpenData de AEMET
