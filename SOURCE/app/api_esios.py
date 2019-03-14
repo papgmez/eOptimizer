@@ -15,11 +15,11 @@ headers = {
           }
 
 
-def get_price (indicator):
+def get_incoming_prices():
     global headers
     today = dt.datetime.today()
     tomorrow = today+dt.timedelta(1)
-    url = const.ESIOS_URL.replace('$INDICATOR',indicator).replace('$START_DATE',dt.datetime.strftime(today,'%Y/%m/%d')).replace('$END_DATE',dt.datetime.strftime(tomorrow,'%Y/%m/%d'))
+    url = const.ESIOS_URL.replace('$START_DATE',dt.datetime.strftime(today,'%Y/%m/%d')).replace('$END_DATE',dt.datetime.strftime(tomorrow,'%Y/%m/%d'))
     response = requests.get(url, headers=headers)
     if response.status_code == 200:
         data = response.json()
@@ -52,8 +52,6 @@ def create_price_buffer(data,today):
 
 '''
 if "__NAME__==__MAIN__":
-    print ("PVPC of the next 24 h:")
-    print(get_price(const.PVPC))
     print("SPOT price of the next 24 h:")
-    print(get_price(const.SPOT))
+    print(get_incoming_prices)
 '''

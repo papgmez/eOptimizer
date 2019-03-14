@@ -49,13 +49,12 @@ AEMET_URL = 'https://opendata.aemet.es/opendata/api/prediccion/especifica/munici
 # Token para la API de Esios (Red Electrica de España)
 ESIOS_TOKEN = '879c5ab5bc0211a1ba23527736e3402a0e708f0a5e7c370f0274004e676ee5f6'
 
-# url api Esios REE
-ESIOS_URL = 'https://api.esios.ree.es/indicators/$INDICATOR?start_date=$START_DATE&end_date=$END_DATE'
-
 # Indicadores de precios Esios REE
 PVPC = '1013' # Precio Voluntario para el Pequeño Consumidor (precio de venta al cliente)
 SPOT = '613'  # Precio marginal del intradiario (precio de compra/venta a la red eletrica)
 
+# url api Esios REE
+ESIOS_URL = 'https://api.esios.ree.es/indicators/{}?start_date=$START_DATE&end_date=$END_DATE'.format(SPOT)
 # # Maxima Potencia Nominal posible (MNP) en W de un modulo fotovoltaico de Potencia Pico 50 W, de cada conjunto difuso del estado de Cielo
 FUZZY_SETS = {
     'Despejado' : 48,
