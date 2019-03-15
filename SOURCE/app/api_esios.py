@@ -15,11 +15,11 @@ headers = {
           }
 
 
-def get_incoming_prices():
+def get_incoming_prices(indicator):
     global headers
     today = dt.datetime.today()
     tomorrow = today+dt.timedelta(1)
-    url = const.ESIOS_URL.replace('$START_DATE',dt.datetime.strftime(today,'%Y/%m/%d')).replace('$END_DATE',dt.datetime.strftime(tomorrow,'%Y/%m/%d'))
+    url = const.ESIOS_URL.replace('$INDICATOR',indicator).replace('$START_DATE',dt.datetime.strftime(today,'%Y/%m/%d')).replace('$END_DATE',dt.datetime.strftime(tomorrow,'%Y/%m/%d'))
     response = requests.get(url, headers=headers)
     if response.status_code == 200:
         data = response.json()

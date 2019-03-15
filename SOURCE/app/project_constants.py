@@ -8,31 +8,31 @@ import random
 # Constantes respecto a EF (energia fotovoltaica)
 # --------------------------------------------------
 # Numero de modulos fotovoltaicos empleados (PN=50W).
-PV_MODULES = <VALOR>
+PV_MODULES = 100
 # Precio de cada modulo fotovoltaico (€)
 MODULE_PRICE = 40
 # Produccion anual estimada de un modulo (KW)
 YEARLY_POWER_PH_ESTIMATE = 96
 # Numero de años en los que se desea amortizar la inversion de los modulos fotovoltaicos
-YEARS_TO_AMORTIZE_PH = <VALOR>
+YEARS_TO_AMORTIZE_PH = 8
 
 # Constantes respecto a EB (energia de baterias)
 # -------------------------------------------------
 # Precio de la Baterías estacionaria (6 vasos, 12V) (€)
-BATTERY_PRICE = 7900
+BATTERY_PRICE = 7500
 # Profundidad de descarga
 DISCHARGE_DEPTH = 0.5
 # Capacidad de Almacenaje en Kw
 BATTERY_CAPACITY = 21
 # Numero de años en los que se desea amortizar la inversion de las baterias
-YEARS_TO_AMORTIZE_BATT = <VALOR>
+YEARS_TO_AMORTIZE_BATT = 35
 
 # Constantes respecto al Consumo
 # --------------------------------
 # Consumo del sistema por funcionamiento (4KW al dia) (KWh)
 C_INT = 0.166
 # Consumo propio del hogar. Valor que debe ser satisfecho siempre
-C = <VALOR>
+C = [12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12]#<VALOR>
 
 
 # --------- API Aemet OpenData ---------
@@ -50,11 +50,11 @@ AEMET_URL = 'https://opendata.aemet.es/opendata/api/prediccion/especifica/munici
 ESIOS_TOKEN = '879c5ab5bc0211a1ba23527736e3402a0e708f0a5e7c370f0274004e676ee5f6'
 
 # Indicadores de precios Esios REE
-PVPC = '1013' # Precio Voluntario para el Pequeño Consumidor (precio de venta al cliente)
-SPOT = '613'  # Precio marginal del intradiario (precio de compra/venta a la red eletrica)
+PVPC = '1013' # Precio Voluntario para el Pequeño Consumidor (precio de compra de energia)
+SPOT = '613'  # Precio marginal del intradiario (precio de venta a la red eletrica)
 
 # url api Esios REE
-ESIOS_URL = 'https://api.esios.ree.es/indicators/{}?start_date=$START_DATE&end_date=$END_DATE'.format(SPOT)
+ESIOS_URL = 'https://api.esios.ree.es/indicators/$INDICATOR?start_date=$START_DATE&end_date=$END_DATE'
 # # Maxima Potencia Nominal posible (MNP) en W de un modulo fotovoltaico de Potencia Pico 50 W, de cada conjunto difuso del estado de Cielo
 FUZZY_SETS = {
     'Despejado' : 48,
