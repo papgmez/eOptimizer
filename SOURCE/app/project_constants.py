@@ -24,6 +24,8 @@ BATTERY_PRICE = 7500
 DISCHARGE_DEPTH = 0.5
 # Capacidad de Almacenaje en Kw
 BATTERY_CAPACITY = 21
+# Nivel de carga inicial de la bateria
+BATTERY_LEVEL = 0.5
 # Numero de años en los que se desea amortizar la inversion de las baterias
 YEARS_TO_AMORTIZE_BATT = 35
 
@@ -32,7 +34,7 @@ YEARS_TO_AMORTIZE_BATT = 35
 # Consumo del sistema por funcionamiento (4KW al dia) (KWh)
 C_INT = 0.166
 # Consumo propio del hogar. Valor que debe ser satisfecho siempre
-C = [12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12]#<VALOR>
+C = [0.8,0.8,0.7,0.2,0.1,0.2,0.2,0.2,0.2,0.3,0.3,0.3,0.4,0.5,0.6,0.7,0.7,0.7,0.8,0.8,0.8,0.8,0.7,0.7]#<VALOR>
 
 
 # --------- API Aemet OpenData ---------
