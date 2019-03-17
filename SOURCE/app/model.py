@@ -1,4 +1,7 @@
 #!/usr/bin/python3
+# -*- coding: utf-8; mode: python -*-
+
+# from pdb import set_trace as breakpoint
 
 import project_constants as pc
 import api_esios as esios
@@ -7,12 +10,10 @@ import datetime as dt
 from scipy.optimize import linprog
 import numpy as np
 
-from pdb import set_trace as breakpoint
-
 class Model:
     def __init__(self,pvm=pc.PV_MODULES,module_price=pc.MODULE_PRICE,yearly_pw_ph=pc.YEARLY_POWER_PH_ESTIMATE,years_ph=pc.YEARS_TO_AMORTIZE_PH,
                  total_batt_price=pc.BATTERY_PRICE,disch_depth=pc.DISCHARGE_DEPTH,batt_size=pc.BATTERY_CAPACITY,batt_level=pc.BATTERY_LEVEL,
-                 years_bat=pc.YEARS_TO_AMORTIZE_BATT,c_int=pc.C_INT,c=pc.C):
+                 years_bat=pc.YEARS_TO_AMORTIZE_BATT,c_int=pc.C_INT,c=pc.C,start=pc.START,end=pc.END):
         self.ef_price = self.calculate_ef_price(pvm, module_price, years_ph, yearly_pw_ph)
         self.discharge_depth = disch_depth
         self.battery_capacity = batt_size
@@ -26,8 +27,8 @@ class Model:
         self.cb_price = self.generate_cb_prices() # buffer with incoming 24 prices for store energy in battery
         self.c = c # buffer with incoming 24 values of energy consumption in home
         # ---- time bounds of the simulation ----
-        self.start = dt.datetime.now()
-        self.end = self.start + dt.timedelta(1)
+        self.start = start
+        self.end = end
 
     def calculate_max_ef_buffer(self, num_modules):
         wb = aemet.get_weather()
@@ -45,8 +46,8 @@ class Model:
     def generate_cb_prices(self):
         prices = []
         for i in range(0,24):
-            # is the average of pv and pvpc prices
-            prices.append((self.ef_price+self.er_price[i])/2)
+            # is the minimum price between ef and er (value saved by storing energy)
+            prices.append(self.ef_price if (self.ef_price <= self.er_price[i]) else self.er_price[i])
         return prices
 
     def generate_restriction_1(self, i):
@@ -108,26 +109,20 @@ class Model:
         return restr_coef
 
     def optimize_model(self):
+        f, A_eq, b_eq, A_ub, b_ub = [], [], [], [], []
         '''
         Function to minimize:
         --------------------------------------------------------------------
-        | f(x) = Σ(0..23) EFi*PF + ERi*PVPCi + EB*PB - CRi*PRi - CB*PBin_i |
+        | f(x) = Σ(0..24) EFi*PF + ERi*PVPCi + EB*PB - CRi*PRi - CB*PBin_i |
         --------------------------------------------------------------------
         (Daily expenditure on the production of energy for self-consumption)
         '''
-        f = []
-
         for i in range(0,24):
             f.append(self.ef_price)     # cost of producing 1kw of photovoltaic energy in t hour (amortization)
             f.append(self.er_price[i])  # cost of buying 1kw of network energy in t hour
             f.append(self.eb_price)     # cost of obtaining 1kw of energy from batteries in t hour (amortization)
             f.append(-self.cr_price[i]) # cost of selling 1kw of energy to the network energy in t hour
             f.append(-self.cb_price[i]) # cost of store 1kw of energy in the battery in t hour
-
-        # Restricciones de =
-        # ------------------
-        A_eq = [] # Coeficientes de las variables en las restricciones (lado izquierdo)
-        b_eq = [] # Constantes en las restricciones (lado derecho)
 
         # 1. EFi+ERi+EBi-CRi-CBi=Cinst+Cprop_i (i=0..23) (the sum of the energy generated must be equal to the sum of the energy consumed)
         for i in range(0,24):
@@ -138,11 +133,6 @@ class Model:
         for i in range(0,24):
             A_eq.append(self.generate_restriction_2(i))
             b_eq.append(0)
-
-        # Restricciones de <=
-        # -------------------
-        A_ub = [] # Coeficientes de las variables en las restricciones (lado izquierdo)
-        b_ub = [] # Constantes en las restricciones (lado derecho)
 
         # 3. EFi <= EFmax_i (the photovoltaic energy obtained must be less than or equal to the maximum possible at t hour)
         for i in range(0,24):
@@ -167,21 +157,22 @@ class Model:
             A_ub.append(self.generate_restriction_7(i))
             b_ub.append(self.battery_capacity - self.battery_level)
 
-        breakpoint()
         res = linprog(f, A_ub, b_ub, A_eq, b_eq, bounds=(0,None))
-        self.print_result(res)
+
+        self.store_result(res)
         return res
 
-    def print_result(self,res):
+    def store_result(self, res):
         values = res.x.tolist()
-        out = open("simulacion_{}".format(dt.datetime.now()),"w")
+        out = open("simulations/simulation_{}".format(dt.datetime.now().strftime("%Y-%m-%d %H:%M:%S")),"w")
         out.write("-----------------------------------------------------\n")
         out.write("--------------- Simulacion Completada ---------------\n")
         out.write("-----------------------------------------------------\n")
-        out.write("Inicio:\t{}\nFin:\t{}\n\n".format(self.start, self.end))
+        out.write("Inicio:\t{}\nFin:\t{}\n".format(self.start, self.end))
+        out.write("Gasto: {} €\n\n".format(res.fun))
 
         for i in range(0,24):
-            out.write("Valores en la hora {}/24\n".format(i))
+            out.write("Valores a las {}\n".format((self.start+dt.timedelta(hours=i)).strftime("%H:%M %d/%m/%y")))
             out.write("\t· EF = {} Kwh\n".format(values[i*5]))
             out.write("\t· ER = {} Kwh\n".format(values[i*5+1]))
             out.write("\t· EB = {} Kwh\n".format(values[i*5+2]))

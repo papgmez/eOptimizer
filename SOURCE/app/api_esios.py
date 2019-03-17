@@ -17,19 +17,19 @@ headers = {
 
 def get_incoming_prices(indicator):
     global headers
-    today = dt.datetime.today()
-    tomorrow = today+dt.timedelta(1)
-    url = const.ESIOS_URL.replace('$INDICATOR',indicator).replace('$START_DATE',dt.datetime.strftime(today,'%Y/%m/%d')).replace('$END_DATE',dt.datetime.strftime(tomorrow,'%Y/%m/%d'))
+    start = const.START
+    end = const.END
+    url = const.ESIOS_URL.replace('$INDICATOR',indicator).replace('$START_DATE',dt.datetime.strftime(start,'%Y/%m/%d')).replace('$END_DATE',dt.datetime.strftime(end,'%Y/%m/%d'))
     response = requests.get(url, headers=headers)
     if response.status_code == 200:
         data = response.json()
-        price_buffer = create_price_buffer(data,today)
+        price_buffer = create_price_buffer(data,start)
         return price_buffer
     else:
         print("An error has occurred")
         return None
 
-def create_price_buffer(data,today):
+def create_price_buffer(data,start):
     pb = []
     pb_size = 0
     price_per_hours = data['indicator']['values']
@@ -37,7 +37,7 @@ def create_price_buffer(data,today):
     for price in price_per_hours:
         price_date = dt.datetime.strptime(price['datetime'].split('.')[0], "%Y-%m-%dT%H:%M:%S")
 
-        if price['geo_name'] == 'España' and (price_date.date() > today.date() or (price_date.date() == today.date() and price_date.hour >= today.hour)):
+        if price['geo_name'] == 'España' and (price_date.date() > start.date() or (price_date.date() == start.date() and price_date.hour >= start.hour)):
             pb.append(round(price['value']/1000,3)) # price in €/kwh
             pb_size += 1
 
@@ -52,6 +52,7 @@ def create_price_buffer(data,today):
 
 '''
 if "__NAME__==__MAIN__":
-    print("SPOT price of the next 24 h:")
-    print(get_incoming_prices)
+    print("Prices between {} and {}".format(const.START,const.END))
+    print(get_incoming_prices(const.PVPC))
+    print(get_incoming_prices(const.SPOT))
 '''

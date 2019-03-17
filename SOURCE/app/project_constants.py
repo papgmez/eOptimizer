@@ -1,10 +1,12 @@
 #!/usr/bin/python3
 
-import random
+import datetime as dt
+import home_consumption as home
 
-# Fichero de Constantes del Proyecto
-# ==================================
-
+# Fichero de Constantes
+# =====================
+START = dt.datetime(2019, 3, 11, 0, 0, 0)#dt.datetime.now()
+END = START + dt.timedelta(1)
 # Constantes respecto a EF (energia fotovoltaica)
 # --------------------------------------------------
 # Numero de modulos fotovoltaicos empleados (PN=50W).
@@ -30,16 +32,16 @@ BATTERY_LEVEL = 0.5
 YEARS_TO_AMORTIZE_BATT = 35
 
 # Constantes respecto al Consumo
-# --------------------------------
+# ---------------------------------
 # Consumo del sistema por funcionamiento (4KW al dia) (KWh)
 C_INT = 0.166
 # Consumo propio del hogar. Valor que debe ser satisfecho siempre
-C = [0.8,0.8,0.7,0.2,0.1,0.2,0.2,0.2,0.2,0.3,0.3,0.3,0.4,0.5,0.6,0.7,0.7,0.7,0.8,0.8,0.8,0.8,0.7,0.7]#<VALOR>
-
+C = home.read_from_file()
+# C = home.get_random_values()
 
 # --------- API Aemet OpenData ---------
 # Codigo de la API OpenData de AEMET
-CITY_CODE = '13034' # Ciudad Real
+CITY_CODE = '45053' # Consuegra (Toledo)
 
 # Api key para el manejo de OpenData AEMET
 AEMET_KEY = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYWJsby5wYWxvbWlubzFAb3V0bG9vay5jb20iLCJqdGkiOiJmOGFhZTdiNi0yYWIzLTQzOTktYjU3Mi0zNDBlYWE2OGUwMDUiLCJpc3MiOiJBRU1FVCIsImlhdCI6MTU0ODU4NTE1NywidXNlcklkIjoiZjhhYWU3YjYtMmFiMy00Mzk5LWI1NzItMzQwZWFhNjhlMDA1Iiwicm9sZSI6IiJ9.4VGEUO4v-ncytcyWuaNwHBBvhhIAW5r-5Es0VAFiLr8'
@@ -57,6 +59,7 @@ SPOT = '613'  # Precio marginal del intradiario (precio de venta a la red eletri
 
 # url api Esios REE
 ESIOS_URL = 'https://api.esios.ree.es/indicators/$INDICATOR?start_date=$START_DATE&end_date=$END_DATE'
+
 # # Maxima Potencia Nominal posible (MNP) en W de un modulo fotovoltaico de Potencia Pico 50 W, de cada conjunto difuso del estado de Cielo
 FUZZY_SETS = {
     'Despejado' : 48,
