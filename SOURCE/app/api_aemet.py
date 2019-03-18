@@ -1,8 +1,8 @@
 #!/usr/bin/python3
+# -*- coding: utf-8; mode: python -*-
 
-import requests
 import time
-
+import requests
 import project_constants as const
 
 def get_weather ():
