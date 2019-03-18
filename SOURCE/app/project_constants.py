@@ -1,17 +1,48 @@
 #!/usr/bin/python3
 
-import random
+import datetime as dt
+import home_consumption as home
 
-# Fichero de Constantes del Proyecto
-# ----------------------------------
-# Numero de modulos fotovoltaicos del Sistema.
-PV_MODULES = 125
-# Kw de consumo propio del Sistema. Valor que consume el sistema en una hora t y debe ser satisfecho siempre (aleatorio entre 10 y 12 Kwh)
-C = random.uniform(10,12)
+# Fichero de Constantes
+# =====================
+START = dt.datetime(2019, 3, 11, 0, 0, 0)
+END = START + dt.timedelta(1)
+
+# Constantes respecto a EF (energia fotovoltaica)
+# --------------------------------------------------
+# Numero de modulos fotovoltaicos empleados (PN=50W).
+PV_MODULES = 100
+# Precio de cada modulo fotovoltaico (€)
+MODULE_PRICE = 40
+# Produccion anual estimada de un modulo (KW)
+YEARLY_POWER_PH_ESTIMATE = 96
+# Numero de años en los que se desea amortizar la inversion de los modulos fotovoltaicos
+YEARS_TO_AMORTIZE_PH = 8
+
+# Constantes respecto a EB (energia de baterias)
+# -------------------------------------------------
+# Precio de la Baterías estacionaria (6 vasos, 12V) (€)
+BATTERY_PRICE = 7500
+# Profundidad de descarga
+DISCHARGE_DEPTH = 0.5
+# Capacidad de Almacenaje en Kw
+BATTERY_CAPACITY = 21
+# Nivel de carga inicial de la bateria
+BATTERY_LEVEL = 0.5
+# Numero de años en los que se desea amortizar la inversion de las baterias
+YEARS_TO_AMORTIZE_BATT = 35
+
+# Constantes respecto al Consumo
+# ---------------------------------
+# Consumo del sistema por funcionamiento (2KWh al dia) (KWh)
+C_INT = 0.0888
+# Consumo propio del hogar. Valor que debe ser satisfecho siempre
+C = home.read_from_file()
+# C = home.get_random_values()
 
 # --------- API Aemet OpenData ---------
 # Codigo de la API OpenData de AEMET
-CITY_CODE = '13034' # Ciudad Real
+CITY_CODE = '45053' # Consuegra (Toledo)
 
 # Api key para el manejo de OpenData AEMET
 AEMET_KEY = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYWJsby5wYWxvbWlubzFAb3V0bG9vay5jb20iLCJqdGkiOiJmOGFhZTdiNi0yYWIzLTQzOTktYjU3Mi0zNDBlYWE2OGUwMDUiLCJpc3MiOiJBRU1FVCIsImlhdCI6MTU0ODU4NTE1NywidXNlcklkIjoiZjhhYWU3YjYtMmFiMy00Mzk5LWI1NzItMzQwZWFhNjhlMDA1Iiwicm9sZSI6IiJ9.4VGEUO4v-ncytcyWuaNwHBBvhhIAW5r-5Es0VAFiLr8'
@@ -23,12 +54,12 @@ AEMET_URL = 'https://opendata.aemet.es/opendata/api/prediccion/especifica/munici
 # Token para la API de Esios (Red Electrica de España)
 ESIOS_TOKEN = '879c5ab5bc0211a1ba23527736e3402a0e708f0a5e7c370f0274004e676ee5f6'
 
+# Indicadores de precios Esios REE
+PVPC = '1013' # Precio Voluntario para el Pequeño Consumidor (precio de compra de energia)
+SPOT = '613'  # Precio marginal del intradiario (precio de venta a la red eletrica)
+
 # url api Esios REE
 ESIOS_URL = 'https://api.esios.ree.es/indicators/$INDICATOR?start_date=$START_DATE&end_date=$END_DATE'
-
-# Indicadores de precios Esios REE
-PVPC = '1013' # Precio Voluntario para el Pequeño Consumidor (precio de venta al cliente)
-SPOT = '613'  # Precio marginal del intradiario (precio de compra/venta a la red eletrica)
 
 # # Maxima Potencia Nominal posible (MNP) en W de un modulo fotovoltaico de Potencia Pico 50 W, de cada conjunto difuso del estado de Cielo
 FUZZY_SETS = {
