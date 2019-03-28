@@ -3,34 +3,50 @@
 
 
 \section{Objetivo Principal}
-El objetivo principal a abordar será la construcción de un simulador para la predicción de la \textbf{distribución óptima} de energía entre \textbf{elementos generadores} (placas solares, energía almacenada en las baterías de almacenaje, o suministro de la red eléctrica) y \textbf{elementos consumidores} (clientes particulares, venta a la red eléctrica, almacenaje, etc) teniendo en cuenta que toda la energía generada debe ser consumida de una u otra forma.
-Este problema podría ser modelado como un problema de satisfacción de restricciones (PSR).
+El objetivo principal a abordar será la construcción de un sistema inteligente para la simulación y predicción de la \textbf{distribución óptima} de energía entre \textbf{elementos generadores} y \textbf{elementos consumidores} en el hogar teniendo en cuenta que toda la energía generada debe ser consumida de una u otra forma.
+
+El objetivo del sistema es ajustar en cada momento la cantidad de energía obtenida de cada elemento de los mencionados anteriormente con el objetivo de minimizar el gasto económico dedicado en el hogar.
+Este objetivo puede ser abordado como un problema de satisfacción de restricciones (PSR).
 Un problema de satisfacción de restricciones~\cite{Russ06} está caracterizado por:
 \begin{itemize}
 	\item Un conjunto de variables, donde cada variable dispone de un dominio de valores que puede tomar.
 	\item Un conjunto de restricciones, que permite conocer las posibles combinaciones de las variables.
-	\item La solución al PSR será la asignación de valores a las variables de forma que se satisfacen las restricciones.
+	\item La solución al PSR será la asignación de valores a las variables de forma que se satisfacen las restricciones y se alcanza el objetivo.
 \end{itemize} 
-Cómo se puede observar en la Figura 2, la funcionalidad del sistema sería la de modelar cada una de las salidas (cantidad de energía a la baterías, Cbat; cantidad de energía al hogar, Chogar; y cantidad de energía a la red, Cred), en función del valor de cada una de las entradas (potencia suministrada de las placas fotovoltaicas, Pfv; potencia suministrada de la red, Pred; y potencia suministrada de las baterías, Pbat), que representan el conjunto de variables del problema de satisfacción de restricciones. 
+Cómo se puede observar en la Figura 2, la funcionalidad del sistema sería la de modelar cada una de las salidas en función del valor de cada una de las entradas, que representan el conjunto de variables del problema de satisfacción de restricciones, el cuál se definirá mas adelante.
 
 \begin{figure}[!h]
 	\centering
-	\includegraphics[width=9cm]{figs/Esquema.png}
+	\includegraphics[width=7cm]{figs/Esquema.png}
 	\caption{Esquema del sistema}
 \end{figure}
+
+En este sistema las fuentes de suministro de energía (entradas) son:
+\begin{itemize}
+	\item Módulos fotovoltaicos
+	\item Red eléctrica
+	\item Baterías de almacenaje
+\end{itemize}
+Como fuentes de consumo (salidas) existen:
+\begin{itemize}
+	\item Consumo energético del hogar
+	\item Consumo propio del sistema que se propone
+	\item Carga de baterías de almacenaje
+	\item Venta al mercado eléctrico como particular
+\end{itemize}
 
 \section{Objetivos Parciales}
 A lo largo del trabajo habrá que satisfacer una serie de subobjetivos necesarios para lograr el objetivo principal tales como:
 \begin{enumerate}
 	\item \textbf{Identificación y adquisición de los datos y variables que definen el sistema:}
-	Se estudiarán las entradas del sistema y el grado de importancia que tiene cada una en cada situación. La información meteorológica de las próximas 24 horas será obtenida utilizando una API oficial de AEMET~\cite{Aemet}, y los datos del mercado eléctrico serán obtenidos utilizando la API oficial e-sios de Red Eléctrica de España S.A.~\cite{Esios} 
+	Estudio de las entradas del sistema y el grado de importancia que tiene cada una en cada situación. La información meteorológica será obtenida utilizando una API oficial de AEMET~\cite{Aemet}, y los datos del mercado eléctrico serán obtenidos utilizando la API oficial e-sios de Red Eléctrica de España S.A.~\cite{Esios} 
 	
 	\item \textbf{Establecer las relaciones y restricciones propias del consumo eléctrico:}
-	Las variables obtenidas en el objetivo anterior estarán sujetas a unas restricciones que nos permitirán conocer las combinaciones posibles de valores, teniendo en cuenta que toda la energía generada debe ser consumida de alguna forma, ya sea por medio de venta a clientes, venta a la red eléctrica, o cargada en baterías de almacenaje.
+	Las variables obtenidas en el objetivo anterior estarán sujetas a unas restricciones que nos permitirán conocer las combinaciones posibles de valores, teniendo en cuenta que toda la energía generada debe ser consumida de alguna forma, ya sea por medio de venta a la red, o cargada en baterías de almacenaje en caso de superar la energía demandada por el consumo que se realiza.
 	
 	\item \textbf{Añadir una IA para la generación optimizada de energía y dar lugar a una planificación:}
-	Una vez obtenidos los datos y variables del problema y conociendo el grado de implicación de los mismos, se creará un modelo del sistema con una planificación temporal de 24 horas. Esto se podrá llevar a cabo incorporando inteligencia artificial, mediante \textbf{redes LSTM} (Long Short Term Memory)~\cite{Brow07}.
-	Las redes LSTM son empleadas en problemas de predicción de secuencia, diferentes a otros problemas de aprendizaje supervisado. En una secuencia existe un orden que debe preservarse a la hora de entrenar el modelo y realizar predicciones, como ocurrirá en nuestro caso. Implementar un problema de este tipo con una red neuronal clásica (perceptrón multicapa) es posible pero tiene algunas limitaciones, ya que carece de una estructura temporal y sus entradas son de tamaño fijo. Por su parte, las redes LSTM cuentan con una formulación única que permite evitar problemas que impiden el entrenamiento obteniendo muy buenos resultados. Es por esto que se ha decidido implementar el modelo de predicción a partir de ellas.
+	Una vez obtenidos los datos y variables del problema y conociendo el grado de implicación de los mismos, se creará un modelo del sistema que dará una planificación temporal de 24 horas. Esto se podrá llevar a cabo incorporando inteligencia artificial.
+	
 	\item \textbf{Simular la planificación:}
 	Se llevará a cabo la simulación de la planificación realizando un seguimiento y una comprobación de la desviación que se puede haber producido con respecto a los datos reales. A partir de lo deducido en la simulación anterior, se tomará la decisión de ajustar o no el modelo para futuras predicciones.
 \end{enumerate}
