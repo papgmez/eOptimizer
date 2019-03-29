@@ -3,11 +3,12 @@
 
 import time
 import requests
-import project_constants as const
+from config import project_constants as const
 
-def get_weather ():
+def get_weather(city):
     weather_buffer = []
-    response = requests.get(const.AEMET_URL)
+    url = const.AEMET_URL.replace('$CITY', city)
+    response = requests.get(url)
     data = response.json()
 
     if data['estado'] == 200:
@@ -37,9 +38,3 @@ def create_weather_buffer(data):
             wb.append(hour['descripcion'])
             buffer_size += 1
     return wb
-
-'''
-if "__NAME__==__MAIN__":
-    print("Weather buffer of the next 24 h:")
-    print(get_weather())
-'''

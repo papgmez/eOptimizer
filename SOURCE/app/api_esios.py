@@ -5,7 +5,7 @@ import datetime
 import requests
 import datetime as dt
 import random as rd
-import project_constants as const
+from config import project_constants as const
 
 headers = {
           'Accept' : 'application/json; application/vnd.esios-api-v1+json',

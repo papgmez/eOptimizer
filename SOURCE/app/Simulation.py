@@ -8,43 +8,44 @@ import numpy as np
 import datetime as dt
 import api_esios as esios
 import api_aemet as aemet
-import project_constants as pc
+from config import project_constants as const
 
-class Model:
-    def __init__(self,pvm=pc.PV_MODULES,module_price=pc.MODULE_PRICE,yearly_pw_ph=pc.YEARLY_POWER_PH_ESTIMATE,years_ph=pc.YEARS_TO_AMORTIZE_PH,
-                 total_batt_price=pc.BATTERY_PRICE,disch_depth=pc.DISCHARGE_DEPTH,batt_size=pc.BATTERY_CAPACITY,batt_level=pc.BATTERY_LEVEL,
-                 years_bat=pc.YEARS_TO_AMORTIZE_BATT,c_int=pc.C_INT,c=pc.C,start=pc.START,end=pc.END):
-        self.ef_price = self.calculate_ef_price(pvm, module_price, years_ph, yearly_pw_ph)
-        self.discharge_depth = disch_depth
-        self.battery_capacity = batt_size
-        self.battery_level = self.battery_capacity * batt_level
-        self.eb_price = self.calculate_eb_price(total_batt_price, years_bat)
-        self.c_int = c_int
-        # ---- buffers of data ----
-        self.max_ef_buffer = self.calculate_max_ef_buffer(pvm) # buffer with incoming 24 max possible values of PV energy
-        self.cr_price = esios.get_incoming_prices(pc.SPOT) # buffer with incoming 24 prices for sell energy
-        self.er_price = esios.get_incoming_prices(pc.PVPC) # buffer with incoming 24 prices for buy energy
-        self.cb_price = self.calculate_cb_prices() # buffer with incoming 24 prices for store energy in battery
-        self.c = c # buffer with incoming 24 values of energy consumption in home
+class Simulation:
+    def __init__(self, home): # c, start
         # ---- time bounds of the simulation ----
-        self.start = start
-        self.end = end
+        self.start = const.START
+        self.end = const.END
+        # ---- attr ----
+        self.home = home
+        self.discharge_depth = const.DISCH_DEPTH
+        self.battery_capacity = const.BAT_CAPACITY
+        self.battery_level = self.battery_capacity * 0.5
+        self.max_ef_buffer = self.calculate_max_ef_buffer() # buffer with incoming 24 max possible values of PV energy
+        # ---- prices ----
+        self.ef_price = self.calculate_ef_price()
+        self.er_price = esios.get_incoming_prices(const.PVPC) # buffer with incoming 24 prices for buy energy
+        self.eb_price = self.calculate_eb_price()
+        self.cr_price = esios.get_incoming_prices(const.SPOT) # buffer with incoming 24 prices for sell energy
+        self.cb_price = self.calculate_cb_prices() # buffer with incoming 24 prices for store energy in battery
+        # ---- home consumptions ----
+        self.c_int = const.C_INT
+        self.c = const.C # buffer with incoming 24 values of energy consumption in home
         # ---- simulation arguments ----
         self.f = self.generate_function_coeficients() # coeficients of the function to minimize
         self.A_eq, self.b_eq, self.A_ub, self.b_ub = [], [], [], [] # restrictions arrays
 
-    def calculate_max_ef_buffer(self, num_modules):
-        wb = aemet.get_weather()
+    def calculate_max_ef_buffer(self):
+        wb = aemet.get_weather(self.home.city_code)
         max_values = []
         for state in wb:
-            max_values.append(num_modules * pc.FUZZY_SETS.get(state)/1000)
+            max_values.append(self.home.pv_modules * const.FUZZY_SETS.get(state)/1000)
         return max_values
 
-    def calculate_ef_price(self, pvm, module_price, years_ph, yearly_pw_ph):
-        return (pvm * module_price / years_ph) / (yearly_pw_ph * pvm)
+    def calculate_ef_price(self):
+        return (self.home.pv_modules * const.MODULE_PRICE / self.home.amortization_years_pv) / (const.YEAR_PV_ESTIM * self.home.pv_modules)
 
-    def calculate_eb_price(self, total_batt_price, years_bat):
-        return (total_batt_price / years_bat) / (self.battery_capacity * 182.5)
+    def calculate_eb_price(self):
+        return (const.BAT_PRICE / self.home.amortization_years_bat) / (self.battery_capacity * 182.5)
 
     def calculate_cb_prices(self):
         prices = []
@@ -134,7 +135,7 @@ class Model:
             self.A_ub.append(restr_coef)
             self.b_ub.append(self.battery_capacity - self.battery_level)
 
-    def optimize_model(self):
+    def optimize(self):
         # Function to minimize:
         # f(x) = Σ(0..24) EFi*PF + ERi*PVPCi + EB*PB - CRi*PRi - CB*PBin_i
         # Daily expenditure on the production of energy for self-consumption

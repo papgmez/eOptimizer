@@ -1,48 +1,23 @@
 #!/usr/bin/python3
 # -*- coding: utf-8; mode: python -*-
 
-from flask import Flask, make_response, abort, jsonify, request, redirect, flash, url_for, render_template
+from flask import Flask, make_response, abort, jsonify, request, redirect, url_for, render_template
+from flask_bootstrap import Bootstrap
+from flask_sqlalchemy import SQLAlchemy
 
+from config import project_constants as const, config
 import api_aemet as aemet
 import api_esios as esios
-import project_constants as const
-import model
+import Simulation
 
 app = Flask(__name__)
-app.secret_key = "development"
-
+app.config.from_object(config)
+Bootstrap(app)
+db = SQLAlchemy(app)
 
 @app.route('/')
 def index():
    return "Welcome to my TFG"
-
-@app.route('/EF')
-def get_EF():
-    weather = aemet.get_weather()
-
-    if weather is None:
-       abort(404)
-
-    values = []
-    for state in weather:
-       # centroids of each weather state fuzzy set
-       values.append(model.calculate_EF(const.FUZZY_SETS.get(state)))
-
-    return make_response(jsonify({'EF':values}),200)
-
-@app.route('/price/<type>')
-def get_current_price(type):
-    price = None
-
-    if type == 'PVPC':
-       price = esios.get_price(const.PVPC)
-    elif type == 'SPOT':
-        price = esios.get_price(const.SPOT)
-
-    if price is not None:
-        return make_response(jsonify({'type':type, 'unit':'€/Kwh', 'price_buffer':price}),200)
-    abort(404)
-
 
 @app.errorhandler(404)
 def not_found(error):
