@@ -17,7 +17,7 @@ class Users(Base):
     home = relationship("Homes", uselist=False, backref="Users")
 
     def __repr__(self):
-        return (u'<{self.__class__.__name__}: {self.id}, name={self.name} {self.lastname}, email={self.email}, home_id={self.home.id}>'.format(self=self))
+        return (u'<{self.__class__.__name__}: {self.id}, name={self.name} {self.lastname}, email={self.email}>'.format(self=self))
 
 class Homes(Base):
     __tablename__ = "homes"

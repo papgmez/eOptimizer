@@ -9,12 +9,13 @@ import datetime as dt
 import api_esios as esios
 import api_aemet as aemet
 from config import project_constants as const
+import json
 
 class Simulation:
-    def __init__(self, home): # c, start
+    def __init__(self, home, c, date):
         # ---- time bounds of the simulation ----
-        self.start = const.START
-        self.end = const.END
+        self.start = date
+        self.end = self.start + dt.timedelta(1)
         # ---- attr ----
         self.home = home
         self.discharge_depth = const.DISCH_DEPTH
@@ -23,13 +24,13 @@ class Simulation:
         self.max_ef_buffer = self.calculate_max_ef_buffer() # buffer with incoming 24 max possible values of PV energy
         # ---- prices ----
         self.ef_price = self.calculate_ef_price()
-        self.er_price = esios.get_incoming_prices(const.PVPC) # buffer with incoming 24 prices for buy energy
+        self.er_price = esios.get_incoming_prices(const.PVPC, self.start, self.end) # buffer with incoming 24 prices for buy energy
         self.eb_price = self.calculate_eb_price()
-        self.cr_price = esios.get_incoming_prices(const.SPOT) # buffer with incoming 24 prices for sell energy
+        self.cr_price = esios.get_incoming_prices(const.SPOT, self.start, self.end) # buffer with incoming 24 prices for sell energy
         self.cb_price = self.calculate_cb_prices() # buffer with incoming 24 prices for store energy in battery
         # ---- home consumptions ----
         self.c_int = const.C_INT
-        self.c = const.C # buffer with incoming 24 values of energy consumption in home
+        self.c = c # buffer with incoming 24 values of energy consumption in home
         # ---- simulation arguments ----
         self.f = self.generate_function_coeficients() # coeficients of the function to minimize
         self.A_eq, self.b_eq, self.A_ub, self.b_ub = [], [], [], [] # restrictions arrays
@@ -152,7 +153,30 @@ class Simulation:
 
         self.store_result(res)
 
-        return res
+        return self.prepare_result(res)
+
+    def prepare_result(self, res):
+        values = res.x.tolist()
+        data = {
+            "start" : self.start.strftime("%Y-%m-%d %H:%M:%S"),
+            "end" : self.end.strftime("%Y-%m-%d %H:%M:%S"),
+            "result" : res.fun,
+            "hours" : self.prepare_hours(values)
+        }
+        return json.dumps(data)
+
+    def prepare_hours(self, values):
+        hours = []
+        for i in range(0,24):
+            hours.append({"EF" : values[i*5],
+                          "ER" : values[i*5+1],
+                          "EB" : values[i*5+2],
+                          "CR" : values[i*5+3],
+                          "CB" : values[i*5+4],
+                          "C" : self.c[i],
+                          "C_int" : self.c_int
+            })
+        return hours
 
     def store_result(self, res):
         values = res.x.tolist()

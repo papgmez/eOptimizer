@@ -19,10 +19,10 @@ def generate_user():
 
 def generate_home(user_id):
     home = Homes()
-    home.pv_modules = random.randint()
-    home.city_code = random.randint()
-    home.amortization_years_pv = random.randint()
-    amortization_years_bat = random.randint()
+    home.pv_modules = random.randint(1,100)
+    home.city_code = '28079'
+    home.amortization_years_pv = random.randint(1,100)
+    home.amortization_years_bat = random.randint(1,100)
     home.UserId = user_id
 
     return home

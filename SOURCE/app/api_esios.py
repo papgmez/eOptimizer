@@ -15,10 +15,8 @@ headers = {
           }
 
 
-def get_incoming_prices(indicator):
+def get_incoming_prices(indicator, start, end):
     global headers
-    start = const.START
-    end = const.END
     url = const.ESIOS_URL.replace('$INDICATOR',indicator).replace('$START_DATE',dt.datetime.strftime(start,'%Y/%m/%d')).replace('$END_DATE',dt.datetime.strftime(end,'%Y/%m/%d'))
     response = requests.get(url, headers=headers)
     if response.status_code == 200:

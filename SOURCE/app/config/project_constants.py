@@ -1,13 +1,9 @@
 #!/usr/bin/python3
 
-import datetime as dt
 import home_consumption as home
 
 # Fichero de Constantes
 # =====================
-START = dt.datetime(2019, 3, 11, 0, 0, 0)
-END = START + dt.timedelta(1)
-
 # Constantes respecto a EF (energia fotovoltaica)
 # --------------------------------------------------
 # Precio de cada modulo fotovoltaico (€)

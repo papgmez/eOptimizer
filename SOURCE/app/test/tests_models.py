@@ -35,7 +35,25 @@ class test_Models(unittest.TestCase):
         self.db.session.add(user)
         self.assertRaises(IntegrityError, self.db.session.commit)
 
+    def test_create_home(self):
+        user = factory.generate_user()
+        self.db.session.add(user)
+        self.db.session.commit()
+        home = factory.generate_home(user.id)
 
+        self.db.session.add(home)
+        self.assertEqual(self.db.session.query(Homes).count(), 1)
+        self.assertEqual(self.db.session.query(Homes).get(home.id).user, user)
+
+    def test_create_fail_home(self):
+        user = factory.generate_user()
+        self.db.session.add(user)
+        self.db.session.commit()
+        home = factory.generate_home(user.id)
+        home.pv_modules = None
+
+        self.db.session.add(home)
+        self.assertRaises(IntegrityError, self.db.session.commit)
 
 if __name__ == '__main__':
     unittest.main()
