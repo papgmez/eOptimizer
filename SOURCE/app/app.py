@@ -4,16 +4,17 @@
 from flask import Flask, make_response, abort, jsonify, request, redirect, url_for, render_template
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
-
-from config import project_constants as const, config
+from models import Base, Users, Homes
+from config import project_constants as const, prod_config
 import api_aemet as aemet
 import api_esios as esios
 import Simulation
 
 app = Flask(__name__)
-app.config.from_object(config)
-Bootstrap(app)
+app.config.from_object(prod_config)
 db = SQLAlchemy(app)
+Base.metadata.create_all(bind=db.engine)
+# Bootstrap(app)
 
 @app.route('/')
 def index():

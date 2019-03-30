@@ -3,9 +3,11 @@
 from sqlalchemy import DateTime, Integer, String, Text, Float
 from sqlalchemy import Column, ForeignKey
 from sqlalchemy.orm import relationship
-from server import db
+from sqlalchemy.ext.declarative import declarative_base
 
-class Users(db.Model):
+Base = declarative_base()
+
+class Users(Base):
     __tablename__ = 'usuarios'
     id = Column(Integer, primary_key=True)
     name = Column(String(100), nullable=False)
@@ -17,7 +19,7 @@ class Users(db.Model):
     def __repr__(self):
         return (u'<{self.__class__.__name__}: {self.id}, name={self.name} {self.lastname}, email={self.email}, home_id={self.home.id}>'.format(self=self))
 
-class Homes(db.Model):
+class Homes(Base):
     __tablename__ = "homes"
     id = Column(Integer, primary_key=True)
     city_code = Column(String(100), nullable=False)
