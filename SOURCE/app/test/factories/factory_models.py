@@ -13,7 +13,7 @@ def generate_user():
     user.name = faker_generator.first_name()
     user.lastname = faker_generator.last_name()
     user.email = faker_generator.email()
-    user.password = faker_generator.password()
+    user.set_password(faker_generator.password())
 
     return user
 
