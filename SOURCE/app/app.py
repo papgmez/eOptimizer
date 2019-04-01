@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 # -*- coding: utf-8; mode: python -*-
 
+#from pdb import set_trace as breakpoint
+
 from flask import Flask, make_response, abort, jsonify, request, redirect, url_for, render_template
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
@@ -38,6 +40,7 @@ def sign_up():
       db.session.commit()
    except IntegrityError:
       # Error de insercion de user
+      return make_response(jsonify({'error': 'error'}),400)
 
    # ---- creating user home ----
    home = Homes()
@@ -68,7 +71,7 @@ def do_login():
    user = db.session.query(Users).filter_by(email=input_email).first()
 
    if user is not None:
-      if user.check_password(imput_pass):
+      if user.check_password(input_pass):
          currentUser = user
          return redirect(url_for('index'))
       else:
@@ -79,7 +82,6 @@ def do_login():
 @app.route('/simulation', methods=['POST'])
 def simulation():
    global currentUser
-   currentUser = db.session.query(Users).get(1)
 
    if currentUser is not None:
       # Recoger date y consumo
