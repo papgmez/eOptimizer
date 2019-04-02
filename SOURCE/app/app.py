@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 # -*- coding: utf-8; mode: python -*-
 
-#from pdb import set_trace as breakpoint
+# from pdb import set_trace as breakpoint
 
-from flask import Flask, make_response, abort, jsonify, request, redirect, url_for, render_template
+from flask import Flask, make_response, abort, jsonify, request, redirect, url_for, render_template, session
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.exc import IntegrityError
@@ -12,6 +12,7 @@ from config import project_constants as const, prod_config
 from simulation import Simulation
 import datetime as dt
 import json
+import os
 
 app = Flask(__name__)
 app.config.from_object(prod_config)
@@ -23,7 +24,10 @@ currentUser = None
 
 @app.route('/')
 def index():
-   return "Welcome to my TFG"
+   if not session.get('logged_in'):
+      return redirect(url_for('do_login'))
+   else:
+      return "Welcome to my TFG"      
 
 @app.route('/signup', methods=['POST'])
 def sign_up():
@@ -51,13 +55,15 @@ def sign_up():
    home.userId = user.id
 
    db.session.add(home)
+   '''
    try:
       db.session.commit()
    except IntegrityError:
       # Error de insercion de home
-
+   
    currentUser = user
-
+   session['logged_in'] = True
+   '''
    return redirect(url_for('index'))
 
 
@@ -65,20 +71,25 @@ def sign_up():
 def do_login():
    global currentUser
 
-   input_email = request.form['username']
-   input_pass = request.form['password']
+   input_email = request.get_json().get('email')
+   input_pass = request.get_json().get('password')
+   #input_email = request.form['username']
+   #input_pass = request.form['password']
 
    user = db.session.query(Users).filter_by(email=input_email).first()
 
    if user is not None:
       if user.check_password(input_pass):
          currentUser = user
+         session['logged_in'] = True
          return redirect(url_for('index'))
-      else:
+   '''
+   else:
          # Password fails
    else:
       # User fails
-
+   '''
+   
 @app.route('/simulation', methods=['POST'])
 def simulation():
    global currentUser
@@ -98,7 +109,8 @@ def do_logout():
    global currentUser
 
    currentUser = None
-
+   session['logged_in'] = False
+   
    return redirect(url_for('do_login'))
 
 @app.errorhandler(404)
@@ -107,4 +119,5 @@ def not_found(error):
 
 
 if __name__=="__main__":
-    app.run(debug=True, host='0.0.0.0', port=7000)
+   app.secret_key = os.urandom(10)
+   app.run(debug=True, host='0.0.0.0', port=7000)

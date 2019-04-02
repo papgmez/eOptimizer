@@ -1,6 +1,5 @@
 import os
 
-secret_key = 'holaholahola'
 PWD = os.path.abspath(os.curdir)
 
 DEBUG = True
