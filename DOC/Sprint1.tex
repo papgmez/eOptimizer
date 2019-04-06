@@ -1,14 +1,14 @@
-En el primer sprint se busca identificar cada una de las variables que entran en juego en el sistema. Se debe tener clara la diferencia entre variables de entrada y salida y variables de control. 
-\subsection{Variables de entrada} 
-Son las fuentes de suministro de energía al sistema. Tendremos tres:
+En el primer sprint se busca identificar cada una de las variables que entran en juego en el sistema, así como su proceso de obtención.. Se debe tener clara la diferencia entre variables de entrada y salida y variables de control.
+\subsection{Variables de entrada}
+Son las fuentes de suministro de energía al sistema. Habrá un total de tres:
 \begin{itemize}
 	\item \textbf{Energía fotovoltaica (EF)}\\ Energía procedente de las placas solares. Su valor viene determinado por varios factores, como son el número de módulos fotovoltaicos instalados y la máxima potencia posible en cada momento, \textit{current module power} (CMP). Hace referencia a la potencia de salida, en watios que produce un panel fotovoltaico en condiciones de máxima iluminación solar, con una radiación de aproximadamente 1 kW/m2. Será dependiente de la situación meteorológica del momento, de cuya obtención se hablará mas adelante. Como se puede observar, tendrá un valor máximo de obtención, que representa el tope de energía que podemos obtener de los módulos fotovoltaicos en ese momento.
 	\item \textbf{Energía de red (ER)}\\ Energía procedente de la compañía eléctrica como cliente particular. Al contrario que en el caso anterior, no existe un límite superior a la hora de obtener energía de esta fuente.
 	\item \textbf{Energía almacenada en batería (EB)}\\ Energía obtenida de la batería de almacenaje, que se ha guardado previamente para su posterior uso cuando el resto de fuentes de entrada tengan un mayor costo. Al igual que la energía fotovoltaica tiene un límite superior y viene determinado por la cantidad de carga de la misma y la profundidad de descarga que se le puede realizar sin resultar perjudicial para su ciclo de vida, que debe ser de un 50\% como máximo.
 \end{itemize}
 
-Cómo se ha mencionado, la energía fotovoltaica en una hora t será dependiente de la situación meteorológica de esa hora, algo evidente. Para obtener dicha información se utiliza la API oficial de AEMET \cite{Aemet}. Una API (\textit{Application Programming Interface}) es un conjunto de reglas o especificaciones que permite a las aplicaciones proporcionar servicios a otras o comunicarse. Para su uso, se ha debido solicitar un \textbf{API key} ya que es una API cerrada, esto es, su uso está restringido a un conjunto cerrado de clientes. Para realizar una petición a la misma, debe incluirse el \textit{API key} mencionado anteriormente en la url solicitada, así como una serie de parámetros como el código del municipio que se desea consultar. La respuesta a la petición contiene la previsión meteorológica de las próximas 24 horas en ese municipio.\\Para esta funcionalidad se ha creado el módulo \textit{api\_aemet}, que contiene la función \textit{get\_weather}, la cual se muestra en el listado 4.1.
-\begin{lstlisting}[language=Python,float=ht,caption={Función para obtener los valores meteorológicos}]
+Cómo se ha mencionado, la energía fotovoltaica en una hora t será dependiente de la situación meteorológica de esa hora, algo evidente.\\Para obtener dicha información se utiliza la API oficial de AEMET \cite{Aemet}. Una API (\textit{Application Programming Interface}) es un conjunto de reglas o especificaciones que permite a las aplicaciones proporcionar servicios a otras o comunicarse. Para su uso, se ha debido solicitar un \textbf{API key} ya que es una API cerrada, esto es, su uso está restringido a un conjunto cerrado de clientes. Para realizar una petición a la misma, debe incluirse el \textit{API key} mencionado anteriormente en la url solicitada, así como una serie de parámetros como el código del municipio que se desea consultar. La respuesta a la petición contiene la previsión meteorológica de las próximas 24 horas en ese municipio.\\Para esta funcionalidad se ha creado el módulo \textit{api\_aemet}, que contiene la función \textit{get\_weather}, la cual se muestra en el listado~\ref{lst:aemet}
+\begin{lstlisting}[language=Python,float=ht,caption={Función para obtener los valores meteorológicos},label={lst:aemet}]
 def get_weather (city):
     weather_buffer = []
     url = const.AEMET_URL.replace('$CITY', city)
@@ -27,24 +27,26 @@ def get_weather (city):
 
 Las variables de entrada no son excluyentes, es decir, se puede obtener un tanto por ciento de la energía requerida procedente de cada una de ellas, lo que vendrá determinado por el precio en ese momento de cada una, ya que lo que buscamos es minimizar el gasto producido. A continuación se muestra el modo de determinación de los precios de las variables de entrada en una hora t: \\
 
-	El precio de la energía fotovoltaica se calcula a partir de la inversión realizada en la instalación de los módulos fotovoltaicos y la cantidad de años en los que se desea amortizar dicha inversión. Así, el precio en €/Kw de EF se toma a partir de la fórmula 4.1
-	\begin{equation}\label{Costo_EF}
+	El precio de la energía fotovoltaica se calcula a partir de la inversión realizada en la instalación de los módulos fotovoltaicos y la cantidad de años en los que se desea amortizar dicha inversión. Así, el precio en €/Kw de EF se toma a partir de la fórmula~\ref{eq:costoEF}
+	\begin{equation}
+          \label{eq:costoEF}
 	Costo_{EF} = \frac{coste_{anual}}{promedio^{kw}_{anual}} \textup{\euro}/kw
 	\end{equation}
-	Siendo el coste anual la cantidad invertida entre el número de años(n) en amortizarla (Fórmula 4.2)
-	\begin{equation}\label{Inversion_EF}
+	Siendo el coste anual la cantidad invertida entre el número de años(n) en amortizarla, cómo se puede observar en la fórmula~\ref{eq:inversionEF}
+	\begin{equation}
+          \label{eq:inversionEF}
 	Coste_{anual} = \frac{inversion}{n} \textup{\euro}
 	\end{equation}
 
-	
-	El precio de la energía de red es el ya comentado PVPC. Para obtenerlo, se hace uso de la \textbf{API oficial de Red Eléctrica de España (e-sios)} \cite{Ree}. Para su uso se ha debido solicitar un \textit{Token} de acceso que se utiliza en las llamadas a la misma, al tratarse de una API cerrada análogamente al caso de la API de AEMET. Para el procesado de esta API se ha creado el módulo \textit{api\_esios}, que contiene la función \textit{get\_incoming\_prices}, la cuál se muestra en el listado 4.2.
-	
-	\begin{lstlisting}[language=Python,float=ht,caption={Función para obtener los valores del precio eléctrico}]
+
+	El precio de la energía de red es el ya comentado PVPC. Para obtenerlo, se hace uso de la \textbf{API oficial de Red Eléctrica de España (e-sios)} \cite{Ree}. Para su uso se ha debido solicitar un \textit{Token} de acceso que se utiliza en las llamadas a la misma, al tratarse de una API cerrada análogamente al caso de la API de AEMET. Para el procesado de esta API se ha creado el módulo \textit{api\_esios}, que contiene la función \textit{get\_incoming\_prices}, la cuál se muestra en el listado~\ref{lst:esios}
+
+	\begin{lstlisting}[language=Python,float=ht,caption={Función para obtener los valores del precio eléctrico},label={lst:esios}]
 	def get_incoming_prices(indicator, start, end):
 	   url = const.ESIOS_URL.replace('$INDICATOR', indicator)
 	   url = url.replace('$START_DATE', dt.datetime.strftime(start, '%Y/%m/%d'))
 	   url = url.replace('$END_DATE', dt.datetime.strftime(end, '%Y/%m/%d'))
-	
+
 	   response = requests.get(url, headers=HEADERS)
 	   if response.status_code == 200:
 	      data = response.json()
@@ -52,22 +54,23 @@ Las variables de entrada no son excluyentes, es decir, se puede obtener un tanto
 	      return price_buffer
 	   return None
 	\end{lstlisting}
-	
+
 	Esta función es llamada desde el proyecto con el indicador deseado, que se corresponde con el precio que se desea consultar (en este caso PVPC), cuyo código numérico es obtenido de las constantes del proyecto, al igual que la url necesaria para la petición (ESIOS\_URL), que se forma con los parámetros adecuados y se realiza la petición \textit{get} haciendo uso de la librería \textit{requests}~\cite{Kenn11}. En este caso el \textit{API key} no se concatena en la url, si no que debe incluirse en la cabecera de la petición en un campo específico, ya que se trata de una autenticación por token como tal. Si la petición ha sido exitosa (código de respuesta http 200), la función retornará un \textit{buffer} de tamaño 24, que se corresponde con los valores del PVPC en las 24 horas definidas en la simulación. Para ello llama a \textit{create\_price\_buffer}, que se encargará de generar la lista con los 24 valores del precio solicitado procesando la respuesta recibida de la petición a la API.
 	De esta manera se consigue el precio por Kw de la energía de red en cada momento.
-	
-	Por último, el precio de la energía de baterías se puede calcular de un modo muy parecido al de la energía fotovoltaica. Hace referencia al coste que supone extraer energía almacenada en la batería y está relacionado con la inversión realizada en la batería. 
-	\begin{equation}\label{Costo_EB}
+
+	Por último, el precio de la energía de baterías se puede calcular de un modo muy parecido al de la energía fotovoltaica. Hace referencia al coste que supone extraer energía almacenada en la batería y está relacionado con la inversión realizada en la batería~\ref{eq:costoEB}
+	\begin{equation}
+          \label{eq:costoEB}
 	Costo_{EB} = \frac{coste_{anual}}{capacidad_{bat}\cdot182,5} \textup{\euro}/kw
 	\end{equation}
-	Habiendo obtenido previamente el coste anual de forma similar a la fórmula 4.2. La constante 182,5 hace referencia al número de días del año (365) multiplicado por 0.5, debido a que no se va a realizar una profundidad de descarga mayor al 50\% de la capacidad total de la batería. El valor obtenido es el precio que supone recoger 1 Kw de la batería.
+	Habiendo obtenido previamente el coste anual de forma similar a la fórmula~\ref{eq:inversionEF}. La constante 182,5 hace referencia al número de días del año (365) multiplicado por 0.5, debido a que no se va a realizar una profundidad de descarga mayor al 50\% de la capacidad total de la batería. El valor obtenido es el precio que supone recoger 1 Kw de la batería.
 \subsection{Variables de salida}
 Representan las fuentes de consumo de energía del sistema. Habrá un total de cuatro:
 \begin{itemize}
 	\item \textbf{Consumo del hogar (C)}\\Demanda energética del hogar en cuestión, cuantía que debe ser satisfecha siempre, ya que es el uso de energía que necesita el hogar para su uso cotidiano.
 	\item \textbf{Consumo interno del sistema ($ C_{int} $)}\\El sistema propuesto tiene un consumo constante de funcionamiento, cuyo valor se ha estimado en aproximadamente 2 Kw al día, alrededor de unos 0,088 watios por hora. Consta del consumo por funcionamiento de placas fotovoltaicas y realización de carga y descarga de batería.
-	\item \textbf{Carga de batería (CB)}\\Cantidad de energía que se almacena en la batería para su posterior uso (almacenaje en batería). Esta variable cobra sentido en el caso de un abaratamiento de alguna fuente de generación de energía, lo que propicia que se obtenga más de la necesitada y se almacene para cuando el precio sea mayor.  
-	\item \textbf{Vertido al mercado eléctrico (CR)}\\Cantidad de energía que se vende al mercado eléctrico. Como particular, se puede disponer de una instalación fotovoltaica y verter energía a la red eléctrica, aunque es una práctica sujeta a numerosas trabas legales y dificultades en las que no se entrará en el desarrollo de este trabajo fin de grado. Esta energía se vertería al intramercado de red conocido como el mercado SPOT, aquel donde los activos que se compran o venden se entregan al precio de mercado del momento de la compra/venta. 
+	\item \textbf{Carga de batería (CB)}\\Cantidad de energía que se almacena en la batería para su posterior uso (almacenaje en batería). Esta variable cobra sentido en el caso de un abaratamiento de alguna fuente de generación de energía, lo que propicia que se obtenga más de la necesitada y se almacene para cuando el precio sea mayor.
+	\item \textbf{Vertido al mercado eléctrico (CR)}\\Cantidad de energía que se vende al mercado eléctrico. Como particular, se puede disponer de una instalación fotovoltaica y verter energía a la red eléctrica, aunque es una práctica sujeta a numerosas trabas legales y dificultades en las que no se entrará en el desarrollo de este trabajo fin de grado. Esta energía se vertería al intramercado de red conocido como el mercado SPOT, aquel donde los activos que se compran o venden se entregan al precio de mercado del momento de la compra/venta.
 \end{itemize}
 
 Como se puede observar, el vertido al mercado eléctrico es un consumo que tiene un beneficio económico que ha de tenerse en cuenta. Existe una retribución por Kw vertido a la red dependiente del momento del día, ya que como se ha comentado antes, el valor de compra/venta del mercado SPOT varía. Para la obtención de estos valores se vuelve a hacer uso de la ya mencionada API e-sios, proporcionando a la función \textit{get\_incoming\_prices} el indicador del precio SPOT, presente en el fichero de constantes del proyecto. Análogo a la obtención del PVPC, se retorna un buffer con los 24 valores requeridos del precio SPOT correspondientes a las 24 horas a simular.\\

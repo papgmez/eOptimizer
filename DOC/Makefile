@@ -1,5 +1,6 @@
-install:
-	include arco/latex.mk
+all:
+	pdflatex uclmTFGesi.tex
+	evince uclmTFGesi.pdf
 release:
 	clean
 	cp uclmTFGesi.pdf ../TFG_PalominoGomezPablo.pdf
@@ -19,5 +20,4 @@ clean:
 	$(RM) -rf *.idx
 	$(RM) -rf *.gz
 	$(RM) -rf *.xml
-
-
+	$(RM) uclmTFGesi.pdf

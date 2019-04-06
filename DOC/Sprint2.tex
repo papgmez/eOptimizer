@@ -1,8 +1,8 @@
 En el segundo sprint se describe el procedimiento llevado a cabo para el uso de los estados meteorológicos obtenidos de la API de AEMET~\cite{Aemet}.
 
-Tal y como se comentó en el sprint anterior, la respuesta a la petición \textit{requests} recibida por dicha API consta de estados meteorológicos en formato de cadena de texto. Un ejemplo de respuesta se muestra (simplificado) en el listado 4.3. (\textcopyright AEMET)
+Tal y como se comentó en el sprint anterior, la respuesta a la petición \textit{requests} recibida por dicha API consta de estados meteorológicos en formato de cadena de texto. Un ejemplo de respuesta se muestra (simplificado) en el listado~\ref{lst:APIresponse}. (\textcopyright AEMET)
 
-\begin{lstlisting}[numbers=none,caption={Ejemplo de respuesta de la API - AEMET}]]
+\begin{lstlisting}[numbers=none,caption={Ejemplo de respuesta de la API - AEMET},label={lst:APIresponse}]
 {
  origen: {
 	productor: "Agencia Estatal de Meteorología - AEMET. Gobierno de España",
@@ -41,25 +41,67 @@ Tal y como se comentó en el sprint anterior, la respuesta a la petición \texti
 }
 \end{lstlisting}
 
-Cómo se puede observar, en el campo 'predicción' existe un subcampo 'estadoCielo' (entre otros que se han obviado por no ser de interés en este trabajo) que contiene una lista con los estados meteorológicos. Cada elemento de la lista contiene dos valores: período (hora del día de esa previsión) y descripción (cadena de texto que describe el estado del cielo). Claramente existe un problema, ya que para la determinación de la máxima energía fotovoltaica posible en una hora determinada debe conocerse la potencia nominal posible (potencia que es capaz de suministrar el módulo fotovoltaico), directamente proporcional al estado meteorológico, el cuál es un texto que describe la situación y no un valor numérico que representa los watios que puede dar un módulo en esas condiciones, y a priori no se dispone de una forma directa de relacionarlas. \\
+Cómo se puede observar, en el campo 'predicción' existe un subcampo 'estadoCielo' (entre otros que se han obviado por no ser de interés en este trabajo) que contiene una lista con los estados meteorológicos de la previsión. Cada elemento de la lista contiene dos valores: período (hora del día de esa previsión) y descripción (cadena de texto que describe el estado del cielo). Claramente existe un problema, ya que para la determinación de la máxima energía fotovoltaica posible en una hora t debe conocerse la potencia nominal posible (potencia que es capaz de suministrar el módulo fotovoltaico), directamente proporcional al estado meteorológico, el cuál es un texto que describe la situación y no un valor numérico que representa los watios que puede dar un módulo en esas condiciones, y a priori no se dispone de una forma directa de relacionarlas. \\
 
 Se emplea \textbf{lógica difusa} para poder resolver la problemática mencionada anteriormente.
 \subsection{Lógica difusa}
 La teoría de la lógica difusa proporciona un marco matemático que permite modelar la incertidumbre de los procesos cognitivos humanos para poder ser tratable por un computador. Estos procesos cognitivos hacen referencia a expresiones del tipo:
 \begin{itemize}
-	\item Si no vives \textit{lejos} puedes ir en bicicleta. 
-	\item Si hace \textit{mucho} frío llévate un chaquetón. 
-\end{itemize} 
-Los humanos son capaces de interpretar estos valores rápidamente, aunque no existe un valor cuantitativo que indique la distancia a la que se refiere la palabra \textit{lejos} o cuánto es \textit{mucho} frío. Sin embargo, las máquinas tienen algún que otro problema. Si se intentan trasladar estas reglar a código, aparecen dificultades ya que no se puede procesar numéricamente. Una opción es definir intervalos de valores que comprende cada palabra (por ejemplo, tomando \textit{lejos} como la distancia comprendida entre 5 y 10 kilómetros), pero esto no es preciso ya que para un computador, la distancia de 5,01 kilómetros sería lejos rotundamente, cuando en realidad la interpretación correcta no es así. Con ésto queda a la vista que la lógica convencional no trata de forma eficiente este problema. La solución pasa por emplear un método de razonamiento afín a la lógica difusa. \\
+	\item Si no vives \textit{lejos} puedes ir en bicicleta.
+	\item Si hace \textit{mucho} frío llévate un chaquetón.
+\end{itemize}
+Los humanos son capaces de interpretar estos valores rápidamente. Sin embargo, las máquinas tienen algún que otro problema, debido a que no existe un valor cuantitativo que indique la distancia a la que se refiere la palabra \textit{lejos} o cuánto es \textit{mucho} frío Si se intentan trasladar estas reglar a código, aparecen dificultades ya que no se puede procesar numéricamente. Una opción es definir intervalos de valores que comprende cada palabra (por ejemplo, tomando \textit{lejos} como la distancia comprendida entre 5 y 10 kilómetros), pero esto no es preciso ya que para un computador, la distancia de 5,01 kilómetros sería lejos rotundamente, cuando en realidad la interpretación correcta no es así. Con ésto queda a la vista que la lógica convencional no trata de forma eficiente este problema. La solución pasa por emplear un método de razonamiento afín a la lógica difusa. La lógica difusa~\ref{Morc11} permite representar matemáticamente la \textbf{incertidumbre}, mediante el empleo de herramientas formales.\\
 
-La lógica difusa permite representar matemáticamente la \textbf{incertidumbre}, mediante el empleo de herramientas formales. Según Zadeh~\cite{Zad73}, "\textit{Cuando aumenta la complejidad, los enunciados precisos pierden su significado y los enunciados útiles pierden precisión.}", es decir, \textit{los árboles no te dejan ver el bosque}, pues prácticamente cualquier problema del mundo puede resolverse partiendo de unas variables de entrada y buscando obtener como objetivo un conjunto de variables de salida. La lógica difusa establece esa relación entre variables de forma correcta.
+Según Zadeh~\cite{Zad73}, "\textit{Cuando aumenta la complejidad, los enunciados precisos pierden su significado y los enunciados útiles pierden precisión.}", es decir, \textit{los árboles no te dejan ver el bosque}, pues prácticamente cualquier problema del mundo puede resolverse partiendo de unas variables de entrada y buscando obtener como objetivo un conjunto de variables de salida. La lógica difusa establece esta relación entre variables de forma correcta.
 
 \subsection{\textit{Fuzzy Sets}}
+En la teoría de conjuntos de la lógica clásica, el grado de pertenencia puede tomar solo los valores 0 y 1, que representan que el elemento pertenece o no pertenece al conjunto. En la lógica difusa existe el concepto de \textbf{conjunto difuso}~\cite{Zad65}, establecido por Zadeh. Para trabajar con valores difusos se realiza un proceso denominado \textit{fuzzificación} que da resultados difusos. Estos resultados se someten a un proceso de \textit{defuzzificación} para transformarse en valores discretos (llamados \textit{crisp}), que tendrán un \textbf{grado de pertenecia} a los conjuntos difusos el cuál será un valor en el intervalo [0, 1], y representa cuánto pertenece al conjunto.\\
 
+Así pues, hay un claro ejemplo de conjuntos difusos con los estados meteorológicos. En la Figura~\ref{fig:estadoCielo} la API de AEMET~\cite{Aemet} define los siguientes estados meteorológicos posibles (imagen obtenida de \textcopyright AEMET).
+\begin{figure}[!h]
+        \centering
+        \includegraphics[width=12cm]{figs/estadoCieloAEMET.png}
+        \caption{Estados del cielo posibles AEMET}
+        \label{fig:estadoCielo}
+\end{figure}
+Como se puede observar existe un gran número de estados meteorológicos posibles, pero no todos deben ser conjuntos difusos. Esto es porque en un gran número de ellos un módulo fotovoltaico no genera energía, debido a que son estados con tiempo muy contraproducente para la energía solar fotovoltaica. En estos estados el valor máximo a generar por los módulos será de 0 watios.\\Los estados favorables (donde un módulo genera una potencia mayor a 0 watios) serán tomados como conjuntos difusos. En la tabla~\ref{tab:estadosFavorables} se muestran cuáles son estos estados.
 
+Por ejemplo, no se puede determinar cuántos watios se producen como máximo con un tiempo \textit{Despejado} o \textit{Cubierto con nubes altas}, pero podemos mostrar los conjuntos difusos y gráficamente comprobar su distribución, para obtener un valor discreto de cada conjunto difuso, denominado el \textbf{centroide} o centro de gravedad del conjunto difuso. Este proceso es conocido como razonamiento aproximado a partir de inferencia difusa. La inferencia difusa permite obtener un valor de salida para un valor de entrada empleando la teoría de conjuntos difusos.\\Un ejemplo de cuestión a resolver es: \textit{¿Qué potencia pico se puede obtener de un módulo fotovoltaico si hay intervalos nubosos?}. Cómo hemos comentado anteriormente, la respuesta sería el centroide del conjunto difuso \textit{Intervalos Nubosos}.\\El centroide es el punto que divide el conjunto difuso en dos partes de igual masa. En la ecuación~\ref{eq:centroide} se muestra el procedimiento para calcularlo, realizando el sumatorio de las potencias tomadas por su grado de pertenencia al conjunto dividido entre el sumatorio de dichos grados de pertenencia. En la tabla~\ref{tab:estadosFavorables} se incluye el valor del centroide de cada conjunto difuso.\\
+\begin{equation}
+        \label{eq:centroide}
+        Centroide = \frac{\sum_{x=i}^{n} x \mu_{A}(x)}{\sum_{x=i}^{n} \mu_{A}(x)}
+\end{equation}
+
+Para representar los conjuntos difusos, se parte del hipotético caso en el que cada conjunto difuso desciende de manera ligeramente mas inclinada que asciende, representando el factor de adaptación de un módulo fotovoltaico a un nuevo estado meteorológico. En la figura~\ref{fig:fuzzySets} se puede observar el gráfico de los conjuntos difusos definidos en la tabla~\ref{tab:estadosFavorables}. En el eje horizontal se encuentra la potencia máxima posible del módulo fotovoltaico en watios y en el eje vertical el grado de pertenencia a los conjuntos difusos [0,1]. Si avanzamos en el eje horizontal, vemos que el estado meteorológico es cambiante hacia estados favorables, y viceversa, ya que esto es directamente proporcional a la máxima potencia posible del módulo.\\
+
+Cada conjunto difuso es una función PI o \textbf{trapezoidal}, ya que no existe un único punto donde el grado de pertenencia al conjunto es 1, si no que se mantiene ese valor de pertenencia hasta que el módulo comienza a experimentar un cambio en el estado del cielo y se debe adaptar a dicho nuevo estado.
 
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width=17cm]{figs/Fuzzy_diagram.pdf}
-	\caption{\textit{Fuzzy sets de los estados meteorológicos}}
+	\caption{\textit{Fuzzy sets} de los estados meteorológicos}
+        \label{fig:fuzzySets}
 \end{figure}
+
+Tal y cómo se comentó en el sprint anterior, se utilizan módulos fotovoltaicos con una potencia nominal máxima de 50 watios, que solo podría ser alcanzada en el estado meteorológico óptimo (\textit{Despejado}), y en función de este dato, se toman los valores para obtener los centroides.
+\begin{table}[hp]
+        \centering
+        \begin{tabular}{|c|l|c|}
+                \hline
+                \textbf{Variable} & \textbf{Conjunto difuso} & \textbf{Centroide} \\ \hline
+                e10 & Despejado & 48 W \\ \hline
+                e9 & Poco nuboso & 43.16 W \\ \hline
+                e8 & Nubes altas & 38.16 W \\ \hline
+                e7 & Intervalos nubosos & 33.16 W \\ \hline
+                e6 & Intervalos nubosos con lluvia escasa & 28.16 W \\ \hline
+                e5 & Intervalos nubosos con lluvia & 23.16 W \\ \hline
+                e4 & Nuboso & 18.16 W \\ \hline
+                e3 & Nuboso con lluvia escasa & 13.16 W \\ \hline
+                e2 & Cubierto & 8.16 W \\ \hline
+                e1 & Cubierto con lluvia escasa & 2.66 W\\ \hline
+        \end{tabular}
+        \caption{Estados meteorológicos favorables}
+        \label{tab:estadosFavorables}
+\end{table}
+
+Estos valores se almacenarán en un diccionario, disponible en el fichero de constantes del proyecto (módulo \textit{project\_constants}). Dicho diccionario será usado para realizar el parseo de los estados meteorológicos obtenidos de la API AEMET (cadenas de texto) a valores cuantitativos (centroide del conjunto difuso), y poder ser usables por el sistema para determinar la \textbf{máxima energía fotovoltaica} que se puede obtener en un momento determinado.
