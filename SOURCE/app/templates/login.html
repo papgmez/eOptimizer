@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>e-Optimizer</title>
+  </head>
+  <body>
+    <h1>Welcome to e-Optimizer</h1>
+    <form action="{{ url_for('do_login')}}" method=post>
+	  <fieldset>
+	    <legend>Log In</legend>
+	    <p>
+	      <label for="input">email</label>
+	      <input type="text" name="username" placeholder="name@email.com" />
+	    </p>
+	    <p>
+	      <label for="input">password</label>
+	      <input type="password" name="password" />
+	    </p>
+	    {% if login_error %}
+	    <p>
+	      {{ login_error }}
+	    </p>
+	    {% endif %}
+	      <input class="btn btn-primary" type="submit" value="submit">
+	    </p>
+	  </fieldset>
+    </form>
+
+
+    <script src="static/js/jquery-3.3.1.slim.min.js"></script>
+    <script src="static/popper.min.js"></script>
+    <script src="static/js/bootstrap.min.js"></script>
+  </body>
+</html>

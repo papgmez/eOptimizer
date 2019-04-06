@@ -21,13 +21,15 @@ Base.metadata.create_all(bind=db.engine)
 # Bootstrap(app)
 
 currentUser = None
+login_attempts = 0
 
 @app.route('/')
 def index():
    if not session.get('logged_in'):
-      return redirect(url_for('do_login'))
+      return render_template('login.html')
    else:
-      return "Welcome to my TFG"      
+      #return render_template('index.html')
+      return "Welcome to my TFG"
 
 @app.route('/signup', methods=['POST'])
 def sign_up():
@@ -60,7 +62,7 @@ def sign_up():
       db.session.commit()
    except IntegrityError:
       # Error de insercion de home
-   
+
    currentUser = user
    session['logged_in'] = True
    '''
@@ -70,12 +72,13 @@ def sign_up():
 @app.route('/login', methods=['POST'])
 def do_login():
    global currentUser
+   global login_attempts
 
-   input_email = request.get_json().get('email')
-   input_pass = request.get_json().get('password')
-   #input_email = request.form['username']
-   #input_pass = request.form['password']
+   if login_attempts >= 3:
+      return render_template('login.html', login_error='Your session is blocked for max login attempts')
 
+   input_email = request.form['username']
+   input_pass = request.form['password']
    user = db.session.query(Users).filter_by(email=input_email).first()
 
    if user is not None:
@@ -83,13 +86,15 @@ def do_login():
          currentUser = user
          session['logged_in'] = True
          return redirect(url_for('index'))
-   '''
-   else:
+      else:
          # Password fails
+         login_attempts += 1
+         return render_template('login.html', login_error='Icorrect password. Please try again')
    else:
       # User fails
-   '''
-   
+      login_attempts += 1
+      return render_template('login.html', login_error="User {} does not exists".format(input_email))
+
 @app.route('/simulation', methods=['POST'])
 def simulation():
    global currentUser
@@ -110,7 +115,7 @@ def do_logout():
 
    currentUser = None
    session['logged_in'] = False
-   
+
    return redirect(url_for('do_login'))
 
 @app.errorhandler(404)
