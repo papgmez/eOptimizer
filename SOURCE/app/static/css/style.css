@@ -1,12 +1,13 @@
 
 body {
     font-family: 'Roboto', sans-serif;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 300;
     color: #888;
     line-height: 30px;
     text-align: center;
-}
+    background-color: #3d79ce;
+   }
 
 strong { font-weight: 500; }
 
@@ -20,7 +21,7 @@ h1, h2 {
 	margin-top: 10px;
 	font-size: 38px;
     font-weight: 100;
-    color: #555;
+    color: #FFFFFF;
     line-height: 50px;
 }
 
@@ -98,8 +99,6 @@ img { max-width: 100%; }
 	margin: 20px 0 10px 0;
 }
 
-.top-content .description p { opacity: 0.8; }
-
 .top-content .description a {
 	color: #fff;
 }
@@ -113,7 +112,7 @@ img { max-width: 100%; }
 .form-top {
 	overflow: hidden;
 	padding: 0 25px 15px 25px;
-	background: #444;
+	background: #737;
 	background: rgba(0, 0, 0, 0.35);
 	-moz-border-radius: 4px 4px 0 0; -webkit-border-radius: 4px 4px 0 0; border-radius: 4px 4px 0 0;
 	text-align: left;
@@ -136,12 +135,12 @@ img { max-width: 100%; }
 	color: #fff;
 	line-height: 100px;
 	text-align: right;
-	opacity: 0.3;
+	opacity: 0.8;
 }
 
 .form-bottom {
 	padding: 25px 25px 30px 25px;
-	background: #444;
+	background: #808;
 	background: rgba(0, 0, 0, 0.3);
 	-moz-border-radius: 0 0 4px 4px; -webkit-border-radius: 0 0 4px 4px; border-radius: 0 0 4px 4px;
 	text-align: left;
@@ -157,18 +156,6 @@ img { max-width: 100%; }
 
 .form-bottom form .input-error {
 	border-color: #19b9e7;
-}
-
-.social-login {
-	margin-top: 35px;
-}
-
-.social-login h3 {
-	color: #fff;
-}
-
-.social-login-buttons {
-	margin-top: 25px;
 }
 
 .middle-border {
@@ -201,7 +188,20 @@ footer a {
 }
 footer a:hover, footer a:focus { color: #fff; border-bottom: 1px dotted #fff; }
 
-
+.column_footer_left {
+    float: left;
+    width: 33.33%;
+    text-align: left;
+}
+.column_footer {
+    float: left;
+    width: 33.33%;
+}
+.column_footer_right {
+    float: left;
+    width: 33.33%;
+    text-align: right;
+}
 /***** Media queries *****/
 
 @media (min-width: 992px) and (max-width: 1199px) {}

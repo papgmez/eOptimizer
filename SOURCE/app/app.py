@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8; mode: python -*-
 
-# from pdb import set_trace as breakpoint
+from pdb import set_trace as breakpoint
 
 from flask import Flask, make_response, abort, jsonify, request, redirect, url_for, render_template, session
 from flask_bootstrap import Bootstrap
@@ -26,10 +26,9 @@ login_attempts = 0
 @app.route('/')
 def index():
    if not session.get('logged_in'):
-      return render_template('login.html')
+      return render_template('login.html', flag='login')
    else:
-      #return render_template('index.html')
-      return "Welcome to my TFG"
+      return render_template('home.html')
 
 @app.route('/signup', methods=['POST'])
 def sign_up():
@@ -46,25 +45,33 @@ def sign_up():
       db.session.commit()
    except IntegrityError:
       # User Error
-      return render_template('login.html', signup_error='An Error has occurred')
-   # ---- creating user home ----
-   home = Homes()
-   home.pv_modules = request.form['pv_modules']
-   home.city_code = request.form['city_code']
-   home.amortization_years_pv = request.form['amortization_years_pv']
-   home.amortization_years_bat = request.form['amortization_years_bt']
-   home.userId = user.id
+      return render_template('login.html', flag='signup', error='Ha ocurrido un error')
+   return redirect(url_for('index'))
 
-   db.session.add(home)
-   '''
-   try:
+@app.route('/add-home', methods=['POST'])
+def add_home():
+   global currentUser
+
+   if currentUser is not None:
+      # ---- creating user home ----
+      home = Homes()
+      home.pv_modules = request.form['pv_modules']
+      home.city_code = request.form['city_code']
+      home.amortization_years_pv = request.form['amortization_years_pv']
+      home.amortization_years_bat = request.form['amortization_years_bt']
+      home.userId = currentUser.id
+
+      db.session.add(home)
+      '''
+      try:
       db.session.commit()
-   except IntegrityError:
+      except IntegrityError:
       # Error de insercion de home
+      return render_template('home.html', flag='create home', error='Ha ocurrido un error')
 
-   currentUser = user
-   session['logged_in'] = True
-   '''
+      currentUser = user
+      session['logged_in'] = True
+      '''
    return redirect(url_for('index'))
 
 
@@ -74,7 +81,7 @@ def do_login():
    global login_attempts
 
    if login_attempts >= 3:
-      return render_template('login.html', login_error='Your session is blocked for max login attempts')
+      return render_template('login.html', flag='login', error='Has superado el número de intentos de acceso.')
 
    input_email = request.form['form-username']
    input_pass = request.form['form-password']
@@ -88,11 +95,10 @@ def do_login():
       else:
          # Password fails
          login_attempts += 1
-         return render_template('login.html', login_error='Incorrect password. Please try again')
+         return render_template('login.html', flag='login', error='Contraseña incorrecta. Inténtalo de nuevo')
    else:
       # User fails
-      login_attempts += 1
-      return render_template('login.html', login_error="User {} does not exists".format(input_email))
+      return render_template('login.html', flag='login', error="El usuario {} no existe".format(input_email))
 
 @app.route('/simulation', methods=['POST'])
 def simulation():
@@ -117,9 +123,13 @@ def do_logout():
 
    return redirect(url_for('do_login'))
 
+@app.route('/new_user')
+def change_form():
+   return render_template('login.html', flag='signup')
+
 @app.errorhandler(404)
 def not_found(error):
-    return make_response(jsonify({'error':'Not found'}), 404)
+    return render_template('not_found.html')
 
 
 if __name__=="__main__":
