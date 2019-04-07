@@ -36,18 +36,17 @@ def sign_up():
    global currentUser
    # ---- creating user ----
    user = Users()
-   user.name = request.form['name']
-   user.lastname = request.form['lastname']
-   user.email = request.form['email']
-   user.set_password(request.form['password'])
+   user.name = request.form['form-first-name']
+   user.lastname = request.form['form-last-name']
+   user.email = request.form['form-email']
+   user.set_password(request.form['form-newpassword'])
 
    db.session.add(user)
    try:
       db.session.commit()
    except IntegrityError:
-      # Error de insercion de user
-      return make_response(jsonify({'error': 'error'}),400)
-
+      # User Error
+      return render_template('login.html', signup_error='An Error has occurred')
    # ---- creating user home ----
    home = Homes()
    home.pv_modules = request.form['pv_modules']
@@ -77,8 +76,8 @@ def do_login():
    if login_attempts >= 3:
       return render_template('login.html', login_error='Your session is blocked for max login attempts')
 
-   input_email = request.form['username']
-   input_pass = request.form['password']
+   input_email = request.form['form-username']
+   input_pass = request.form['form-password']
    user = db.session.query(Users).filter_by(email=input_email).first()
 
    if user is not None:
@@ -89,7 +88,7 @@ def do_login():
       else:
          # Password fails
          login_attempts += 1
-         return render_template('login.html', login_error='Icorrect password. Please try again')
+         return render_template('login.html', login_error='Incorrect password. Please try again')
    else:
       # User fails
       login_attempts += 1
