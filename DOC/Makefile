@@ -20,4 +20,3 @@ clean:
 	$(RM) -rf *.idx
 	$(RM) -rf *.gz
 	$(RM) -rf *.xml
-	$(RM) uclmTFGesi.pdf

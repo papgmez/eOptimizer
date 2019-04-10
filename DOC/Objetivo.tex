@@ -7,12 +7,6 @@ El objetivo principal a abordar será la construcción de un sistema inteligente
 
 El objetivo del sistema es ajustar en cada momento la cantidad de energía obtenida de cada elemento de los mencionados anteriormente con el objetivo de minimizar el gasto económico dedicado en el hogar.
 Este objetivo puede ser abordado como un problema de satisfacción de restricciones (PSR).
-Un problema de satisfacción de restricciones~\cite{Russ06} está caracterizado por:
-\begin{itemize}
-	\item Un conjunto de variables, donde cada variable dispone de un dominio de valores que puede tomar.
-	\item Un conjunto de restricciones, que permite conocer las posibles combinaciones de las variables.
-	\item La solución al PSR será la asignación de valores a las variables de forma que se satisfacen las restricciones y se alcanza el objetivo.
-\end{itemize} 
 Cómo se puede observar en la Figura 2, la funcionalidad del sistema sería la de modelar cada una de las salidas en función del valor de cada una de las entradas, que representan el conjunto de variables del problema de satisfacción de restricciones, el cuál se definirá mas adelante.
 
 \begin{figure}[!h]
@@ -39,14 +33,14 @@ Como fuentes de consumo (salidas) existen:
 A lo largo del trabajo habrá que satisfacer una serie de subobjetivos necesarios para lograr el objetivo principal tales como:
 \begin{enumerate}
 	\item \textbf{Identificación y adquisición de los datos y variables que definen el sistema:}
-	Estudio de las entradas del sistema y el grado de importancia que tiene cada una en cada situación. La información meteorológica será obtenida utilizando una API oficial de AEMET~\cite{Aemet}, y los datos del mercado eléctrico serán obtenidos utilizando la API oficial e-sios de Red Eléctrica de España S.A.~\cite{Esios} 
-	
+	Estudio de las entradas del sistema y el grado de importancia que tiene cada una en cada situación. La información meteorológica será obtenida utilizando una API oficial de AEMET~\cite{Aemet}, y los datos del mercado eléctrico serán obtenidos utilizando la API oficial e-sios de Red Eléctrica de España S.A.~\cite{Esios}
+
 	\item \textbf{Establecer las relaciones y restricciones propias del consumo eléctrico:}
 	Las variables obtenidas en el objetivo anterior estarán sujetas a unas restricciones que nos permitirán conocer las combinaciones posibles de valores, teniendo en cuenta que toda la energía generada debe ser consumida de alguna forma, ya sea por medio de venta a la red, o cargada en baterías de almacenaje en caso de superar la energía demandada por el consumo que se realiza.
-	
+
 	\item \textbf{Añadir una IA para la generación optimizada de energía y dar lugar a una planificación:}
 	Una vez obtenidos los datos y variables del problema y conociendo el grado de implicación de los mismos, se creará un modelo del sistema que dará una planificación temporal de 24 horas. Esto se podrá llevar a cabo incorporando inteligencia artificial.
-	
+
 	\item \textbf{Simular la planificación:}
 	Se llevará a cabo la simulación de la planificación realizando un seguimiento y una comprobación de la desviación que se puede haber producido con respecto a los datos reales. A partir de lo deducido en la simulación anterior, se tomará la decisión de ajustar o no el modelo para futuras predicciones.
 \end{enumerate}
@@ -59,7 +53,7 @@ Una de las tareas más complicadas al proponer un TFG es plantear su \textsf{Obj
 
 \begin{enumerate}
 	\item La \emph{finalidad específica} del TFG que se plantea para resolver una problemática concreta aplicando los métodos y herramientas adquiridos durante la formación académica. Por ejemplo, \emph{<<Desarrollo de una aplicación software para gestionar reservas hoteleras \emph{on-line}>>}.
-	
+
 	\item El \emph{propósito académico} que la realización de un TFG tiene en la formación de un graduado. Por ejemplo, la \emph{adquisición de competencias específicas de la especialización} cursada.
 \end{enumerate}
 
@@ -72,7 +66,7 @@ Un objetivo bien planteado para el TFG debe estar determinado en términos del \
 	\item \emph{Validación de una hipótesis} de partida (propio de los trabajos científicos y menos habitual en el caso de los TFG).
 \end{itemize}
 
-Estas categorías no son excluyentes, de modo que es posible plantear un trabajo cuyo objetivo sea el diseño y desarrollo de un <<artefacto>> y éste implique un estudio previo o la validación de alguna hipótesis para guiar el proceso. En este caso y cuando el objetivo sea lo suficientemente amplio puede ser conveniente su descomposición en elementos más simples hablando de \emph{subobjetivos}. Por ejemplo, un programa informático puede descomponerse en módulos o requerir un estudio previo para plantear un nuevo algoritmo que será preciso validar. 
+Estas categorías no son excluyentes, de modo que es posible plantear un trabajo cuyo objetivo sea el diseño y desarrollo de un <<artefacto>> y éste implique un estudio previo o la validación de alguna hipótesis para guiar el proceso. En este caso y cuando el objetivo sea lo suficientemente amplio puede ser conveniente su descomposición en elementos más simples hablando de \emph{subobjetivos}. Por ejemplo, un programa informático puede descomponerse en módulos o requerir un estudio previo para plantear un nuevo algoritmo que será preciso validar.
 
 La descomposición de un objetivo principal en subobjetivos u objetivos secundarios debería ser natural (no forzada), bien justificada y sólo pertinente en los TFG de gran amplitud.
 
@@ -83,4 +77,3 @@ Al redactar el objetivo de un TFG se debe evitar confundir los medios con el fin
 %El motivo de tal confusión deriva de <<mezclar>> la definición de la finalidad específica del TFG con el propósito académico del mismo.
 
 La categoría del objetivo planteado justifica modificaciones en la organización genérica de la memoria del TFG. Así en el caso de estudios y validación de hipótesis el apartado de resultados y conclusiones debería incluir los resultados de experimentación y los comentarios de cómo dichos resultados validan o refutan la hipótesis planteada.
-
