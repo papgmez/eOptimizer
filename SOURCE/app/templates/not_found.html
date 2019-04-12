@@ -1,26 +1,19 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="shortcut icon" type="image/png" href="{{ url_for('static', filename='img/favicon.png') }}"/>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/form-elements.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-
-    <title>e-Optimizer</title>
-  </head>
-  <body>
-    <div class="top-content">
-      <div class="row">
-        <div class="col-12">
-	  <div class="alert alert-danger" role="alert">
-	    Ha ocurrido un error no reconocido. Puede volver al <a href="{{ url_for('index') }}" class="alert-link">Dashboard</a>.
-	  </div>
-	</div>
+{% extends "base.html" %}
+{% block body %}
+<div class="top-content">
+  <div class="row">
+    <div class="col-12">
+      <div class="alert alert-danger" role="alert">
+	An unknown error has occurred. You can return to <a href="{{ url_for('index') }}" class="alert-link">Dashboard</a>.
       </div>
-  </body>
-</html>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <br>
+      <img src="static/img/not_found.png" alt="">
+    </div>
+  </div>
+</div>
+<br>
+{% endblock %}

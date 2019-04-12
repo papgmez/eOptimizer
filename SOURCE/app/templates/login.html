@@ -1,158 +1,102 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="shortcut icon" type="image/png" href="{{ url_for('static', filename='img/favicon.png') }}"/>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/form-elements.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-
-    <title>e-Optimizer</title>
-  </head>
-  <body>
-    <div class="top-content">
-
-      <div class="inner-bg">
-        <div class="container">
-          <div class="row">
-            <div class="col-12">
-	      <h1>Bienvenido a <strong>e-Optimizer</strong></h1>
-	    </div>
-	  </div>
-	  <div class="row">
-	    <div class="col-sm-1"></div>
-	    <div class="col-sm-1"></div>
-	    <div class="col-sm-1"></div>
-	    {% if flag == 'login' %}
-	    <div class="col-sm-6">
-	      <div class="form-box">
-	        <div class="form-top">
-	          <div class="form-top-left">
-	            <h3>Acceso</h3>
-	            <p>Introduzca usuario y contraseña</p>
-		  </div>
-		  <div class="form-top-right">
-	            <img src="static/img/logo_white.png" style="width: 50%; height: 50%" alt=""></a>
-	          </div>
-		</div>
-	      <div class="form-bottom">
-		<form action="{{ url_for('do_login')}}" method=post>
-		  <div class="form-group">
-		    <label class="sr-only" for="form-username">email</label>
-		    <input type="text" name="form-username" placeholder="user@email.com" class="form-username form-control" id="form-username">
-		  </div>
-		  <div class="form-group">
-		    <label class="sr-only" for="form-password">Password</label>
-		    <input type="password" name="form-password" placeholder="password" class="form-password form-control" id="form-password">
-		  </div>
-		  <div class="form-group">
-		    <p style="color:#FFFFFF">
-		      ¿No eres usuario? <a href="{{ url_for('change_form') }}" class="alert-link" style="color:#FFFFFF">Crea una cuenta</a>.
-		    </p>
-		  </div>
-		  {% if error %}
-		  <div class="alert alert-danger" role="alert">
-		      {{ error }}
-		  </div>
-		  {% endif %}
-		  <input class="btn btn-primary" type="submit" value="Sign in">
-		</form>
-	      </div>
-	      </div>
-	    </div>
-	    {% elif flag == 'signup' %}
-	    <!--<div class="col-sm-1 middle-border"></div>
-            <div class="col-sm-1"></div> -->
-	    <div class="col-sm-6">
-              <div class="form-box">
-		<div class="form-top">
-		  <div class="form-top-left">
-              	    <h3>Crear una cuenta</h3>
-		    <p>Rellene los datos de usuario</p>
-		  </div>
-		  <div class="form-top-right">
-		    <img src="static/img/logo_white.png" style="width: 50%; height: 50%" alt=""></a>
-		  </div>
-		</div>
-		<div class="form-bottom">
-		  <form action="{{ url_for('sign_up')}}" method=post>
-		    <div class="form-group">
-		      <label class="sr-only" for="form-first-name">First name</label>
-		      <input type="text" name="form-first-name" placeholder="First name..." class="form-first-name form-control" id="form-first-name">
-		    </div>
-		    <div class="form-group">
-		      <label class="sr-only" for="form-last-name">Last name</label>
-			<input type="text" name="form-last-name" placeholder="Last name..." class="form-last-name form-control" id="form-last-name">
-		    </div>
-		    <div class="form-group">
-		      <label class="sr-only" for="form-email">Email</label>
-		      <input type="text" name="form-email" placeholder="user@email.com" class="form-email form-control" id="form-email">
-		    </div>
-		    <div class="form-group">
-		      <label class="sr-only" for="form-newpassword">Password</label>
-		      <input type="password" name="form-newpassword" placeholder="password" class="form-newpassword form-control" id="form-newpassword">
-		    </div>
-		    {% if error %}
-		     <div class="alert alert-danger" role="alert">
-		      {{ error }}
-		    </div>
-		    {% endif %}
-		  <input class="btn btn-primary" type="submit" value="Sign up">
-		  </form>
-		</div>
-	      </div>
-	    </div>
-	    {% endif %}
-	    <div class="col-sm-1"></div>
-	    <div class="col-sm-1"></div>
-	    <div class="col-sm-1"></div>
-	  </div>
+{% extends "base.html" %}
+{% block body %}
+<div class="top-content">
+  <div class="inner-bg">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+	  <h1>Welcome to <strong>e-Optimizer</strong></h1>
 	</div>
       </div>
-    </div>
-    <footer>
-      <div class="container">
-        <div class="row">
-          <div class="col-12">
-            <div class="footer-border"></div>
-            <div class="column_footer_left">
-	      <br/ >
-	      <br/ >Trabajo Fin de Grado<br/ ><br>
-		    <b>Sistema Inteligente para<br/ >
-			Gestión y Optimización de Energía<br/ ></b>
+      <div class="row">
+	<div class="col-sm-1"></div>
+	<div class="col-sm-1"></div>
+	<div class="col-sm-1"></div>
+	{% if flag == 'login' %}
+	<div class="col-sm-6">
+	  <div class="form-box">
+	    <div class="form-top">
+	      <div class="form-top-left">
+	        <h3>Sign in</h3>
+	        <p>Enter username and password</p>
+	      </div>
+	      <div class="form-top-right">
+	        <img src="static/img/logo_white.png" style="width: 50%; height: 50%" alt="">
+	      </div>
 	    </div>
-	    <div class="column_footer">
-	      <br/ >
-		<p>
-		  <a href="https://github.com/pablopalomino96/TFG_PalominoGomez_Pablo.git"><img src="static/img/GitHub-Mark-Light-32px.png" alt=""></a>
-		  <br>
-		</p>
-		<text font-family="Roboto"><b>@e-Optimizer 2019</b></text><br/ >
-
-		  Pablo Palomino Gómez<br />
-		  Pablo.Palomino1@alu.uclm.es
+	    <div class="form-bottom">
+	      <form action="{{ url_for('do_login')}}" method=post>
+		<div class="form-group">
+		  <label class="sr-only" for="form-username">email</label>
+		  <input type="text" name="form-username" placeholder="user@email.com" class="form-username form-control" id="form-username">
+		</div>
+		<div class="form-group">
+		  <label class="sr-only" for="form-password">Password</label>
+		  <input type="password" name="form-password" placeholder="password" class="form-password form-control" id="form-password">
+		</div>
+		<div class="form-group">
+		  <p style="color:#FFFFFF">
+		    Not a user yet? <a href="{{ url_for('change_form') }}" class="alert-link" style="color:#FFFFFF">Sign up</a>.
+		  </p>
+		</div>
+		{% if error %}
+		<div class="alert alert-danger" role="alert">
+		  {{ error }}
+		</div>
+		{% endif %}
+		<input class="btn btn-primary" type="submit" value="Sign in">
+	      </form>
 	    </div>
-	    <div class="column_footer_right">
-	      <p>
-		<br>
-		<a href="http://www.uclm.es"><img src="static/img/logoUCLM.png" alt=""></a>
-		<br><br>
-		<strong>Escuela Superior de Informática</strong><br />
-		Paseo de la Universidad, 4<br />
-		13071,
-		Ciudad Real<br />
-	      </p>
+	  </div>
+	</div>
+	{% elif flag == 'signup' %}
+	<!--<div class="col-sm-1 middle-border"></div>
+	    <div class="col-sm-1"></div> -->
+	<div class="col-sm-6">
+	  <div class="form-box">
+	    <div class="form-top">
+	      <div class="form-top-left">
+		<h3>Create an account</h3>
+		<p>Fill in the user data</p>
+	      </div>
+	      <div class="form-top-right">
+		<img src="static/img/logo_white.png" style="width: 50%; height: 50%" alt="">
+	      </div>
 	    </div>
-          </div>
-        </div>
+	    <div class="form-bottom">
+	      <form action="{{ url_for('sign_up')}}" method=post>
+		<div class="form-group">
+		  <label class="sr-only" for="form-first-name">First name</label>
+		  <input type="text" name="form-first-name" placeholder="First name" class="form-first-name form-control" id="form-first-name">
+		</div>
+		<div class="form-group">
+		  <label class="sr-only" for="form-last-name">Last name</label>
+		  <input type="text" name="form-last-name" placeholder="Last name" class="form-last-name form-control" id="form-last-name">
+		</div>
+		<div class="form-group">
+		  <label class="sr-only" for="form-email">Email</label>
+		  <input type="text" name="form-email" placeholder="user@email.com" class="form-email form-control" id="form-email">
+		</div>
+		<div class="form-group">
+		  <label class="sr-only" for="form-newpassword">Password</label>
+		  <input type="password" name="form-newpassword" placeholder="Password" class="form-newpassword form-control" id="form-newpassword">
+		</div>
+		{% if error %}
+		<div class="alert alert-danger" role="alert">
+		  {{ error }}
+		</div>
+		{% endif %}
+		<input class="btn btn-primary" type="submit" value="Sign up">
+	      </form>
+	    </div>
+	  </div>
+	</div>
+	{% endif %}
+	<div class="col-sm-1"></div>
+	<div class="col-sm-1"></div>
+	<div class="col-sm-1"></div>
       </div>
-    </footer>
-    <script src="static/js/jquery-3.3.1.slim.min.js"></script>
-    <script src="static/popper.min.js"></script>
-    <script src="static/js/bootstrap.min.js"></script>
-  </body>
-</html>
+    </div>
+  </div>
+</div>
+{% endblock %}
