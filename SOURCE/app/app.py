@@ -2,14 +2,17 @@
 # -*- coding: utf-8; mode: python -*-
 
 from pdb import set_trace as breakpoint
+from flask import jsonify
 
-from flask import Flask, make_response, abort, jsonify, request, redirect, url_for, render_template, session
-from flask_bootstrap import Bootstrap
+from flask import Flask, make_response, abort, request, redirect, url_for, render_template, session
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.exc import IntegrityError
+
 from models import Base, Users, Homes
 from config import project_constants as const, prod_config
 from simulation import Simulation
+import home_consumption
+
 import datetime as dt
 import json
 import os
@@ -18,17 +21,22 @@ app = Flask(__name__)
 app.config.from_object(prod_config)
 db = SQLAlchemy(app)
 Base.metadata.create_all(bind=db.engine)
-# Bootstrap(app)
 
 currentUser = None
+currentHome = None
 login_attempts = 0
 
 @app.route('/')
 def index():
-   if not session.get('logged_in'):
+   global currentUser
+   global currentHome
+
+   if currentUser is None or not session.get('logged_in'):
       return render_template('login.html', flag='login')
+   elif currentHome is None:
+      return render_template('new_home.html')
    else:
-      return render_template('home.html')
+      return render_template('dashboard.html', user=currentUser, home=currentHome)
 
 @app.route('/signup', methods=['POST'])
 def sign_up():
@@ -39,45 +47,47 @@ def sign_up():
    user.lastname = request.form['form-last-name']
    user.email = request.form['form-email']
    user.set_password(request.form['form-newpassword'])
-
    db.session.add(user)
+
    try:
       db.session.commit()
    except IntegrityError:
       # User Error
-      return render_template('login.html', flag='signup', error='Ha ocurrido un error')
-   return redirect(url_for('index'))
+      return render_template('login.html', flag='signup', error='An error has occurred')
+
+   currentUser = user
+   session['logged_in'] = True
+
+   return render_template('new_home.html', user=user.email)
 
 @app.route('/add-home', methods=['POST'])
 def add_home():
    global currentUser
+   global currentHome
 
    if currentUser is not None:
       # ---- creating user home ----
       home = Homes()
-      home.pv_modules = request.form['pv_modules']
-      home.city_code = request.form['city_code']
-      home.amortization_years_pv = request.form['amortization_years_pv']
-      home.amortization_years_bat = request.form['amortization_years_bt']
-      home.userId = currentUser.id
+      home.pv_modules = request.form['form-pvmodules']
+      home.city_code = str(request.form['form-city_code'])
+      home.amortization_years_pv = request.form['form-amortization_years_pv']
+      home.amortization_years_bat = request.form['form-amortization_years_bt']
+      home.user = currentUser
 
       db.session.add(home)
-      '''
       try:
-      db.session.commit()
+         db.session.commit()
       except IntegrityError:
       # Error de insercion de home
-      return render_template('home.html', flag='create home', error='Ha ocurrido un error')
-
-      currentUser = user
-      session['logged_in'] = True
-      '''
+         return render_template('new_home.html', error='Ha ocurrido un error')
+      currentUser = home.user
+      currentHome = home
    return redirect(url_for('index'))
-
 
 @app.route('/login', methods=['POST'])
 def do_login():
    global currentUser
+   global currentHome
    global login_attempts
 
    if login_attempts >= 3:
@@ -90,6 +100,7 @@ def do_login():
    if user is not None:
       if user.check_password(input_pass):
          currentUser = user
+         currentHome = user.home
          session['logged_in'] = True
          return redirect(url_for('index'))
       else:
@@ -103,11 +114,18 @@ def do_login():
 @app.route('/simulation', methods=['POST'])
 def simulation():
    global currentUser
+   global currentHome
 
-   if currentUser is not None:
-      # Recoger date y consumo
-      current_sim = Simulation(current_user.home, const.C, dt.datetime(2019, 3, 11, 0, 0, 0))
+   if currentUser is not None and currentHome is not None:
+      simulation_date = request.form['form-start-date']
+      consumption_file = request.form['consumption-file']
+      #breakpoint()
+      start_date = dt.datetime.strptime(simulation_date, '%Y-%m-%d')
+      consumption = home_consumption.read_from_file(consumption_file)
+
+      current_sim = Simulation(currentHome, consumption, start_date)
       data = current_sim.optimize()
+
       result = json.loads(data)
 
       return make_response(jsonify(result), 200)
@@ -117,11 +135,15 @@ def simulation():
 @app.route('/logout')
 def do_logout():
    global currentUser
+   global currentHome
+   global login_attempts
 
    currentUser = None
+   currentHome = None
+   login_attempts = 0
    session['logged_in'] = False
 
-   return redirect(url_for('do_login'))
+   return render_template('login.html', flag='login')
 
 @app.route('/new_user')
 def change_form():

@@ -24,9 +24,6 @@ BAT_CAPACITY = 21
 # ---------------------------------
 # Consumo del sistema por funcionamiento (2KWh al dia) (KWh)
 C_INT = 0.0888
-# Consumo propio del hogar. Valor que debe ser satisfecho siempre
-C = home.read_from_file()
-# C = home.get_random_values()
 
 # --------- API Aemet OpenData ---------
 # Codigos de la API OpenData de AEMET

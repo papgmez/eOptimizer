@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block body %}
+<div class="top-content">
+  <div class="inner-bg">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+	  <h1>Welcome <strong>{{ user }}</strong></h1>
+	</div>
+      </div>
+      <div class="row">
+	<div class="col-sm-1"></div>
+	<div class="col-sm-1"></div>
+	<div class="col-sm-1"></div>
+	<div class="col-sm-6">
+	  <div class="form-box">
+	    <div class="form-top">
+	      <div class="form-top-left">
+	        <h3>Create a home</h3>
+	        <p>Enter your home data</p>
+	      </div>
+	      <div class="form-top-right">
+	        <img src="static/img/logo_white.png" style="width: 50%; height: 50%" alt="">
+	      </div>
+	    </div>
+	    <div class="form-bottom">
+	      <form action="{{ url_for('add_home')}}" method=post>
+		<div class="form-group">
+		  <label class="sr-only" for="form-pv_modules">Number of solar modules</label>
+		  <input type="number" name="form-pvmodules" min="1" class="form-pvmodules form-control" placeholder="Number of solar modules" id="form-pvmodules">
+		</div>
+		<div class="form-group">
+		  <label class="sr-only" for="form-city_code">Location code</label>
+		  <input type="number" name="form-city_code" min="0" class="form-city_code form-control" placeholder="Location code" id="form-city_code">
+		</div>
+		<div class="form-group">
+		  <label class="sr-only" for="form-amortization_years_pv">Years to amortize solar modules</label>
+		  <input type="number" name="form-amortization_years_pv" class="form-amortization_years_pv form-control" placeholder="Years to amortize solar modules" id="form-amortization_years_pv">
+		</div>
+		<div class="form-group">
+		  <label class="sr-only" for="form-amortization_years_bt">Years to amortize battery</label>
+		  <input type="number" name="form-amortization_years_bt" class="form-amortization_years_bt form-control" placeholder="Years to amortize battery" id="form-amortization_years_bt">
+		</div>
+		{% if error %}
+		<div class="alert alert-danger" role="alert">
+		  {{ error }}
+		</div>
+		{% endif %}
+		<input class="btn btn-primary" type="submit" value="Create home">
+	      </form>
+	    </div>
+	  </div>
+	</div>
+	<div class="col-sm-1"></div>
+	<div class="col-sm-1"></div>
+	<div class="col-sm-1"></div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

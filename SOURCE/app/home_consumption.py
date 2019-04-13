@@ -3,8 +3,8 @@
 
 import random as rd
 
-def read_from_file():
-    file = open("home_data/consumption.txt","r")
+def read_from_file(path):
+    file = open("home_data/{}".format(path),"r")
     # redundant data
     for i in range(0,6):
         file.readline()

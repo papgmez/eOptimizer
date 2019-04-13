@@ -39,7 +39,6 @@
 		  <br>
 		</p>
 		<text font-family="Roboto"><b>@e-Optimizer 2019</b></text><br/ >
-
 		  Pablo Palomino Gómez<br />
 		  Pablo.Palomino1@alu.uclm.es
 	    </div>
@@ -58,8 +57,8 @@
         </div>
       </div>
     </footer>
-    <script src="static/js/jquery-3.3.1.slim.min.js"></script>
-    <script src="static/popper.min.js"></script>
-    <script src="static/js/bootstrap.min.js"></script>
+    <script src="{{ url_for('static', filename='js/jquery-3.3.1.slim.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='popper.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
   </body>
 </html>
