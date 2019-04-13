@@ -47,10 +47,3 @@ def create_price_buffer(data,start):
         pb_size += 1
 
     return pb
-
-'''
-if "__NAME__==__MAIN__":
-    print("Prices between {} and {}".format(const.START,const.END))
-    print(get_incoming_prices(const.PVPC))
-    print(get_incoming_prices(const.SPOT))
-'''
