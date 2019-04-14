@@ -60,7 +60,7 @@
 	      </div>
 	    </div>
 	    <div class="form-bottom">
-	      <form action="{{ url_for('simulation') }}" method=post>
+	      <form action="{{ url_for('simulation') }}" method=post enctype=multipart/form-data>
 		<div class="form-group" style="color: #FFFFFF">
 		  <label for="form-start-date" class="form-label">&nbsp Simulation Date&nbsp&nbsp&nbsp &nbsp</label>
 		  <input class="col-7 col-form-control" type="date" name="form-start-date" id="form-start-date">
@@ -71,6 +71,13 @@
 		    <label class="custom-file-label" for="consumption-file">Choose file</label>
 		  </div>
 		</div>
+		{% if errors %}
+		{% for error in errors %}
+		<div class="alert alert-danger" role="alert">
+		  {{ error }}
+		</div>
+		{% endfor %}
+		{% endif %}
 		<input class="btn btn-primary" type="submit" value="Start Simulation">
 	      </form>
 	    </div>

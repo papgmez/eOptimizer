@@ -79,10 +79,12 @@
 		  <label class="sr-only" for="form-newpassword">Password</label>
 		  <input type="password" name="form-newpassword" placeholder="Password" class="form-newpassword form-control" id="form-newpassword">
 		</div>
-		{% if error %}
+		{% if errors %}
+		{% for error in errors %}
 		<div class="alert alert-danger" role="alert">
 		  {{ error }}
 		</div>
+		{% endfor %}
 		{% endif %}
 		<input class="btn btn-primary" type="submit" value="Sign up">
 	      </form>

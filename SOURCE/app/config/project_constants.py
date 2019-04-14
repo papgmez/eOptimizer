@@ -1,7 +1,5 @@
 #!/usr/bin/python3
 
-import home_consumption as home
-
 # Fichero de Constantes
 # =====================
 # Constantes respecto a EF (energia fotovoltaica)
