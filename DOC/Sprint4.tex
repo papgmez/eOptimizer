@@ -1,0 +1,30 @@
+Cómo se comentó anteriormente, éste PSR dispone de 81 restricciones. Además, no interesa cualquiera de las soluciones posibles si no que debe buscarse la solución más óptima de todas. Por lo tanto para su resolución deberá emplearme algún procedimiento lo suficientemente potente para contemplar ambos requisitos.
+\subsection{Programación Lineal}
+La programación lineal~\cite{Loom64} tiene como objetivo optimizar una función lineal cuyas variables están sujetas a un conjunto de restricciones lineales.
+Se trata de un campo de la matemática muy efectivo para la resolución de problemas donde se desea sacar el mayor provecho de una situación.\\
+
+Historicamente, el concepto de programación lineal debe su nombre a John Von Neumann (1947), uno de los matemáticos más importantes del siglo XX gracias a sus contribuciones en las ciencias de la computación; y a George Dantzig (1947), cuyo trabajo intentaba asignar 70 puestos de trabajo a 70 personas mediante programación lineal. Las permutaciones necesarias para la asignación óptima de dichos puestos era factorial de 70 (70!), algo enorme, pues el número de combinaciones de variables es inmenso. Curiosamente, mediante programación lineal el problema se resuelve en un momento pues el número de combinaciones se reduce en su mayor parte. La programación lineal puede ser aplicable a numerosos problemas comunes tales como:
+\begin{itemize}
+\item Asignación de horarios a profesores en un centro educativo para obtener la mayor productividad a la par que comodidad para profesor y alumno.
+\item Distribución de elementos en almacenes de tal modo que se reduzca el costo de almacenamiento teniendo en cuenta la limitada capacidad.
+\item Distribución de bienes entre compradores y consumidores de tal modo que las ganancias del intermediario sean máximas.
+\end{itemize}
+Cómo se puede observar, el problema de este trabajo fin de grado está muy relacionado con el último ejemplo, pues se distribuye cantidad de energía entre fuentes de entrada y fuentes de salida de manera óptima para garantizar un gasto mínimo de consumo energético.\\
+
+Para un problema de programación lineal pueden existir varios casos en su resolución:
+\begin{itemize}
+\item Existe una solución óptima.
+\item Existen varias soluciones óptimas.
+\item No existe solución.
+\item Existen soluciones infitas.
+\end{itemize}
+La situación deseada es la primera, pero puede ocurrir alguno de los otro casos. Estas situaciones pueden resolverse convirtiendo las restricciones que son inecuaciones (desigualdades) en igualdades.\\
+
+Existen varios métodos de programación lineal. El más utilizado es conocido como el \textbf{método Simplex}, pues es muy potente debido a que se basa en evaluar solo algunos puntos extremos mediante dos condiciones:
+\begin{itemize}
+\item \textbf{Optimalidad}. La solución inferior relativa al punto de solución actual no se tiene en cuenta.
+  \item \textbf{Factibilidad}. Una vez se encuentra una solución básica factible, sólo apareceran soluciones factibles.
+\end{itemize}
+Otro método de programación lineal es el método de ramificación y acotamiento \textit{branch and bound}, el cuál divide el problema en varios subproblemas de programación lineal, acotamiento que permite obtener soluciones óptimas que se mejorar por cada subproblema.\\
+
+En el ámbito de las ciencias de la computación existen librerías que permiten emplear algoritmos de programación lineal para la resolución de problemas de optimización. En este trabajo fin de grado se empleará la librería del lenguaje Python \textbf{Scipy}.
