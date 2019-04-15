@@ -113,7 +113,9 @@ img { max-width: 100%; }
 .form-box {
 	margin-top: 70px;
 }
-
+.form-group {
+    text-align: left;
+}
 .form-top {
 	overflow: hidden;
 	padding: 0 25px 15px 25px;
@@ -165,7 +167,7 @@ img { max-width: 100%; }
 
 .middle-border {
 	min-height: 300px;
-	margin-top: 170px;
+	margin-top: 70px;
 	border-right: 1px solid #fff;
 	border-right: 1px solid rgba(255, 255, 255, 0.6);
 }
@@ -179,7 +181,7 @@ footer {
 }
 
 footer .footer-border {
-	width: 200px;
+	width: 700px;
 	margin: 0 auto;
 	padding-bottom: 30px;
 	border-top: 1px solid #fff;
