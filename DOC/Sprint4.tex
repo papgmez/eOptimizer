@@ -3,7 +3,7 @@ Cómo se comentó anteriormente, éste PSR dispone de 81 restricciones. Además,
 La programación lineal~\cite{Loom64} tiene como objetivo optimizar una función lineal cuyas variables están sujetas a un conjunto de restricciones lineales.
 Se trata de un campo de la matemática muy efectivo para la resolución de problemas donde se desea sacar el mayor provecho de una situación.\\
 
-Historicamente, el concepto de programación lineal debe su nombre a John Von Neumann (1947), uno de los matemáticos más importantes del siglo XX gracias a sus contribuciones en las ciencias de la computación; y a George Dantzig (1947), cuyo trabajo intentaba asignar 70 puestos de trabajo a 70 personas mediante programación lineal. Las permutaciones necesarias para la asignación óptima de dichos puestos era factorial de 70 (70!), algo enorme, pues el número de combinaciones de variables es inmenso. Curiosamente, mediante programación lineal el problema se resuelve en un momento pues el número de combinaciones se reduce en su mayor parte. La programación lineal puede ser aplicable a numerosos problemas comunes tales como:
+Históricamente, el concepto de programación lineal debe su nombre a John Von Neumann (1947), uno de los matemáticos más importantes del siglo XX gracias a sus contribuciones en las ciencias de la computación; y a George Dantzig (1947), cuyo trabajo intentaba asignar 70 puestos de trabajo a 70 personas mediante programación lineal. Las permutaciones necesarias para la asignación óptima de dichos puestos era factorial de 70 (70!), algo enorme, pues el número de combinaciones de variables es inmenso. Curiosamente, mediante programación lineal el problema se resuelve en un momento pues el número de combinaciones se reduce en su mayor parte. La programación lineal puede ser aplicable a numerosos problemas comunes tales como:
 \begin{itemize}
 \item Asignación de horarios a profesores en un centro educativo para obtener la mayor productividad a la par que comodidad para profesor y alumno.
 \item Distribución de elementos en almacenes de tal modo que se reduzca el costo de almacenamiento teniendo en cuenta la limitada capacidad.
@@ -16,7 +16,7 @@ Para un problema de programación lineal pueden existir varios casos en su resol
 \item Existe una solución óptima.
 \item Existen varias soluciones óptimas.
 \item No existe solución.
-\item Existen soluciones infitas.
+\item Existen soluciones infinitas.
 \end{itemize}
 La situación deseada es la primera, pero puede ocurrir alguno de los otro casos. Estas situaciones pueden resolverse convirtiendo las restricciones que son inecuaciones (desigualdades) en igualdades.\\
 
@@ -27,4 +27,7 @@ Existen varios métodos de programación lineal. El más utilizado es conocido c
 \end{itemize}
 Otro método de programación lineal es el método de ramificación y acotamiento \textit{branch and bound}, el cuál divide el problema en varios subproblemas de programación lineal, acotamiento que permite obtener soluciones óptimas que se mejorar por cada subproblema.\\
 
-En el ámbito de las ciencias de la computación existen librerías que permiten emplear algoritmos de programación lineal para la resolución de problemas de optimización. En este trabajo fin de grado se empleará la librería del lenguaje Python \textbf{Scipy}.
+En el ámbito de las ciencias de la computación existen librerías que permiten emplear algoritmos de programación lineal para la resolución de problemas de optimización. En este trabajo fin de grado se empleará \textbf{SciPy}, un ecosistema de librerías de código abierto con numerosas herramientas para matemáticas, ciencia e ingeniería.
+
+\subsection{Módulo linprog de SciPy}
+Scipy~\cite{Scip} proporciona un conjunto de paquetes de computación científica para el lenguaje Python.
