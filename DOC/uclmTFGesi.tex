@@ -1,15 +1,15 @@
 %%%%%%%%%%%%%%
 % Fichero: uclmTFGesi.tex
 % Autor: Jesús Salido Tercero (http://www.uclm.es/profesorado/jsalido)
-% Fecha (creación): Febrero 2010 
+% Fecha (creación): Febrero 2010
 % Rev. : Febrero 2019
-% Descripción: Plantilla para memoria de TFG 
-% (Escuela Sup. de Informática, UCLM). Creada para el curso 
-% “LaTeX esencial para preparación de TFG, Tesis y otros documentos 
+% Descripción: Plantilla para memoria de TFG
+% (Escuela Sup. de Informática, UCLM). Creada para el curso
+% “LaTeX esencial para preparación de TFG, Tesis y otros documentos
 % académicos” (Esc. Sup. Informática-UCLM)
 %
 % Comentarios: Preparada para `pdflatex' y `biblatex'
-% Documento editado con TeXstudio. 
+% Documento editado con TeXstudio.
 %%%%%%%%%%%%%%
 
 
@@ -22,7 +22,7 @@
 \newif\ifspanish%Definición de un condicional (spanish)
 
 \spanishtrue 			% Idioma pral.: español (spanish=true)
-	
+
 \documentclass[ 		% Clase del documento
 	11pt,				% Tamaño de letra
 	a4paper,			% Tamaño de papel
@@ -48,7 +48,7 @@
 \usepackage{textcomp,marvosym,pifont} % Generación de símbolos especiales
 \usepackage{ccicons} % Iconos de licencia Creative Commons
 \usepackage{amsmath,amsthm,amssymb}	% Mejoras cuando hay matemáticas
-
+\usepackage{float} % Para posicionar las imagenes donde quiero
 %--- Tipografía (Opción 1)
 \usepackage[tt=false]{libertine}	% Libertine
 \usepackage[libertine]{newtxmath}	% Times
@@ -61,7 +61,7 @@
 %---
 
 
-\usepackage[T1]{fontenc}% Codificación de salida    
+\usepackage[T1]{fontenc}% Codificación de salida
 \usepackage{microtype}	% Mejoras de microtipografía en la obtención de PDF (sólo para pdflatex)
 
 
@@ -90,13 +90,13 @@
 	pdftex,
 	breaklinks,			% Permite que los links ocupen más de una línea
 %	hidelinks,			% Oculta el color y borde de los links
-% OJO: La opción colorlinks se comenta para evitar un error con el paquete menukeys. 
+% OJO: La opción colorlinks se comenta para evitar un error con el paquete menukeys.
 %	colorlinks=true,	% Pone color en los link o un borde
 	linkcolor=palered,	% Color de los links
-	anchorcolor=palered, 
-	citecolor=palered, 
-	filecolor=palered, 
-	menucolor=palered, 
+	anchorcolor=palered,
+	citecolor=palered,
+	filecolor=palered,
+	menucolor=palered,
 	urlcolor=palered,
 	bookmarksnumbered=true % Incluye números en bookmarks
 ]{hyperref}
@@ -170,7 +170,7 @@
 %--- Paquete con personalización local para el TFG (ESI-UCLM)
 \usepackage{uclmTFGesi}
 % -------------------------
-% PAQUETES QUE USA: 
+% PAQUETES QUE USA:
 % 	fancyhdr,titlesec,sectsty,tikz
 % -------------------------
 % LISTA DE COMANDOS PROPORCIONADOS:
@@ -186,17 +186,17 @@
 % RE-\dedicado{texto}			: Pág. de dedicatoria con texto
 % RE-\creditos{texto}{imagen}	: Pág. de créditos con el texto y la imagen
 % OB-\abstract{texto}			: Añade abstract (no definido en clase book)
-% OP-\tecla{texto}				: Borde de tecla en torno al texto (sustituir por menukeys)		
-% OP-\nodivide[penalty]			: Penaliza la división de palabras. 
+% OP-\tecla{texto}				: Borde de tecla en torno al texto (sustituir por menukeys)
+% OP-\nodivide[penalty]			: Penaliza la división de palabras.
 %								  Máx. (n=10000) sin arg.
 % OP-\nowidowandorphan[penalty]: Penaliza las viudas y huérfanas.
 %								(sólo si necesario)
-% OP-\nodividenotes[penalty]	: Penaliza la división de notas al pié 
-%								entre págs.	(sólo si necesario)	
+% OP-\nodividenotes[penalty]	: Penaliza la división de notas al pié
+%								entre págs.	(sólo si necesario)
 % OP-\savepagecnt				: Crea contador interno con el nº de pág. actual
 % OP-\contpagination			: Recupera el valor de pág. previamente
 %								 salvado en el cont. interno.
-% RE-\cleanhdfirst				: Elimina la cabecera en la primera 
+% RE-\cleanhdfirst				: Elimina la cabecera en la primera
 %								página de capítulo.
 %
 % -------------------------
@@ -229,7 +229,7 @@
 
 % -------------------------
 %
-% DATOS DEL DOCUMENTO 
+% DATOS DEL DOCUMENTO
 % Definición de variables empleadas en el documento por lo que no son
 % traducidos. Cuando algún campo puede tener varias líneas aparecen dos
 % campos señalados como <campo>Primera y <campo>Segunda.
@@ -238,27 +238,27 @@
 % -------------------------
 % Datos del documento
 \tituloPrimera{Sistema Inteligente para la Gestión y Optimización de Energía basado en la Nube}	% 1ª Línea
-%\tituloSegunda{} % 2ª Línea  
+%\tituloSegunda{} % 2ª Línea
 \titulo{Sistema Inteligente para la Gestión y Optimización de Energía basado en la Nube}
 \autor{Pablo Palomino Gómez}
-\email{pablo.palomino1@alu.uclm.es}					
+\email{pablo.palomino1@alu.uclm.es}
 \director{Luis Jiménez Linares}
-\codirector{Luis Rodríguez Benítez}	
+\codirector{Luis Rodríguez Benítez}
 \instEdu{UNIVERSIDAD DE CASTILLA-LA MANCHA}
 % Fichero con escudo de la institución
 % Poner el logo del centro que corresponda
-%\escudo{esi} 								
-%\escudo{esicolor} 
-%\escudo{logo_ESI} 
-\escudo{escudoInf} 	% Nucleo de ferrita						
-%\escudo{uclm} 
-%\escudo{etsii} 
+%\escudo{esi}
+%\escudo{esicolor}
+%\escudo{logo_ESI}
+\escudo{escudoInf} 	% Nucleo de ferrita
+%\escudo{uclm}
+%\escudo{etsii}
 
 \centroEdu{ESCUELA SUPERIOR DE INFORMÁTICA}
 \deptoEduPrimera{Departamento de Tecnologías y Sistemas de Información}% 1ª Línea
 %\deptoEduSegunda{<Segunda línea Depto. Director>}% 2ª Línea
 \titulacion{GRADO EN INGENIERÍA INFORMÁTICA}
-\especialidad{TECNOLOGÍA ESPECÍFICA DE COMPUTACIÓN} 
+\especialidad{TECNOLOGÍA ESPECÍFICA DE COMPUTACIÓN}
 \tipoDoc{TRABAJO FIN DE GRADO}
 % Si las fechas se desean en inglés hay que ponerlas explícitamente.
 \fechaDef{Julio, 2019} 							% Fecha de defensa
@@ -268,7 +268,7 @@
 
 
 % --- Propiedades para el documento PDF
-\hypersetup{	
+\hypersetup{
 	pdftitle={TFG\_PalominoGomezPablo}, % Título
 	pdfauthor={P. Palomino},			% Autor
 	pdfsubject={TFG},					% Tema
@@ -286,7 +286,7 @@
 %
 % -------------------------
 \begin{document}
-	
+
 %--- Ajustes del documento (en páginas iniciales).
 \ifspanish
 	\selectlanguage{spanish}% Emplea idioma español
@@ -319,8 +319,8 @@
 % Este comando permite una gran flexibilidad y la ventaja de no depender de paquetes externos.
 % Esta es una página reservada para señalar información relativa a los derechos de autor y la licencia de distribución y uso del documento. Esta página debería ser aprovechada también para informar de cualquier tipo de cesión de los derechos anteriormente citados. El autor del TFG debe tener presente que el incumplimiento de la legislación vigente en materia de protección de la propiedad intelectual es de su exclusiva responsabilidad independientemente de la cesión de derechos que este haya convenido para su obra ya que no son objeto de cesión aquellos derechos de los que no se es poseedor.
 
-\creditos{Este documento se distribuye con licencia Creative Commons Atribución Compartir Igual 4.0. El texto completo de la licencia puede obtenerse en \url{https://creativecommons.org/licenses/by-sa/4.0/}. 
-% El escudo de Informática basado en el nuclo de ferrita que acompaña la distribución de esta plantilla ha sido realizado por P.~Moya, D.~Villa e I. Díez, su inclusión debe respetar los derechos de autor y las licencias a las que se vea sometido. 
+\creditos{Este documento se distribuye con licencia Creative Commons Atribución Compartir Igual 4.0. El texto completo de la licencia puede obtenerse en \url{https://creativecommons.org/licenses/by-sa/4.0/}.
+% El escudo de Informática basado en el nuclo de ferrita que acompaña la distribución de esta plantilla ha sido realizado por P.~Moya, D.~Villa e I. Díez, su inclusión debe respetar los derechos de autor y las licencias a las que se vea sometido.
 
 La copia y distribución de esta obra está permitida en todo el mundo, sin regalías y por cualquier medio, siempre que esta nota sea preservada. Se concede permiso para copiar y distribuir traducciones de este libro desde el español original a otro idioma, siempre que la traducción sea aprobada por el autor del libro y tanto el aviso de copyright como esta nota de permiso, sean preservados en todas las copias.\\}{cclicense}
 %---
@@ -337,7 +337,7 @@ La copia y distribución de esta obra está permitida en todo el mundo, sin rega
 % -------------------------
 %
 % DEDICATORIA (opcional, 1 pág. máximo)
-% Aunque opcional, no se debería perder la oportunidad de poder 
+% Aunque opcional, no se debería perder la oportunidad de poder
 % dedicar el trabajo a alguien MUY especial.
 %
 % -------------------------
@@ -400,7 +400,7 @@ El resumen debe ocupar como máximo una página y en dicho espacio proporcionar�
 \begin{center}
 \emph{(... english version of the abstract ...)}
 \end{center}
-Versión del resumen en inglés. En los trabajos cuyo idioma principal sea el inglés, el orden de \textsf{Resumen} y \textsf{Abstract} se invertirá.	
+Versión del resumen en inglés. En los trabajos cuyo idioma principal sea el inglés, el orden de \textsf{Resumen} y \textsf{Abstract} se invertirá.
 \end{abstract}
 %---
 

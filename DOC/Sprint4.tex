@@ -29,5 +29,96 @@ Otro método de programación lineal es el método de ramificación y acotamient
 
 En el ámbito de las ciencias de la computación existen librerías que permiten emplear algoritmos de programación lineal para la resolución de problemas de optimización. En este trabajo fin de grado se empleará \textbf{SciPy}, un ecosistema de librerías de código abierto con numerosas herramientas para matemáticas, ciencia e ingeniería.
 
-\subsection{Módulo linprog de SciPy}
-Scipy~\cite{Scip} proporciona un conjunto de paquetes de computación científica para el lenguaje Python.
+\subsection{Optimización con SciPy}
+Scipy~\cite{Scip} proporciona un conjunto de paquetes de computación científica para el lenguaje Python como son Numpy, Scipy, Matplotlib, iPython, SymPy y Pandas. En este caso el trabajo se centra en el módulo Scipy.optimize~\cite{SciOp}, que contiene las herramientas de Scipy para optimización. Proporciona numerosos algoritmos de optimización para uso común:
+\begin{itemize}
+\item Minimización sin restricciones y restringida de funciones escalares multivariadas.
+\item Optimización global mediante fuerza bruta.
+\item Minimización de mínimos cuadrados.
+\item Minimización de funciones univariantes escalares y búsqueda de soluciones.
+\item Solución de sistemas de ecuaciones multivariables con una gran cantidad de algoritmos.
+\end{itemize}
+Para el caso propio de este trabajo fin de grado en que se el objetivo es minimizar una función sujeta a un gran conjuntos de restricciones, lo más conveniente es hacer uso del módulo \textbf{linprog} de Scipy.optimize, específico para trabajar con programación lineal. Resuelve problemas del tipo definido en el listado~\ref{lst:linprog}, donde:
+\begin{itemize}
+\item A\_ub representa los coeficientes de las restricciones definidas como inecuaciones.
+\item b\_ub representa las constantes del tipo de restricción inecuación.
+\item A\_eq representa los coeficientes de las restricciones de igualdad, es decir, ecuaciones.
+\item b\_eq representa las constantes del tipo de restricción de igualdad.
+\item (lb, ub) representan los límites inferior y superior del dominio de la variable x.
+\item c es la función a minimizar, dependiente de la variable x.
+\end{itemize}
+\begin{lstlisting}[language=Python,float=ht,numbers=none,caption={Tipo de problema aplicable a Scipy.optimize.linprog},label={lst:linprog}]
+  # Minimizar:
+  c @ x
+  # Sujeto a:
+  A_ub @ x <= b_ub
+  A_eq @ x == b_eq
+  lb <= x <= ub
+\end{lstlisting}
+El caso particular de este trabajo se adapta perfectamente a dicho modelo de problema. Pero antes de implementar el algoritmo linprog, se deben implementar cada una de las restricciones del modelo, algo complejo en este caso pues existen numerosas restricciones al tratarse de una función lineal, pues cada una de las variables involucradas en la función a minimizar~\ref{eq:funcionObjetivo} tendrá realmente 24 valores, correspondientes a las 24 horas de la simulación, y desde el punto de vista de la implementación, será tenido en cuenta como 24 variables distintas.\\
+
+Antes de implementar cada una de las restricciones, se debe hacer una modificación en la clase Simulation. Se añaden cinco nuevos atributos a la clase:
+\begin{itemize}
+\item \textbf{f}: Esta variable representa la función objetivo (véase la ecuación~\ref{eq:funcionObjetivo}), expresada como una lista con los coeficientes de cada variable en la función los cuáles representan el precio del tipo de energía asociado a la variable. Al tratarse de un sumatorio de 24 iteraciones y contener 5 variables en la expresión, esta lista contendrá 120 elementos resultantes de la suma entre los 24 valores de cada una de las variables. Para dotar de valores a la lista se ha implementado la función \textit{generate\_function\_coeficients()}, que mediante 24 iteraciones concatena a la lista el valor correspondiente de cada coeficiente de variable, que se encuentran en los atributos de clase definidos en el sprint 3 (Véase la representación UML de Simulation en la figura~\ref{fig:simulation}). Esta variable se corresponde con \textit{c} en el modelo de problema para Scipy Linprog del listado~\ref{lst:linprog}.
+\item \textbf{A\_ub, b\_ub}: Cómo se comentó anteriormente representan las restricciones del tipo inecuación. En A\_ub se almacenan en una lista los coeficientes de las inecuaciones en una lista por restricción, de tal modo que se tiene una lista de listas (lista de dos dimensiones) del tipo: [[coeficientes restr. 1], [coeficientes restr.2], ...]. En b\_ub se tiene una lista con las constantes de las inecuaciones, por lo que el tamaño de b\_ub y A\_ub debe ser igual para que se realice el \textit{matching} de coeficientes con constantes por inecuación.
+\item \textbf{A\_eq, b\_eq}: Similar a las dos listas anteriores, pero en este caso se trata de las restricciones de igualdad. Las lista tienen el mismo formato.
+\end{itemize}
+Éstas variables serán primordiales a la hora de ejecutar el algoritmo linprog pues de sus valores serán dependientes los resultados para cada variable. Definidas las variables que contendrán los valores de las restricciones se pasa a la implementación de dichas restricciones.
+\subsection{Implementación de las restricciones del tipo 1}
+La restricción 1 se corresponde con que toda la energía generada debe ser consumida (Véase la ecuación~\ref{eq:restr1}). Se trata de una restricción de igualdad, por lo que deben dotarse de valor A\_eq y b\_eq. Es una restricción lineal por lo que desde el punto de vista de la implementación se traduce en 24 restricciones, una por hora de la simulación. En el listado~\ref{lst:restr1} se muestra la función \textit{generate\_restriction\_1()} que realiza dicha tarea.\\
+\begin{lstlisting}[language=Python,float=ht,caption={Restricciones del tipo 1},label={lst:restr1}]
+def generate_restriction_1(self):
+    for i in range(0, 24):
+        restr_coef = [0]*5*24
+        restr_coef[i*5] = 1
+        restr_coef[i*5+1] = 1
+        restr_coef[i*5+2] = 1
+        restr_coef[i*5+3] = -1
+        restr_coef[i*5+4] = -1
+        self.A_eq.append(restr_coef)
+        self.b_eq.append(self.c_int + self.c[i])
+\end{lstlisting}
+
+Primero se deben mostrar a la izquierda de la restricción las variables y a la derecha las constantes. En A\_eq se debe concatenar una lista por restricción del sumatorio que contendrá los valores 0 o 1 en función de la condición mostrada en el listado~\ref{lst:coef}
+\begin{lstlisting}[numbers=none,float=ht,caption={Condición para dotar de valor los coeficientes},label={lst:coef}]
+  Si la variable de esa posición aparece en la restricción
+      restr_coef[posicion] = 1
+  Si no
+      restr_coef[posicion] = 0
+\end{lstlisting}
+Cómo se puede observar en el listado~\ref{lst:restr1}, por cada iteración de las 24 (correspondientes a las 24 horas de la simulación) primero se crea una lista \textbf{restr\_coef} con solo valores 0. Ésta lista dispone de 120 elementos, pues la restricción es realmente el sumatorio de 24 restricciones y existen 5 variables en la expresión (EF, ER, EB, CR y CB). Cómo resultado se obtendrá en A\_eq 24 listas de 120 elementos cada una, de los cuáles todos toman el valor 0 excepto los relativos a las posiciones de las variables que entran en juego en la restricción de esa iteración. Es primordial que se preserve el orden de ordenamiento de las variables en todas las restricciones. Deben tener el mismo orden que en la función objetivo y tomar 1 si aparecen o 0 si no (Podrán tomar el valor -1 si van precedidas de una resta en la restricción). En el caso de b\_eq, se concatenan 24 valores, uno por iteración, correspondientes l valor constante de la restricción de esa iteración.\\Obsérvese cómo se realizaría la primera iteración, correspondiente a la hora 0 de la simulación:\\
+
+\textit{Deben dotarse con 1 $ EF_{0} $, $ ER_{0} $ y $ EB_{0} $, pues su coeficiente en la restricción es +1. Deben dotarse con -1 $ CR_{0} $ y $ CB_{0} $, pues su coeficiente es -1 en la restricción. El resto de elementos de la lista deben ser 0 (Correspondientes al resto de coeficientes de variables para i=1,2,3..). Ésta lista se concatena en A\_eq. En b\_eq se concatena el valor constante de esta restricción, que es $ c_{int} + C_{i}^{prop} $. Con esta queda implementada la restricción de tipo 1 correspondiente a la hora 0 de la simulación.}
+
+\subsection{Implementación de las restricciones del tipo 2}
+La restricción 2 hace referencia a que no se puede producir energía fotovoltaica durante la noche (Véase la ecuación~\ref{eq:restr2}). En este trabajo fin de grado se definen estos valores como los comprendidos entre las 9:30 pm y las 7:00 am. Como se observa en el listado~\ref{lst:restr2}, para generar las restricciones de este tipo, en cada iteración se inicializa la lista de 120 valores con ceros de manera análoga a las restricciones de tipo 1. Después, para determinar la hora real correspondiente de la iteración en curso, se debe sumar a la hora de inicio de la simulación el número de iteración actual. El uso del módulo de la librería estándar de Python \textit{datetime}~\cite{Dtpy} hace que sea posible manejar variables en formato hora o fecha. En las iteraciones en las que la hora actual esté comprendida en las definidas cómo horas nocturnas, el valor de la posición de EF (energía fotovoltaica) en esa iteración tomará el valor 1. Éstas listas resultantes de cada iteración se van concatenando con A\_eq, pues son restricciones de igualdad. En cuanto a b\_eq, por cada iteración se concatena un 0, pues el valor constante de esta restricción es 0 debido a que la energía fotovoltaica de noche es nula. Tras la ejecución de la función \textit{generate\_restriction\_2()} A\_eq cuenta con 24 listas mas, que son las 24 restricciones del tipo 2.
+\begin{lstlisting}[language=Python,float=ht,caption={Restricciones del tipo 2},label={lst:restr2}]
+def generate_restriction_2(self):
+    for i in range(0, 24):
+        restr_coef = [0]*5*24
+        time = (self.start+dt.timedelta(hours=i)).time()
+        if time >= dt.time(21, 30) or time <= dt.time(7, 00):
+            restr_coef[i*5] = 1
+        self.A_eq.append(restr_coef)
+        self.b_eq.append(0)
+\end{lstlisting}
+\subsection{Implementación de las restricciones del tipo 3}
+Las restricciones del tipo 3 hacen que se cumpla que la energía fotovoltaica generada no puede ser mayor que la máxima energía fotovoltaica en t, siendo t cada hora de la simulación (Véase la ecuación~\ref{eq:restr3}). Se trata de una restricción de tipo inecuación, por lo que en este caso deberán concatenarse sus valores a A\_ub y b\_ub. En la variable de clase \textit{self.max\_ef\_buffer} se dispone de una lista con los 24 valores correspondientes a la energía fotovoltaica máxima de cada hora de la simulación. Cada elemento de esta lista representa la parte constante de cada restricción de este tipo, por ello, en cuanto a b\_ub se refiere, basta con concatenar \textit{self.max\_ef\_buffer}. En el caso de la parte de variables (A\_ub), al igual que en los casos anteriores se realizan 24 iteraciones correspondientes a las 24 horas de la simulación, y en cada una de ellas, la lista de 120 elementos toma el valor 1 únicamente en la posición relativa a la energía fotovoltaica, pues es la única que entra en juego en este tipo de restricción.La lista generada en cada iteración se concatena con el resto de restricciones en A\_ub.
+\begin{lstlisting}[language=Python,float=ht,caption={Restricciones del tipo 3},label={lst:restr3}]
+def generate_restriction_3(self):
+    for i in range(0, 24):
+        restr_coef = [0]*5*24
+        restr_coef[i*5] = 1
+        self.A_ub.append(restr_coef)
+    self.b_ub.extend(self.max_ef_buffer)
+\end{lstlisting}
+\subsection{Implementación de las restricciones del tipo 4}
+\begin{lstlisting}[language=Python,float=ht,caption={Restricciones del tipo 4},label={lst:restr4}]
+
+\end{lstlisting}
+\subsection{Implementación de las restricciones del tipo 5}
+\begin{lstlisting}[language=Python,float=ht,caption={Restricciones del tipo 5},label={lst:restr5}]
+
+\end{lstlisting}
+\subsection{Generación optimizada de energía}
+\subsection{Caso de prueba: Simulación del 14 de Abril}

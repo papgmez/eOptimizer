@@ -73,7 +73,7 @@ Por ejemplo, no se puede determinar cuántos watios se producen como máximo con
 \end{equation}
 
 Para representar los conjuntos difusos, se parte del hipotético caso en el que cada conjunto difuso desciende de manera ligeramente mas inclinada que asciende, representando el factor de adaptación de un módulo fotovoltaico a un nuevo estado meteorológico. En la figura~\ref{fig:fuzzySets} se puede observar el gráfico de los conjuntos difusos definidos en la tabla~\ref{tab:estadosFavorables}. En el eje horizontal se encuentra la potencia máxima posible del módulo fotovoltaico en watios y en el eje vertical el grado de pertenencia a los conjuntos difusos [0,1]. Si avanzamos en el eje horizontal, vemos que el estado meteorológico es cambiante hacia estados favorables, y viceversa, ya que esto es directamente proporcional a la máxima potencia posible del módulo.
-\begin{figure}[!h]
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=17cm]{figs/estadoCieloAEMET.png}
 	\caption{Estados del cielo posibles AEMET}
@@ -81,7 +81,7 @@ Para representar los conjuntos difusos, se parte del hipotético caso en el que 
 \end{figure}
 Cada conjunto difuso es una función PI o \textbf{trapezoidal}, ya que no existe un único punto donde el grado de pertenencia al conjunto es 1, si no que se mantiene ese valor de pertenencia hasta que el módulo comienza a experimentar un cambio en el estado del cielo y se debe adaptar a dicho nuevo estado.
 
-\begin{figure}[!h]
+\begin{figure}[h]
 	\centering
 	\includegraphics[width=17cm]{figs/Fuzzy_diagram.pdf}
 	\caption{\textit{Fuzzy sets} de los estados meteorológicos}
