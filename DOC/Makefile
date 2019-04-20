@@ -1,5 +1,5 @@
 all:
-	pdflatex uclmTFGesi.tex
+	python compile.py uclmTFGesi
 	evince uclmTFGesi.pdf
 release:
 	clean

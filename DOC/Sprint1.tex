@@ -67,8 +67,14 @@ Las variables de entrada no son excluyentes, es decir, se puede obtener un tanto
 \subsection{Variables de salida}
 Representan las fuentes de consumo de energía del sistema. Habrá un total de cuatro:
 \begin{itemize}
-	\item \textbf{Consumo del hogar (C)}\\Demanda energética del hogar en cuestión, cuantía que debe ser satisfecha siempre, ya que es el uso de energía que necesita el hogar para su uso cotidiano.
-	\item \textbf{Consumo interno del sistema ($ C_{int} $)}\\El sistema propuesto tiene un consumo constante de funcionamiento, cuyo valor se ha estimado en aproximadamente 2 Kw al día, alrededor de unos 0,088 watios por hora. Consta del consumo por funcionamiento de placas fotovoltaicas y realización de carga y descarga de batería.
+\item \textbf{Consumo del hogar (C)}\\Demanda energética del hogar en cuestión, cuantía que debe ser satisfecha siempre, ya que es la energía que necesita el hogar para su uso cotidiano. En este trabajo fin de grado se ha decidido trabajar con clientes de la empresa eléctrica Endesa S.A., pues el hogar del alumno es su cliente lo que permitirá trabajar con información real. Además cuenta con un área privada de cliente que permite acceder a datos analíticos del hogar (Figura~\ref{fig:endesa}) y permite descargar ficheros en formato de texto con el consumo por horas de un día determinado en el hogar del cliente, justo lo que se necesita para dotar de valor esta variable. Para adaptar la información del fichero al valor de la variable se ha creado la función \textit{read\_from\_file(filename)} del módulo \textit{client\_consumption} que devuelve una lista con los 24 consumos de las 24 horas de la simulación en Kilowatios, obtenidos del fichero proporcionado.
+  \begin{figure}[!h]
+    \centering
+    \includegraphics[width=10cm]{figs/Endesa.PNG}
+    \caption{Panel de control del área cliente Endesa}
+    \label{fig:endesa}
+  \end{figure}
+\item \textbf{Consumo interno del sistema ($ C_{int} $)}\\El sistema propuesto tiene un consumo constante de funcionamiento, cuyo valor se ha estimado en aproximadamente 2 Kw al día, alrededor de unos 0,088 watios por hora. Consta del consumo por funcionamiento de placas fotovoltaicas y realización de carga y descarga de batería.
 	\item \textbf{Carga de batería (CB)}\\Cantidad de energía que se almacena en la batería para su posterior uso (almacenaje en batería). Esta variable cobra sentido en el caso de un abaratamiento de alguna fuente de generación de energía, lo que propicia que se obtenga más de la necesitada y se almacene para cuando el precio sea mayor.
 	\item \textbf{Vertido al mercado eléctrico (CR)}\\Cantidad de energía que se vende al mercado eléctrico. Como particular, se puede disponer de una instalación fotovoltaica y verter energía a la red eléctrica, aunque es una práctica sujeta a numerosas trabas legales y dificultades en las que no se entrará en el desarrollo de este trabajo fin de grado. Esta energía se vertería al intramercado de red conocido como el mercado SPOT, aquel donde los activos que se compran o venden se entregan al precio de mercado del momento de la compra/venta.
 \end{itemize}

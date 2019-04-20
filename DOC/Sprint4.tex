@@ -113,12 +113,63 @@ def generate_restriction_3(self):
     self.b_ub.extend(self.max_ef_buffer)
 \end{lstlisting}
 \subsection{Implementación de las restricciones del tipo 4}
+Las restricciones de tipo 4 hacen que se cumpla que la energía obtenida de la batería no puede ser mayor que el nivel de batería actual teniendo en cuenta la profundidad máxima de descarga (Véase la ecuación~\ref{eq:restr4}). Son restricciones de tipo inecuación por lo que deben modificarse A\_ub y b\_ub. En este caso, la restricción correspondiente a la hora 0 de la simulación debe separarse de las restantes, pues en ese punto la cantidad de carga de la batería se obtiene directamente de la variable de clase que contiene el nivel inicial de batería (\textit{self.battery\_level})~\ref{eq:restr4t1} y en el resto de casos se obtiene mediante un conjunto de operaciones~\ref{eq:restr4t2}. Esto permite calcular el nivel actual de batería en la hora i a partir de la que hubo inicialmente, mediante el sumatorio de las cargas y descargas que se han realizado desde que comenzó la simulación. En el listado~\ref{lst:restr4} se puede observar la función \textit{generate\_restriction\_4()}, encargada de la implementación de las restricciones de tipo 4 comprendidas entre las horas 1 y 24 de la simulación. Por cada iteración, en la lista de coeficientes se coloca un uno en la posición relativa a EB, pues es la dependiente de esta restricción. Después, se realizan iteraciones desde 0 hasta la iteración anterior a la actual, para comprobar el nivel actual de batería, posicionando los valores 1 en EB y -1 en CB. Cuando la lista de coeficientes está completa en esa iteración, se añade a A\_ub, y en b\_ub se concatena la parte constante de este tipo de restricción, que viene a ser la diferencia entre el nivel inicial de batería y la capacidad de la misma por su profundidad de descarga.
+\begin{equation}
+  \label{eq:restr4t1}
+  EB_{0} \leq initial\_level - capacity * depth
+\end{equation}
+\begin{equation}
+  \label{eq:restr4t2}
+  EB_{i} \leq initial\_level + \sum_{t=0}^{i-1}(-EB_{t}+CB_{t}) - capacity * depth
+\end{equation}
 \begin{lstlisting}[language=Python,float=ht,caption={Restricciones del tipo 4},label={lst:restr4}]
-
+def generate_restriction_4(self):
+    for i in range(1, 24):
+        restr_coef = [0]*5*24
+        restr_coef[i*5+2] = 1
+        for j in range(0, i-1):
+            restr_coef[j*5+2] = 1
+            restr_coef[j*5+4] = -1
+        self.A_ub.append(restr_coef)
+        self.b_ub.append(self.battery_level
+            -self.battery_capacity*self.discharge_depth)
 \end{lstlisting}
 \subsection{Implementación de las restricciones del tipo 5}
+Las restricciones de tipo 5 se encargan de que el consumo para cargar la batería no pueda ser mayor que la capacidad de la misma menos el nivel restante después de t (Véase la ecuación~\ref{eq:restr5}). Las restricciones de este tipo son muy parecidas a las de tipo 4, con la diferencia de que las retricciones de tipo 4 se encargan de regular la energía que se descarga de la batería y las restricciones de tipo 5 regulan la energía que se carga a la batería. La hora 0 de la simulación debe implementarse aparte análogamente al tipo anterior, pues el nivel actual de batería se determina en función de las cargas y descargas que se han producido desde que comenzó la simulación. En este caso la restricción de la hora 0 es muy sencilla pues tras agrupar a la izquieda de la inecuación las variables y a la derecha las constantes y ordenar las variables preservando el orden de \textit{f} se obtiene la restricción~\ref{eq:restr5t1}. Para implementar esta restricción simplemente se debe dar valor de -1 a la posición relativa a $ EB_{0} $ y 1 a la posición relativa a $ CB_{0} $, para después añadir a sus respectivas listas la lista de coeficientes y el valor constante de la restricción. Para el resto de restricciones de este tipo (hora 1 a 24) se usa la función \textit{generate\_restriccion\_5()} cuya traza es similar a \textit{generate\_restriccion\_4()} exceptuando los valores que toman las posiciones relativas a las variables dependientes de la restricción.
+\begin{equation}
+  \label{eq:restr5t1}
+  CB0 - EB0 <= capacity - initial_level
+  -EB_{0} + CB_{0} \leq capacity - initial\_level
+\end{equation}
 \begin{lstlisting}[language=Python,float=ht,caption={Restricciones del tipo 5},label={lst:restr5}]
-
+def generate_restriction_5(self):
+    for i in range(1, 24):
+        restr_coef = [0]*5*24
+        restr_coef[i*5+4] = 1
+        restr_coef[i*5+2] = -1
+        for j in range(0, i-1):
+            restr_coef[j*5+2] = -1
+            restr_coef[j*5+4] = 1
+        self.A_ub.append(restr_coef)
+        self.b_ub.append(self.battery_capacity - self.battery_level)
 \end{lstlisting}
 \subsection{Generación optimizada de energía}
+Una vez implementadas todas las restricciones necesarias del PSR es la hora de implementar el algoritmo linprog de Scipy. El método \textit{optimize()} de la clase Simulation se encarga de esta tarea. En ella deben llamarse todos los métodos encargados de las restricciones, para así poder contener en A\_eq, b\_eq, A\_ub y b\_ub los datos de variables y constantes necesarios. Después deben determinarse los límites que pueden tomar las variables, definidos en el sprint anterior. Finalmente se efectúa el algoritmo linprog sobre todos los datos y se obtiene como respuesta un conjunto de valores que han de ser interpretados, para lo que se añaden a la clase Simulation las siguientes funciones auxiliares:
+\begin{itemize}
+\item \textbf{store\_result(result)}: Se encarga de almacenar en un fichero los resultados obtenidos, indicando fecha de simulación, gasto económico producido y cantidad de energía de cada fuente de entrada y salida por horas. Esta información es almacenada en un fichero llamado \textit{simulation\_fecha.txt}, que sirve como reporte de la simulación. Para obtener cada valor se itera sobre la lista de valores en bruto \textbf{\textit{res.x.to\_list()}} separando cada valor de variable en su iteración y variable correspondiente.
+\item \textbf{prepare\_result(result)}: Se encarga de procesar una salida a la simulación alternativa a la anterior, pues retorna los resultados utilizando el formato json. Ésto será útil cuando se haga una petición de simulación desde el servidor y deba devolverse el resultado en este formato para poder ser procesado fácilmente. Se utiliza el método \textit{json.dumps()} para generar el objeto json a partir de un diccionario clave-valor (Véase el listado~\ref{lst:resultJson}). La función \textit{self.prepare\_hours(values)} procesa la lista de valores de variables en bruto a un diccionario clave-valor.
+\begin{lstlisting}[language=Python,float=ht,caption={Función de procesamiento del resultado a formato json},label={lst:resultJson}]
+def prepare_result(self, res):
+    values = res.x.tolist()
+    data = {
+      "start" : self.start.strftime("%Y-%m-%d %H:%M:%S"),
+      "end" : self.end.strftime("%Y-%m-%d %H:%M:%S"),
+      "result" : res.fun,
+      "hours" : self.prepare_hours(values)
+    }
+
+    return json.dumps(data)
+\end{lstlisting}
+\end{itemize}
+Puesto que ya se cuenta con el esqueleto del proceso para llevar a cabo una simulación, se procede a realizar un caso de prueba del domingo 14 de Abril de 2019.
 \subsection{Caso de prueba: Simulación del 14 de Abril}
