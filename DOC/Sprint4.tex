@@ -171,5 +171,43 @@ def prepare_result(self, res):
     return json.dumps(data)
 \end{lstlisting}
 \end{itemize}
-Puesto que ya se cuenta con el esqueleto del proceso para llevar a cabo una simulación, se procede a realizar un caso de prueba del domingo 14 de Abril de 2019.
-\subsection{Caso de prueba: Simulación del 14 de Abril}
+Puesto que ya se cuenta con el esqueleto del proceso para llevar a cabo una simulación, se procede a realizar un caso de prueba del lunes 11 de Marzo de 2019.
+\subsection{Caso de prueba: Simulación del 11 de Marzo}
+Tal y cómo se explicó en el sprint 1, en el Área Cliente de Endesa es posible obtener el consumo realizado por horas de un día determinado. Esto va a permitir conocer cuál fue el consumo del 11 de Marzo y, gracias al trabajo realizado con la API e-sios~\cite{Ree}, poder saber cuál fue la cuantía económica que supuso el consumo total de ese día, para así poder comparar con el gasto económico que se obtendrá de la simulación.\\
+
+El 11 de marzo en el hogar del alumno se produjo un consumo total de 7 KWh. El precio voluntario al pequeño consumor (PVPC) por defecto de ese día obtuvo cómo valor medio 0.117 euros, por lo tanto cómo mínimo el consumo del día supuso un gasto de 0.82 euros. El fichero de texto que contiene el consumo diario de Endesa sigue el formato mostrado en el listado~\ref{lst:11marzo} (\textcopyright Endesa S.A.)\\
+
+\begin{lstlisting}[float=ht,numbers=none,caption={Fichero de consumo por horas de Endesa},label={lst:11marzo}]
+CUPS:				ESXXXXXXXXXXXXXXXXXXXX
+Fecha :				11/03/2019
+Fecha y hora de extracción :	23/03/2019 10:57:52
+Tarifa :			No se encontró la tarifa
+  Fecha 			   Hora 			    Consumo (Wh)
+2019-03-11			00:00-01:00				110.0
+2019-03-11			01:00-02:00				80.0
+2019-03-11			02:00-03:00				166.0
+2019-03-11			03:00-04:00				141.0
+2019-03-11			04:00-05:00				95.0
+2019-03-11			05:00-06:00				126.0
+2019-03-11			06:00-07:00				186.0
+2019-03-11			07:00-08:00				217.0
+2019-03-11			08:00-09:00				568.0
+2019-03-11			09:00-10:00				692.0
+2019-03-11			10:00-11:00				280.0
+2019-03-11			11:00-12:00				216.0
+2019-03-11			12:00-13:00				149.0
+2019-03-11			13:00-14:00				348.0
+2019-03-11			14:00-15:00				677.0
+2019-03-11			15:00-16:00				339.0
+2019-03-11			16:00-17:00				368.0
+2019-03-11			17:00-18:00				192.0
+2019-03-11			18:00-19:00				202.0
+2019-03-11			19:00-20:00				175.0
+2019-03-11			20:00-21:00				648.0
+2019-03-11			21:00-22:00				479.0
+2019-03-11			22:00-23:00				318.0
+2019-03-11			23:00-00:00				270.0
+
+Total (Wh):				7042.0
+\end{lstlisting}
+Mediante la función \textit{read\_from\_file()} del módulo \textit{client\_consumption} se procesa el fichero de consumo, se establecen los consumos en la unidad de KWh y se retorna una lista con los 24 consumos de las 24 del día, en este caso 11 de marzo. Esta lista será el valor que toma la variable de Simulation \textit{self.c}. Debido a que aún no se dispone de interfaz ni servidor, para ejecutar la simulación se ha empleado el intérprete de comandos ipython3. Se debe crear un objeto simulación con los argumentos necesarios explicados a lo largo de este capítulo y que se pueden observar en la clase UML de Simulation (Figura~\ref{fig:simulation}). Tras instanciar la simulación, se debe invocar el método \textit{optimize()} que implementa las restricciones y ejecuta el algoritmo de programación lineal.
