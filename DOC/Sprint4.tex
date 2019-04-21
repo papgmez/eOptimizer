@@ -175,7 +175,7 @@ Puesto que ya se cuenta con el esqueleto del proceso para llevar a cabo una simu
 \subsection{Caso de prueba: Simulación del 11 de Marzo}
 Tal y cómo se explicó en el sprint 1, en el Área Cliente de Endesa es posible obtener el consumo realizado por horas de un día determinado. Esto va a permitir conocer cuál fue el consumo del 11 de Marzo y, gracias al trabajo realizado con la API e-sios~\cite{Ree}, poder saber cuál fue la cuantía económica que supuso el consumo total de ese día, para así poder comparar con el gasto económico que se obtendrá de la simulación.\\
 
-El 11 de marzo en el hogar del alumno se produjo un consumo total de 7 KWh. El precio voluntario al pequeño consumor (PVPC) por defecto de ese día obtuvo cómo valor medio 0.117 euros, por lo tanto cómo mínimo el consumo del día supuso un gasto de 0.82 euros. El fichero de texto que contiene el consumo diario de Endesa sigue el formato mostrado en el listado~\ref{lst:11marzo} (\textcopyright Endesa S.A.)\\
+El 11 de marzo en el hogar del alumno se produjo un consumo total de 7 KWh. El precio voluntario al pequeño consumor (PVPC) por defecto de ese día obtuvo cómo valor medio 0.12 euros, por lo tanto cómo mínimo el consumo del día supuso un gasto de 0.84 euros. El fichero de texto que contiene el consumo diario de Endesa sigue el formato mostrado en el listado~\ref{lst:11marzo} (\textcopyright Endesa S.A.)\\
 
 \begin{lstlisting}[float=ht,numbers=none,caption={Fichero de consumo por horas de Endesa},label={lst:11marzo}]
 CUPS:				ESXXXXXXXXXXXXXXXXXXXX
@@ -210,4 +210,40 @@ Tarifa :			No se encontró la tarifa
 
 Total (Wh):				7042.0
 \end{lstlisting}
-Mediante la función \textit{read\_from\_file()} del módulo \textit{client\_consumption} se procesa el fichero de consumo, se establecen los consumos en la unidad de KWh y se retorna una lista con los 24 consumos de las 24 del día, en este caso 11 de marzo. Esta lista será el valor que toma la variable de Simulation \textit{self.c}. Debido a que aún no se dispone de interfaz ni servidor, para ejecutar la simulación se ha empleado el intérprete de comandos ipython3. Se debe crear un objeto simulación con los argumentos necesarios explicados a lo largo de este capítulo y que se pueden observar en la clase UML de Simulation (Figura~\ref{fig:simulation}). Tras instanciar la simulación, se debe invocar el método \textit{optimize()} que implementa las restricciones y ejecuta el algoritmo de programación lineal.
+Mediante la función \textit{read\_from\_file()} del módulo \textit{client\_consumption} se procesa el fichero de consumo, se establecen los consumos en la unidad de KWh y se retorna una lista con los 24 consumos de las 24 del día, en este caso 11 de marzo. Esta lista será el valor que toma la variable de Simulation \textit{self.c}. Debido a que aún no se dispone de interfaz ni servidor, para ejecutar la simulación se ha empleado el intérprete de comandos ipython3. Se debe crear un objeto simulación con los argumentos necesarios explicados a lo largo de este capítulo y que se pueden observar en la clase UML de Simulation (Figura~\ref{fig:simulation}). Tras instanciar en un objeto la simulación, se debe invocar el método \textit{optimize()} que implementa las restricciones y ejecuta el algoritmo de programación lineal, obteniendo como salida el contenido del listado~\ref{lst:output}.\\
+
+\begin{lstlisting}[language=bash,float=ht,numbers=none,caption={Salida del algoritmo \textit{linprog}},label={lst:output}]
+fun: 0.6187091110614097
+message: 'Optimization terminated successfully.'
+nit: 236
+slack: array([ 8.16000000e-01,  8.16000000e-01,  8.16000000e-01,
+        8.16000000e-01,  2.66000000e-01,  2.66000000e-01,
+        2.66000000e-01,  2.66000000e-01,  0.00000000e+00,
+                                      . . .
+        5.91880000e+00,  4.68600000e+00,  1.05000000e+01,
+        5.02480000e+00,  1.05000000e+01,  1.05000000e+01])
+status: 0
+success: True
+x: array([0.00000000e+00, 1.98800000e-01, 0.00000000e+00,
+       0.00000000e+00, 0.00000000e+00, 0.00000000e+00,
+       1.68800000e-01, 0.00000000e+00, 0.00000000e+00,
+                                     . . .
+       0.00000000e+00, 0.00000000e+00, 0.00000000e+00,
+       3.58800000e-01, 0.00000000e+00, 0.00000000e+00])
+\end{lstlisting}
+Esta información es difícil de interpretar estando fuera de contexto.
+\begin{itemize}
+\item \textit{fun} es el resultado que toma la función \textit{f(x)} (Función~\ref{eq:funcionObjetivo}) como resultado de asignar a las variables los valores de la optimización. Dicho valor representa el \textbf{gasto económico} producido para el día simulado. Cómo se puede observar, se trata de 0.61 euros frente a los 0.84 euros que supuso el consumo del día utilizando solamente la energía de la compañia eléctrica. Se ha producido un ahorro del 27.38\% lo cuál es bastante significativo, teniendo en cuenta que el valor medio del PVPC del día 11 de marzo fue relativamente bajo con respecto al valor que suele oscilar (0.15 euros).
+\item \textit{message} devuelve \textit{feedback} sobre si la optimización ha tenido o no éxito, tomando en los campos \textit{status} y \textit{success} los valores 0 y True en caso de éxito; y los valores 1 y False en caso de error.
+\item \textit{nit} hace referencia a las iteraciones realizadas sobre las variables para determinar el valor óptimo obtenido. En este caso se han realizado 236 iteraciones.
+\item \textit{slack} contiene un array con los valores de las variables de holgura, donde cada variable de holgura corresponde con una de las restricciones de desigualdad.
+\item \textit{x} contiene el array en bruto de valores de variables que han hecho posible la optimización. Esta información ha de ser tratada y clasificada para poder ser interpretada, por lo que mediante la función \textit{store\_result()} se ha generado un fichero de reporte de simulación que contiene el valor de cada variable (EF, ER, EB, CB, CR, C y $ C_{int} $) en cada una de las horas de la simulación. Estos valores representan la cantidad de energía en KWh que debe tomarse en cada variable para producir la minimización del gasto económico.
+\end{itemize}
+Véase el Anexo A pues contiene el listado~\ref{lst:simulationReport} con la información procesada de la simulación.\\Cómo se puede observar, en la hora de comienzo de la simulación (0:00), la única fuente de energía es la energía de red, pues una de las restricciones implementadas es que durante la noche la energía fotovoltaica no es posible, y la batería aún no se ha cargado para permitir su extracción. Se puede observar que en algunas horas se genera más energía de la necesaria para satisfacer el consumo (C + $ C_{int} $). Esto es debido a que mediante la API aemet~\cite{Ree} se comprueba que en ese momento el precio PVPC se encuentra relativamente bajo por lo que resulta rentable importar más energía de la necesaria y almacenarla en batería para una hora en la que los precios suban. Es el caso de lo ocurrido en la hora 2:00 a.m. por ejemplo. A partir del amacener comienza a tenerse en cuenta la energía fotovoltaica, es el caso de la hora 8:00 a.m., donde se aprovecha su potencial para importar mucha más energía de la requerida y se almacena (Se requieren 0.65 KWh pero sin embargo son generados 0.816 KWh, aprovechando la diferencia para cargar la batería). Esto permite que en horas donde por causas meteorológicas (API AEMET~\cite{Aemet}) no sea posible emplear energía fotovoltaica se tengan alternativas a la energía de red, o también durante la noche, como es el caso de la hora 11:00 p.m., cuando la energía fotovoltaica no es posible y la energía de red tiene un precio más alto, se obtenga la totalidad de la energía requerida de la batería (EB).\\
+
+Tras esta simulación y la interpretación de resultados se han sacado las siguientes conclusiones:
+\begin{itemize}
+\item Se ha producido un ahorro económico en la simulación del día 11 de marzo mediante el caso propuesto con respecto al caso real, a pesar que es un día donde el PVPC se encuentra relativamente bajo, por lo que el ahorro producido en un caso de simulación de la media habría sido mucho mayor.
+\item Mediante el empleo de distintas fuentes de energía se ha producido una eficiencia energética.
+  \item La actuación reactiva del sistema con respecto a la información cambiante ya sea meteorológica o del mercado eléctrico permite garantizar que en cada momento la cantidad de energía en cada una de las fuentes es la cantdad óptima.
+\end{itemize}
