@@ -1,0 +1,247 @@
+-----------------------------------------------------
+--------------- Simulacion Completada ---------------
+-----------------------------------------------------
+Inicio:	2019-03-11 00:00:00
+Fin:	2019-03-12 00:00:00
+Gasto: 0.41970138707017 €
+
+Valores a las 00:00 11/03/19
+	· EF = 0.0 Kwh
+	· ER = 0.1988000000000012 Kwh
+	· EB = 0.0 Kwh
+	· CR = 0.0 Kwh
+	· CB = 0.0 Kwh
+	· Consumo del Hogar = 0.11 Kwh
+	· Consumo del Sistema = 0.0888 Kwh
+
+----------------------------------------------
+Valores a las 01:00 11/03/19
+	· EF = 0.0 Kwh
+	· ER = 0.1687999999999974 Kwh
+	· EB = 0.0 Kwh
+	· CR = 0.0 Kwh
+	· CB = 0.0 Kwh
+	· Consumo del Hogar = 0.08 Kwh
+	· Consumo del Sistema = 0.0888 Kwh
+
+----------------------------------------------
+Valores a las 02:00 11/03/19
+	· EF = 0.0 Kwh
+	· ER = 0.2547999999999977 Kwh
+	· EB = 0.0 Kwh
+	· CR = 0.0 Kwh
+	· CB = 0.0 Kwh
+	· Consumo del Hogar = 0.166 Kwh
+	· Consumo del Sistema = 0.0888 Kwh
+
+----------------------------------------------
+Valores a las 03:00 11/03/19
+	· EF = 0.0 Kwh
+	· ER = 0.22979999999999734 Kwh
+	· EB = 0.0 Kwh
+	· CR = 0.0 Kwh
+	· CB = 0.0 Kwh
+	· Consumo del Hogar = 0.141 Kwh
+	· Consumo del Sistema = 0.0888 Kwh
+
+----------------------------------------------
+Valores a las 04:00 11/03/19
+	· EF = 0.0 Kwh
+	· ER = 0.45860000000000056 Kwh
+	· EB = 0.0 Kwh
+	· CR = 0.0 Kwh
+	· CB = 0.2748000000000008 Kwh
+	· Consumo del Hogar = 0.095 Kwh
+	· Consumo del Sistema = 0.0888 Kwh
+
+----------------------------------------------
+Valores a las 05:00 11/03/19
+	· EF = 0.0 Kwh
+	· ER = 0.5205999999999982 Kwh
+	· EB = 0.0 Kwh
+	· CR = 0.0 Kwh
+	· CB = 0.30579999999999785 Kwh
+	· Consumo del Hogar = 0.126 Kwh
+	· Consumo del Sistema = 0.0888 Kwh
+
+----------------------------------------------
+Valores a las 06:00 11/03/19
+	· EF = 0.0 Kwh
+	· ER = 0.0 Kwh
+	· EB = 0.27479999999999905 Kwh
+	· CR = 0.0 Kwh
+	· CB = 0.0 Kwh
+	· Consumo del Hogar = 0.186 Kwh
+	· Consumo del Sistema = 0.0888 Kwh
+
+----------------------------------------------
+Valores a las 07:00 11/03/19
+	· EF = 0.0 Kwh
+	· ER = 0.0 Kwh
+	· EB = 0.30579999999999785 Kwh
+	· CR = 0.0 Kwh
+	· CB = 0.0 Kwh
+	· Consumo del Hogar = 0.217 Kwh
+	· Consumo del Sistema = 0.0888 Kwh
+
+----------------------------------------------
+Valores a las 08:00 11/03/19
+	· EF = 4.8 Kwh
+	· ER = 0.0 Kwh
+	· EB = 0.0 Kwh
+	· CR = 0.0 Kwh
+	· CB = 4.143199999999996 Kwh
+	· Consumo del Hogar = 0.568 Kwh
+	· Consumo del Sistema = 0.0888 Kwh
+
+----------------------------------------------
+Valores a las 09:00 11/03/19
+	· EF = 4.8 Kwh
+	· ER = 0.0 Kwh
+	· EB = 0.0 Kwh
+	· CR = 4.019199999999999 Kwh
+	· CB = 0.0 Kwh
+	· Consumo del Hogar = 0.692 Kwh
+	· Consumo del Sistema = 0.0888 Kwh
+
+----------------------------------------------
+Valores a las 10:00 11/03/19
+	· EF = 4.8 Kwh
+	· ER = 0.0 Kwh
+	· EB = 0.0 Kwh
+	· CR = 4.431200000000003 Kwh
+	· CB = 0.0 Kwh
+	· Consumo del Hogar = 0.28 Kwh
+	· Consumo del Sistema = 0.0888 Kwh
+
+----------------------------------------------
+Valores a las 11:00 11/03/19
+	· EF = 4.8 Kwh
+	· ER = 0.0 Kwh
+	· EB = 0.0 Kwh
+	· CR = 4.4952000000000005 Kwh
+	· CB = 0.0 Kwh
+	· Consumo del Hogar = 0.216 Kwh
+	· Consumo del Sistema = 0.0888 Kwh
+
+----------------------------------------------
+Valores a las 12:00 11/03/19
+	· EF = 4.316 Kwh
+	· ER = 0.0 Kwh
+	· EB = 0.0 Kwh
+	· CR = 4.0782 Kwh
+	· CB = 0.0 Kwh
+	· Consumo del Hogar = 0.149 Kwh
+	· Consumo del Sistema = 0.0888 Kwh
+
+----------------------------------------------
+Valores a las 13:00 11/03/19
+	· EF = 4.316 Kwh
+	· ER = 0.0 Kwh
+	· EB = 0.0 Kwh
+	· CR = 3.879199999999998 Kwh
+	· CB = 0.0 Kwh
+	· Consumo del Hogar = 0.348 Kwh
+	· Consumo del Sistema = 0.0888 Kwh
+
+----------------------------------------------
+Valores a las 14:00 11/03/19
+	· EF = 4.316 Kwh
+	· ER = 0.0 Kwh
+	· EB = 0.0 Kwh
+	· CR = 3.5502000000000002 Kwh
+	· CB = 0.0 Kwh
+	· Consumo del Hogar = 0.677 Kwh
+	· Consumo del Sistema = 0.0888 Kwh
+
+----------------------------------------------
+Valores a las 15:00 11/03/19
+	· EF = 1.816 Kwh
+	· ER = 0.0 Kwh
+	· EB = 0.0 Kwh
+	· CR = 0.0 Kwh
+	· CB = 1.3882000000000012 Kwh
+	· Consumo del Hogar = 0.339 Kwh
+	· Consumo del Sistema = 0.0888 Kwh
+
+----------------------------------------------
+Valores a las 16:00 11/03/19
+	· EF = 4.8 Kwh
+	· ER = 0.0 Kwh
+	· EB = 0.0 Kwh
+	· CR = 4.343199999999995 Kwh
+	· CB = 0.0 Kwh
+	· Consumo del Hogar = 0.368 Kwh
+	· Consumo del Sistema = 0.0888 Kwh
+
+----------------------------------------------
+Valores a las 17:00 11/03/19
+	· EF = 4.8 Kwh
+	· ER = 0.0 Kwh
+	· EB = 0.0 Kwh
+	· CR = 4.011799999999999 Kwh
+	· CB = 0.5074000000000005 Kwh
+	· Consumo del Hogar = 0.192 Kwh
+	· Consumo del Sistema = 0.0888 Kwh
+
+----------------------------------------------
+Valores a las 18:00 11/03/19
+	· EF = 4.8 Kwh
+	· ER = 0.0 Kwh
+	· EB = 0.0 Kwh
+	· CR = 0.0 Kwh
+	· CB = 4.509200000000001 Kwh
+	· Consumo del Hogar = 0.202 Kwh
+	· Consumo del Sistema = 0.0888 Kwh
+
+----------------------------------------------
+Valores a las 19:00 11/03/19
+	· EF = 4.8 Kwh
+	· ER = 0.0 Kwh
+	· EB = 0.0 Kwh
+	· CR = 4.536200000000002 Kwh
+	· CB = 0.0 Kwh
+	· Consumo del Hogar = 0.175 Kwh
+	· Consumo del Sistema = 0.0888 Kwh
+
+----------------------------------------------
+Valores a las 20:00 11/03/19
+	· EF = 4.8 Kwh
+	· ER = 0.0 Kwh
+	· EB = 10.141199999999998 Kwh
+	· CR = 14.204400000000003 Kwh
+	· CB = 0.0 Kwh
+	· Consumo del Hogar = 0.648 Kwh
+	· Consumo del Sistema = 0.0888 Kwh
+
+----------------------------------------------
+Valores a las 21:00 11/03/19
+	· EF = 4.8 Kwh
+	· ER = 0.0 Kwh
+	· EB = 0.04800000000000182 Kwh
+	· CR = 4.280199999999998 Kwh
+	· CB = 0.0 Kwh
+	· Consumo del Hogar = 0.479 Kwh
+	· Consumo del Sistema = 0.0888 Kwh
+
+----------------------------------------------
+Valores a las 22:00 11/03/19
+	· EF = 0.0 Kwh
+	· ER = 0.0 Kwh
+	· EB = 0.4068000000000005 Kwh
+	· CR = 0.0 Kwh
+	· CB = 0.0 Kwh
+	· Consumo del Hogar = 0.318 Kwh
+	· Consumo del Sistema = 0.0888 Kwh
+
+----------------------------------------------
+Valores a las 23:00 11/03/19
+	· EF = 0.0 Kwh
+	· ER = 0.0 Kwh
+	· EB = 0.35880000000000045 Kwh
+	· CR = 0.0 Kwh
+	· CB = 0.0 Kwh
+	· Consumo del Hogar = 0.27 Kwh
+	· Consumo del Sistema = 0.0888 Kwh
+
+----------------------------------------------
