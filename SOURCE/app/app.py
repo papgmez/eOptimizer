@@ -8,8 +8,7 @@ import client_consumption as c_utils
 import json
 import os
 
-from flask import jsonify
-from flask import Flask, make_response, abort, request, redirect, url_for, render_template, session
+from flask import Flask, make_response, abort, request, redirect, url_for, render_template, session, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.exc import IntegrityError
 from models import Base, Users, Homes
@@ -149,17 +148,17 @@ def simulation():
             consumption_file = c_utils.store_upload_file(upload_file, currentUser.id)
             consumption = c_utils.read_from_file(consumption_file)
 
-            current_sim = Simulation(currentHome, consumption, start_date)
+            current_sim = Simulation(currentHome, currentUser, consumption, start_date)
             data = current_sim.optimize()
 
             result = json.loads(data)
 
-            return make_response(jsonify(result), 200)
+            return render_template('simulation.html', simulation=result, user=currentUser)
         else:
             return render_template('dashboard.html', user=currentUser,
                                           home=currentHome, errors=errors)
     else:
-        return redirect(url_for('do_login'))
+        return redirect(url_for('index'))
 
 @app.route('/logout')
 def do_logout():
@@ -178,10 +177,13 @@ def do_logout():
 def change_form():
     return render_template('login.html', flag='signup')
 
+@app.route('/simulations/<path:filename>')
+def download_file(filename):
+    return send_from_directory(prod_config.SIMULATIONS_FOLDER, filename, as_attachment=True)
+
 @app.errorhandler(404)
 def not_found(error):
     return render_template('not_found.html', error=error)
-
 
 if __name__ == "__main__":
     app.secret_key = os.urandom(10)

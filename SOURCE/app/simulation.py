@@ -13,12 +13,13 @@ from scipy.optimize import linprog
 
 
 class Simulation:
-    def __init__(self, home, c, date):
+    def __init__(self, home, user, c, date):
         # ---- time bounds of the simulation ----
         self.start = date
         self.end = self.start + dt.timedelta(1)
         # ---- attr ----
         self.home = home
+        self.user = user
         self.discharge_depth = const.DISCH_DEPTH
         self.battery_capacity = const.BAT_CAPACITY
         self.battery_level = self.battery_capacity * 0.5
@@ -175,9 +176,11 @@ class Simulation:
     def prepare_result(self, res):
         values = res.x.tolist()
         data = {
-            "start" : self.start.strftime("%Y-%m-%d %H:%M:%S"),
-            "end" : self.end.strftime("%Y-%m-%d %H:%M:%S"),
-            "result" : res.fun,
+            "date" : self.start.strftime("%d-%m-%Y"),
+            "start" : self.start.strftime("%H:%M:%S"),
+            "end" : self.end.strftime("%H:%M:%S"),
+            "created_at" : dt.datetime.now().strftime("%Y-%m-%d_%H:%M"),
+            "result" : round(res.fun, 3),
             "hours" : self.prepare_hours(values)
         }
 
@@ -186,37 +189,65 @@ class Simulation:
     def prepare_hours(self, values):
         hours = []
 
+        for i in range(0, len(values)):
+            # Parse results to Watios in case of json result
+            values[i] *= 1000
+
         for i in range(0, 24):
-            hours.append({"EF" : values[i*5],
-                          "ER" : values[i*5+1],
-                          "EB" : values[i*5+2],
-                          "CR" : values[i*5+3],
-                          "CB" : values[i*5+4],
-                          "C" : self.c[i],
-                          "C_int" : self.c_int
+            total_generated = values[i*5] + values[i*5+1] + values[i*5+2]
+            total_consumed = self.c[i] + values[i*5+3] + values[i*5+4] + self.c_int
+
+            hours.append({"EF" : round(values[i*5], 3),
+                          "EF_rate" : self.get_energy_rate(values[i*5], total_generated),
+                          "EF_price" : round(self.ef_price, 3),
+                          "ER" : round(values[i*5+1], 3),
+                          "ER_rate" : self.get_energy_rate(values[i*5+1], total_generated),
+                          "ER_price" : self.er_price[i],
+                          "EB" : round(values[i*5+2], 3),
+                          "EB_rate" : self.get_energy_rate(values[i*5+2], total_generated),
+                          "EB_price" : round(self.eb_price, 3),
+                          "C" : round(self.c[i] * 1000, 3),
+                          "C_rate" : self.get_energy_rate(self.c[i], total_consumed),
+                          "CR" : round(values[i*5+3], 3),
+                          "CR_rate" : self.get_energy_rate(values[i*5+3], total_consumed),
+                          "CR_price" : self.cr_price[i],
+                          "CB" : round(values[i*5+4], 3),
+                          "CB_rate" : self.get_energy_rate(values[i*5+4], total_consumed),
+                          "CB_price" : round(self.cb_price[i], 3),
+                          "C_int" : self.c_int * 1000,
+                          "Cint_rate" : self.get_energy_rate(self.c_int, total_consumed)
                          })
 
         return hours
 
+    def get_energy_rate(self, amount, total_amount):
+        return amount * 100 / total_amount
+
     def store_result(self, res):
         values = res.x.tolist()
-        created_at = dt.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        out = open("simulations/simulation_{}".format(created_at), "w")
+        created_at = dt.datetime.now().strftime("%Y-%m-%d_%H:%M")
+        out = open("simulations/simulation_{}.txt".format(created_at), "w")
 
         out.write("-----------------------------------------------------\n")
-        out.write("--------------- Simulacion Completada ---------------\n")
+        out.write("--------------- Reporte de Simulacion ---------------\n")
+        out.write("-----------------------------------------------------\n")
+        out.write("Usuario: {}\n".format(self.user.email))
+        out.write("Nombre: {} {}\n".format(self.user.name, self.user.lastname))
+        out.write("Numero de modulos fotovoltaicos: {}\n".format(self.home.pv_modules))
+        out.write("Capacidad de la bateria: {} KW\n".format(self.battery_capacity))
         out.write("-----------------------------------------------------\n")
         out.write("Inicio:\t{}\nFin:\t{}\n".format(self.start, self.end))
-        out.write("Gasto: {} €\n\n".format(res.fun))
+        out.write("Gasto producido: {} €\n\n".format(res.fun))
 
         for i in range(0, 24):
-            current_hour = (self.start+dt.timedelta(hours=i)).strftime("%H:%M %d/%m/%y")
-            out.write("Valores a las {}\n".format(current_hour))
-            out.write("\t· EF = {} Kwh\n".format(values[i*5]))
-            out.write("\t· ER = {} Kwh\n".format(values[i*5+1]))
-            out.write("\t· EB = {} Kwh\n".format(values[i*5+2]))
-            out.write("\t· CR = {} Kwh\n".format(values[i*5+3]))
-            out.write("\t· CB = {} Kwh\n".format(values[i*5+4]))
+            current_hour = (self.start+dt.timedelta(hours=i)).strftime("%H:%M")
+            next_hour = (self.start+dt.timedelta(hours=i+1)).strftime("%H:%M")
+            out.write("Valores optimos entre las {} y las {}\n".format(current_hour, next_hour))
+            out.write("\t· Energía Fotovoltaica = {} Kwh\n".format(values[i*5]))
+            out.write("\t· Energía de Red = {} Kwh\n".format(values[i*5+1]))
+            out.write("\t· Energía de Bateria = {} Kwh\n".format(values[i*5+2]))
+            out.write("\t· Venta a la Red = {} Kwh\n".format(values[i*5+3]))
+            out.write("\t· Consumo de Bateria = {} Kwh\n".format(values[i*5+4]))
             out.write("\t· Consumo del Hogar = {} Kwh\n".format(self.c[i]))
             out.write("\t· Consumo del Sistema = {} Kwh\n".format(self.c_int))
             out.write("\n----------------------------------------------\n")
