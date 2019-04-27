@@ -7,11 +7,17 @@ Son las fuentes de suministro de energía al sistema. Habrá un total de tres:
 	\item \textbf{Energía almacenada en batería (EB)}\\ Energía obtenida de la batería de almacenaje, que se ha guardado previamente para su posterior uso cuando el resto de fuentes de entrada tengan un mayor costo. Al igual que la energía fotovoltaica tiene un límite superior y viene determinado por la cantidad de carga de la misma y la profundidad de descarga que se le puede realizar sin resultar perjudicial para su ciclo de vida, que debe ser de un 50\% como máximo.
 \end{itemize}
 
-Cómo se ha mencionado, la energía fotovoltaica en una hora t será dependiente de la situación meteorológica de esa hora, algo evidente.\\Para obtener dicha información se utiliza la API oficial de AEMET \cite{Aemet}. Una API (\textit{Application Programming Interface}) es un conjunto de reglas o especificaciones que permite a las aplicaciones proporcionar servicios a otras o comunicarse. Para su uso, se ha debido solicitar un \textbf{API key} ya que es una API cerrada, esto es, su uso está restringido a un conjunto cerrado de clientes. Para realizar una petición a la misma, debe incluirse el \textit{API key} mencionado anteriormente en la url solicitada, así como una serie de parámetros como el código del municipio que se desea consultar. La respuesta a la petición contiene la previsión meteorológica de las próximas 24 horas en ese municipio.\\Para esta funcionalidad se ha creado el módulo \textit{api\_aemet}, que contiene la función \textit{get\_weather}, la cual se muestra en el listado~\ref{lst:aemet}
-\begin{lstlisting}[language=Python,float=ht,caption={Función para obtener los valores meteorológicos},label={lst:aemet}]
-def get_weather (city):
+Cómo se ha mencionado, la energía fotovoltaica en una hora t será dependiente de la situación meteorológica de esa hora, algo evidente. Para contar con información meteorológica en desarrollo software existen conjuntos de herramientas o servicios que ponen dicha información a disposición del desarrollador, como por ejemplo una API. Una API (\textit{Application Programming Interface}) es un conjunto de reglas o especificaciones que permite a las aplicaciones proporcionar servicios a otras o comunicarse.\\
+
+En este trabajo fin de grado se emplea la API oficial de AEMET \cite{Aemet}. Para su uso, se ha debido solicitar un \textbf{API key} ya que es una API cerrada, esto es, su uso está restringido a un conjunto cerrado de clientes. Para realizar una petición a la misma, debe incluirse el \textit{API key} mencionado anteriormente en la url solicitada, así como una serie de parámetros como el código del municipio que se desea consultar.\\
+
+Para obtener y procesar la información recibida por la API se ha creado el módulo \textit{api\_aemet}, que contiene dos funciones para la obtención de información, una que se encarga de obtener la información referente al día en curso y otra que se encarga de obtener la información cuando la simulación se desea realizar de un día concreto. El motivo de diferenciarlas es que la API no realiza una respuesta con predicciones por horas de un día distinto al actual, devolviendo en su defecto un texto en lenguaje natural con un resumen de lo ocurrido meteorológicamente dicho día para estos casos. Dichas funciones se explican a continuación. Nótese que la url para la petición es obtenida como una constante de \textit{const}, alias que hace referencia al módulo de constantes del proyecto: \textit{project\_constants}.
+\begin{itemize}
+\item \textit{\textbf{get\_weather\_today}} (listado~\ref{lst:aemet1}). Esta función realiza una petición a la API mediante la librería \textit{requests}~\cite{Kenn11}, y en caso de obtener un código de éxito (código de estado http 200), procesa la respuesta recibida. Dicha respuesta es fácilmente procesable pues es un conjunto de parámetros clave-valor. Se procesa en la función \textbf{create\_weather\_buffer} y devuelve una lista con los 24 estados meteorológicos, correspondientes a las 24 horas de la simulación, del tipo: ["Despejado", "Poco Nuboso", "Despejado", ..., "Despejado"]
+\begin{lstlisting}[language=Python,float=ht,caption={Función para obtener los valores meteorológicos del día en curso},label={lst:aemet1}]
+def get_weather_today(city):
     weather_buffer = []
-    url = const.AEMET_URL.replace('$CITY', city)
+    url = const.AEMET_URL_NOW.replace('$CITY', city)
     response = requests.get(url)
     data = response.json()
 
@@ -23,7 +29,41 @@ def get_weather (city):
         return weather_buffer
     return None
 \end{lstlisting}
- Nótese que la url para la petición es obtenida como una constante de \textit{const}, alias que hace referencia al módulo de constantes del proyecto: \textit{project\_constants}. Este método realiza una petición a la API mediante la librería \textit{requests}~\cite{Kenn11}, y en caso de obtener un código de éxito (código de estado http 200), procesa la respuesta en la función \textbf{create\_weather\_buffer} y devuelve una lista con los 24 estados meteorológicos, correspondientes a las 24 horas de la simulación, del tipo: ["Despejado", "Poco Nuboso", "Despejado", ..., "Despejado"]\\
+
+\item \textit{\textbf{get\_weather\_archive}} (listado~\ref{lst:aemet2}). Esta función realiza la petición a la API de manera similar a la anterior, salvo que debe incluir en la url el parámetro específico de la fecha que se desea consultar. En este caso la respuesta no es procesable tan fácilmente pues no se trata de parámetros clave-valor. En su lugar se ha de procesar un texto en lenguaje natural (Observesé en el listado~\ref{lst:aemet1} cómo la respuesta es convertida a \textit{json} y en este caso es convertida a \textit{text}). Para su resolución, se ha implementado la función \textit{proccess\_weather\_archive} que realiza una \textbf{búsqueda de ocurrencias} de estados meteorológicos conocidos en el texto en lenguaje natural, obteniendo así información acerca del estado meterológico que se produjo ese día. Se forma el buffer con los estados meteorológicos encontrados en el texto y se devuelve como lista similar a la del caso anterior. En el listado~\ref{lst:APIresponse2} se muestra un ejemplo del tipo de respuesta obtenida. En este caso se encontraría una ocurrencia de un estado meteorológico ('despejado'), por lo tanto se formaría el buffer del estado del cielo con 'Despejado'.
+\begin{lstlisting}[language=Python,float=ht,caption={Función para obtener los valores meteorológicos de un día concreto},label={lst:aemet2}]
+def get_weather_archive(date, city):
+    weather_buffer = []
+    province = city[:2]
+    url = const.AEMET_URL_DATE.replace('$PROVINCE', province).replace('$DATE', date)
+
+    response = requests.get(url)
+    data = response.json()
+
+    if data['estado'] == 200:
+        url = data['datos']
+        response = requests.get(url)
+        raw_info = response.text
+        weather_buffer = proccess_weather_archive(raw_info)
+        return weather_buffer
+    else:
+        return None
+\end{lstlisting}
+\begin{lstlisting}[numbers=none,float=ht,caption={Ejemplo de respuesta de la API - AEMET para un día concreto},label={lst:APIresponse2}]
+AGENCIA ESTATAL DE METEOROLOGÍA
+
+PREDICCIÓN PARA LA PROVINCIA DE TOLEDO
+DÍA 12 DE FEBRERO DE 2019 A LAS 14:01 HORA OFICIAL
+PREDICCIÓN VALIDA PARA EL MARTES 12
+
+
+TOLEDO
+
+Cielos despejados. Temperaturas mínimas en descenso. Temperaturas
+máximas con pocos cambios predominando los aumentos en la Mancha.
+Vientos flojos del este y nordeste tendiendo a flojos variables.
+\end{lstlisting}
+\end{itemize}
 
 Las variables de entrada no son excluyentes, es decir, se puede obtener un tanto por ciento de la energía requerida procedente de cada una de ellas, lo que vendrá determinado por el precio en ese momento de cada una, ya que lo que buscamos es minimizar el gasto producido. A continuación se muestra el modo de determinación de los precios de las variables de entrada en una hora t: \\
 
