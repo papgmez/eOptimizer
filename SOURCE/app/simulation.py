@@ -23,7 +23,7 @@ class Simulation:
         self.discharge_depth = const.DISCH_DEPTH
         self.battery_capacity = const.BAT_CAPACITY
         self.battery_level = self.battery_capacity * 0.5
-        self.max_ef_buffer = self.calculate_max_ef_buffer()
+        self.max_ef_buffer = self.calculate_max_ef_buffer(date)
         # ---- prices ----
         self.ef_price = self.calculate_ef_price()
         self.er_price = esios.get_incoming_prices(const.PVPC, self.start, self.end)
@@ -33,13 +33,19 @@ class Simulation:
         # ---- home consumptions ----
         self.c_int = const.C_INT
         self.c = c
+        self.comparable_result = self.calculate_comparable_result()
         # ---- simulation arguments ----
         self.f = self.generate_function_coeficients() # coeficients of the function to minimize
         self.A_eq, self.b_eq, self.A_ub, self.b_ub = [], [], [], [] # restrictions arrays
 
-    def calculate_max_ef_buffer(self):
-        wb = aemet.get_weather(self.home.city_code)
+    def calculate_max_ef_buffer(self, date):
+        today = dt.datetime.now()
         max_values = []
+
+        if date.date() == today.date():
+            wb = aemet.get_weather_today(self.home.city_code)
+        else:
+            wb = aemet.get_weather_archive(date.strftime("%Y-%m-%d"), self.home.city_code)
 
         for state in wb:
             max_values.append(self.home.pv_modules * const.FUZZY_SETS.get(state)/1000)
@@ -69,6 +75,14 @@ class Simulation:
                 prices.append(self.er_price[i])
 
         return prices
+
+    def calculate_comparable_result(self):
+        price = 0
+
+        for i in range(0, 24):
+            price += self.er_price[i] * self.c[i]
+
+        return price
 
     def generate_function_coeficients(self):
         f = []
@@ -181,6 +195,7 @@ class Simulation:
             "end" : self.end.strftime("%H:%M:%S"),
             "created_at" : dt.datetime.now().strftime("%Y-%m-%d_%H:%M"),
             "result" : round(res.fun, 3),
+            "comparable_result" : round(self.comparable_result, 3),
             "hours" : self.prepare_hours(values)
         }
 
@@ -195,7 +210,7 @@ class Simulation:
 
         for i in range(0, 24):
             total_generated = values[i*5] + values[i*5+1] + values[i*5+2]
-            total_consumed = self.c[i] + values[i*5+3] + values[i*5+4] + self.c_int
+            total_consumed = self.c[i]*1000 + values[i*5+3] + values[i*5+4] + self.c_int*1000
 
             hours.append({"EF" : round(values[i*5], 3),
                           "EF_rate" : self.get_energy_rate(values[i*5], total_generated),
@@ -207,7 +222,7 @@ class Simulation:
                           "EB_rate" : self.get_energy_rate(values[i*5+2], total_generated),
                           "EB_price" : round(self.eb_price, 3),
                           "C" : round(self.c[i] * 1000, 3),
-                          "C_rate" : self.get_energy_rate(self.c[i], total_consumed),
+                          "C_rate" : self.get_energy_rate(self.c[i]*1000, total_consumed),
                           "CR" : round(values[i*5+3], 3),
                           "CR_rate" : self.get_energy_rate(values[i*5+3], total_consumed),
                           "CR_price" : self.cr_price[i],
@@ -215,7 +230,7 @@ class Simulation:
                           "CB_rate" : self.get_energy_rate(values[i*5+4], total_consumed),
                           "CB_price" : round(self.cb_price[i], 3),
                           "C_int" : self.c_int * 1000,
-                          "Cint_rate" : self.get_energy_rate(self.c_int, total_consumed)
+                          "Cint_rate" : self.get_energy_rate(self.c_int*1000, total_consumed)
                          })
 
         return hours
@@ -237,7 +252,8 @@ class Simulation:
         out.write("Capacidad de la bateria: {} KW\n".format(self.battery_capacity))
         out.write("-----------------------------------------------------\n")
         out.write("Inicio:\t{}\nFin:\t{}\n".format(self.start, self.end))
-        out.write("Gasto producido: {} €\n\n".format(res.fun))
+        out.write("Gasto con el sistema e-Optimizer: {} €\n\n".format(res.fun))
+        out.write("Gasto con energía de red únicamente: {} €\n\n".format(self.comparable_result))
 
         for i in range(0, 24):
             current_hour = (self.start+dt.timedelta(hours=i)).strftime("%H:%M")

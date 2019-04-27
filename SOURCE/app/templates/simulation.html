@@ -26,7 +26,17 @@
 	    </button>
 	    <p>The simulation was successful and results obtained are shown below.</p>
 	    <hr>
-	    <p class="mb-0">The resulting cost was <strong>{{ simulation['result'] }} €</strong></p>
+	    <p class="mb-0">The day cost with e-Optimizer would have been <strong>{{ simulation['result'] }} €</strong></p>
+	  </div>
+	</div>
+	<div clas="row">
+	  <div class="col-12">
+	    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+	      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+	      </button>
+	      <p class="mb-0">The day cost with only grid energy was <strong>{{ simulation['comparable_result'] }} €</strong></p>
+	    </div>
 	  </div>
 	</div>
       </div>
@@ -51,7 +61,7 @@
 		    <th scope="col">C</th>
 		    <th scope="col">CR</th>
 		    <th scope="col">CB</th>
-		    <th scope="col">Cint</th>
+		    <th scope="col">C int</th>
 		    <th scope="col">Energy Generated</th>
 		    <th scope="col">Energy Consumed</th>
 		  </tr>

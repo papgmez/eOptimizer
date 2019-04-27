@@ -20,8 +20,8 @@ BAT_CAPACITY = 21
 
 # Constantes respecto al Consumo
 # ---------------------------------
-# Consumo del sistema por funcionamiento (2KWh al dia) (KWh)
-C_INT = 0.0888
+# Consumo del sistema por funcionamiento (1KWh al dia) (KWh)
+C_INT = 0.044
 
 # --------- API Aemet OpenData ---------
 # Codigos de la API OpenData de AEMET
@@ -32,8 +32,8 @@ C_INT = 0.0888
 AEMET_KEY = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYWJsby5wYWxvbWlubzFAb3V0bG9vay5jb20iLCJqdGkiOiJmOGFhZTdiNi0yYWIzLTQzOTktYjU3Mi0zNDBlYWE2OGUwMDUiLCJpc3MiOiJBRU1FVCIsImlhdCI6MTU0ODU4NTE1NywidXNlcklkIjoiZjhhYWU3YjYtMmFiMy00Mzk5LWI1NzItMzQwZWFhNjhlMDA1Iiwicm9sZSI6IiJ9.4VGEUO4v-ncytcyWuaNwHBBvhhIAW5r-5Es0VAFiLr8'
 
 # url api AEMET OpenData
-AEMET_URL = 'https://opendata.aemet.es/opendata/api/prediccion/especifica/municipio/horaria/$CITY/?api_key={}'.format(AEMET_KEY)
-
+AEMET_URL_NOW = 'https://opendata.aemet.es/opendata/api/prediccion/especifica/municipio/horaria/$CITY/?api_key={}'.format(AEMET_KEY)
+AEMET_URL_DATE = 'https://opendata.aemet.es/opendata/api/prediccion/provincia/hoy/$PROVINCE/elaboracion/$DATE/?api_key={}'.format(AEMET_KEY)
 # --------- API Esios REE ---------
 # Token para la API de Esios (Red Electrica de España)
 ESIOS_TOKEN = '879c5ab5bc0211a1ba23527736e3402a0e708f0a5e7c370f0274004e676ee5f6'

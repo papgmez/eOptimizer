@@ -21,8 +21,11 @@ def read_from_file(filename):
     for i in range(0, 24):
         hour = consumption_file.readline().split("\t\t\t\t")
         # the value in file is in Wh
-        values.append(float(hour[2])/1000)
-    consumption_file.close()
+        try:
+            values.append(float(hour[2])/1000)
+        except ValueError:
+            return None
+        consumption_file.close()
     return values
 
 def store_upload_file(upload_file, userid):

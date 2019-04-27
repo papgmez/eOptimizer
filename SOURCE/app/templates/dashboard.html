@@ -35,8 +35,8 @@
 	    </li>
 	     <li class="list-group-item d-flex justify-content-between align-items-center">
 	      <img src="static/img/battery_icon.png" style="width: 8%; height: 8%" alt=""/>
-	      Number of batteries
-	      <span class="badge badge-primary badge-pill">{{ home.pv_modules }}</span>
+	      Battery capacity (KW)
+	      <span class="badge badge-primary badge-pill">21</span>
 	    </li>
 	    <li class="list-group-item d-flex justify-content-between align-items-center">
 	      <img src="static/img/dollar_icon.png" style="width: 7%; height: 7%" alt=""/>
@@ -63,12 +63,12 @@
 	      <form action="{{ url_for('simulation') }}" method=post enctype=multipart/form-data>
 		<div class="form-group" style="color: #FFFFFF">
 		  <label for="form-start-date" class="form-label">&nbsp Simulation Date&nbsp&nbsp&nbsp &nbsp</label>
-		  <input class="col-7 col-form-control" type="date" name="form-start-date" id="form-start-date">
+		  <input class="col-7 col-form-control" type="date" name="form-start-date" id="form-start-date" max={{ max_date }}>
 		</div>
 		<div class="form-group">
 		  <div class="col-12 custom-file">
 		    <input type="file" class="custom-file-input" name="consumption-file" id="consumption-file">
-		    <label class="custom-file-label" for="consumption-file">Choose file</label>
+		    <label class="custom-file-label" for="consumption-file">Endesa consumption file ...</label>
 		  </div>
 		</div>
 		{% if errors %}
