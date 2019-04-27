@@ -25,7 +25,9 @@ def read_from_file(filename):
             values.append(float(hour[2])/1000)
         except ValueError:
             return None
-        consumption_file.close()
+
+    consumption_file.close()
+
     return values
 
 def store_upload_file(upload_file, userid):

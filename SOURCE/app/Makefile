@@ -6,3 +6,5 @@ clean:
 	$(RM) -rf $(shell find . -name *~)
 	$(RM) -rf $(shell find . -name *pyc)
 	$(RM) -rf *~ *.pyc
+	$(RM) simulations/*
+	$(RM) consumptions/*

@@ -59,13 +59,14 @@ def create_weather_buffer(data):
     return wb
 
 def proccess_weather_archive(raw_info):
+    raw_info = raw_info.lower()
     possible_states = const.FUZZY_SETS.keys()
     occurred_states = []
     wb_size = 0
 
     for state in possible_states:
-        if raw_info.find(state) != -1:
-            occurred_states.append(state)
+        if raw_info.find(state.lower()) != -1:
+            occurred_states.append(state.capitalize())
             wb_size += 1
 
         if wb_size >= 24: break
