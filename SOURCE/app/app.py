@@ -2,7 +2,6 @@
 # -*- coding: utf-8; mode: python -*-
 
 import datetime as dt
-import client_consumption as c_utils
 import json
 import os
 
@@ -12,6 +11,7 @@ from sqlalchemy.exc import IntegrityError
 from models import Base, Users, Homes
 from config import prod_config
 from simulation import Simulation
+from helpers import client_consumption as c_utils
 
 
 app = Flask(__name__)

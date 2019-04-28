@@ -4,12 +4,11 @@
 import datetime as dt
 import json
 
-import api_esios as esios
-import api_aemet as aemet
-
-from config import project_constants as const
-
 from scipy.optimize import linprog
+
+from helpers import api_esios as esios
+from helpers import api_aemet as aemet
+from config import project_constants as const
 
 
 class Simulation:
