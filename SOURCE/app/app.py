@@ -5,9 +5,11 @@ import datetime as dt
 import json
 import os
 
-from flask import Flask, make_response, abort, request, redirect, url_for, render_template, session, send_from_directory
+from flask import Flask, request, render_template, session, send_from_directory
+from flask import make_response, abort, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.exc import IntegrityError
+
 from models import Base, Users, Homes
 from config import prod_config
 from simulation import Simulation
@@ -35,7 +37,8 @@ def index():
     elif currentHome is None:
         return render_template('new_home.html')
     else:
-        return render_template('dashboard.html', user=currentUser, home=currentHome, max_date=today.strftime("%Y-%m-%d"))
+        return render_template('dashboard.html', user=currentUser, home=currentHome,
+                               max_date=today.strftime("%Y-%m-%d"))
 
 @app.route('/signup', methods=['POST'])
 def sign_up():
