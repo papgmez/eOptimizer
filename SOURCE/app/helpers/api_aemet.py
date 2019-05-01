@@ -3,7 +3,6 @@
 
 import time
 import requests
-import random as rd
 
 from config import project_constants as const
 
@@ -58,22 +57,26 @@ def create_weather_buffer(data):
             buffer_size += 1
     return wb
 
-def proccess_weather_archive(raw_info):
-    raw_info = raw_info.lower()
+def proccess_weather_archive(raw_text):
+    wb = []
+    occurrences = []
+    raw_text = raw_text.lower()
     possible_states = const.FUZZY_SETS.keys()
-    occurred_states = []
-    wb_size = 0
 
     for state in possible_states:
-        if raw_info.find(state.lower()) != -1:
-            occurred_states.append(state.capitalize())
-            wb_size += 1
+        if raw_text.find(state.lower()) != -1:
+            occurrences.append(state.capitalize())
 
-        if wb_size >= 24: break
+        if len(occurrences) >= 24: break
 
-    # To fill the remaining slots in the buffer, randomly concatenates states of those occurred
-    while wb_size < 24:
-        occurred_states.append(rd.choice(occurred_states))
-        wb_size += 1
+    interval = 24 // len(occurrences)
 
-    return occurred_states
+    for state in occurrences:
+        for i in range(0, interval):
+            wb.append(state)
+
+    # To fill the remaining slots in the buffer, concatenates last state of those occurred
+    while len(wb) < 24:
+        wb.append(occurrences[-1])
+
+    return wb

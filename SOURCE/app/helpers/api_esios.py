@@ -36,7 +36,7 @@ def create_price_buffer(data,start):
         price_date = dt.datetime.strptime(price['datetime'].split('.')[0], "%Y-%m-%dT%H:%M:%S")
 
         if price['geo_name'] == 'España' and (price_date.date() > start.date() or (price_date.date() == start.date() and price_date.hour >= start.hour)):
-            pb.append(round(price['value']/1000,3)) # price in €/kwh
+            pb.append(round(price['value']/1000, 3)) # price in €/kwh
             pb_size += 1
 
         if pb_size >= 24: break
