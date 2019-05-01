@@ -1,55 +1,39 @@
 #!/usr/bin/python3
 
-import datetime as dt
-import home_consumption as home
-
 # Fichero de Constantes
 # =====================
-START = dt.datetime(2019, 3, 11, 0, 0, 0)
-END = START + dt.timedelta(1)
-
 # Constantes respecto a EF (energia fotovoltaica)
 # --------------------------------------------------
-# Numero de modulos fotovoltaicos empleados (PN=50W).
-PV_MODULES = 100
 # Precio de cada modulo fotovoltaico (€)
 MODULE_PRICE = 40
 # Produccion anual estimada de un modulo (KW)
-YEARLY_POWER_PH_ESTIMATE = 96
-# Numero de años en los que se desea amortizar la inversion de los modulos fotovoltaicos
-YEARS_TO_AMORTIZE_PH = 8
+YEAR_PV_ESTIM = 96
 
 # Constantes respecto a EB (energia de baterias)
 # -------------------------------------------------
 # Precio de la Baterías estacionaria (6 vasos, 12V) (€)
-BATTERY_PRICE = 7500
+BAT_PRICE = 7500
 # Profundidad de descarga
-DISCHARGE_DEPTH = 0.5
+DISCH_DEPTH = 0.5
 # Capacidad de Almacenaje en Kw
-BATTERY_CAPACITY = 21
-# Nivel de carga inicial de la bateria
-BATTERY_LEVEL = 0.5
-# Numero de años en los que se desea amortizar la inversion de las baterias
-YEARS_TO_AMORTIZE_BATT = 35
+BAT_CAPACITY = 21
 
 # Constantes respecto al Consumo
 # ---------------------------------
-# Consumo del sistema por funcionamiento (2KWh al dia) (KWh)
-C_INT = 0.0888
-# Consumo propio del hogar. Valor que debe ser satisfecho siempre
-C = home.read_from_file()
-# C = home.get_random_values()
+# Consumo del sistema por funcionamiento (1KWh al dia) (KWh)
+C_INT = 0.044
 
 # --------- API Aemet OpenData ---------
-# Codigo de la API OpenData de AEMET
-CITY_CODE = '45053' # Consuegra (Toledo)
+# Codigos de la API OpenData de AEMET
+# Consuegra (Toledo)
+# CITY_CODE = '45053'
 
 # Api key para el manejo de OpenData AEMET
 AEMET_KEY = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYWJsby5wYWxvbWlubzFAb3V0bG9vay5jb20iLCJqdGkiOiJmOGFhZTdiNi0yYWIzLTQzOTktYjU3Mi0zNDBlYWE2OGUwMDUiLCJpc3MiOiJBRU1FVCIsImlhdCI6MTU0ODU4NTE1NywidXNlcklkIjoiZjhhYWU3YjYtMmFiMy00Mzk5LWI1NzItMzQwZWFhNjhlMDA1Iiwicm9sZSI6IiJ9.4VGEUO4v-ncytcyWuaNwHBBvhhIAW5r-5Es0VAFiLr8'
 
 # url api AEMET OpenData
-AEMET_URL = 'https://opendata.aemet.es/opendata/api/prediccion/especifica/municipio/horaria/{}/?api_key={}'.format(CITY_CODE, AEMET_KEY)
-
+AEMET_URL_NOW = 'https://opendata.aemet.es/opendata/api/prediccion/especifica/municipio/horaria/$CITY/?api_key={}'.format(AEMET_KEY)
+AEMET_URL_DATE = 'https://opendata.aemet.es/opendata/api/prediccion/provincia/hoy/$PROVINCE/elaboracion/$DATE/?api_key={}'.format(AEMET_KEY)
 # --------- API Esios REE ---------
 # Token para la API de Esios (Red Electrica de España)
 ESIOS_TOKEN = '879c5ab5bc0211a1ba23527736e3402a0e708f0a5e7c370f0274004e676ee5f6'

@@ -5,7 +5,7 @@ import datetime
 import requests
 import datetime as dt
 import random as rd
-import project_constants as const
+from config import project_constants as const
 
 headers = {
           'Accept' : 'application/json; application/vnd.esios-api-v1+json',
@@ -15,10 +15,8 @@ headers = {
           }
 
 
-def get_incoming_prices(indicator):
+def get_incoming_prices(indicator, start, end):
     global headers
-    start = const.START
-    end = const.END
     url = const.ESIOS_URL.replace('$INDICATOR',indicator).replace('$START_DATE',dt.datetime.strftime(start,'%Y/%m/%d')).replace('$END_DATE',dt.datetime.strftime(end,'%Y/%m/%d'))
     response = requests.get(url, headers=headers)
     if response.status_code == 200:
@@ -49,10 +47,3 @@ def create_price_buffer(data,start):
         pb_size += 1
 
     return pb
-
-'''
-if "__NAME__==__MAIN__":
-    print("Prices between {} and {}".format(const.START,const.END))
-    print(get_incoming_prices(const.PVPC))
-    print(get_incoming_prices(const.SPOT))
-'''

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block body %}
+<div class="top-content">
+  <div class="row">
+    <div class="col-12">
+      <div class="alert alert-danger" role="alert">
+	 {{ error }} You can return to Dashboard <a href="{{ url_for('index') }}" class="alert-link">here</a>.
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <br>
+      <img src="static/img/not_found.png" alt="">
+    </div>
+  </div>
+</div>
+<br>
+{% endblock %}
