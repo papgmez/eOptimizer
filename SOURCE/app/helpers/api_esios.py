@@ -24,8 +24,7 @@ def get_incoming_prices(indicator, start, end):
         price_buffer = create_price_buffer(data,start)
         return price_buffer
     else:
-        print("An error has occurred")
-        return None
+        return []
 
 def create_price_buffer(data,start):
     pb = []

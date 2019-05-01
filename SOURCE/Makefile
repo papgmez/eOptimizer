@@ -1,5 +1,7 @@
 run:
-	cd app/ && python3 app.py
+	cd app/ && python3 run.py runserver
+test:
+	cd app/ && nosetests test/
 install:
 	 pip3 install -r requirements.txt
 clean:

@@ -19,7 +19,7 @@ def get_weather_today(city):
         weather_buffer = create_weather_buffer(data)
         return weather_buffer
     else:
-        return None
+        return []
 
 def get_weather_archive(date, city):
     weather_buffer = []
@@ -36,7 +36,7 @@ def get_weather_archive(date, city):
         weather_buffer = proccess_weather_archive(raw_info)
         return weather_buffer
     else:
-        return None
+        return []
 
 def create_weather_buffer(data):
     wb = []

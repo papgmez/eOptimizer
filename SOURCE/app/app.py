@@ -15,11 +15,8 @@ from config import prod_config
 from simulation import Simulation
 from helpers import client_consumption as c_utils
 
-
 app = Flask(__name__)
-app.config.from_object(prod_config)
-db = SQLAlchemy(app)
-Base.metadata.create_all(bind=db.engine)
+db = SQLAlchemy()
 
 currentUser = None
 currentHome = None
@@ -192,7 +189,3 @@ def download_file(filename):
 @app.errorhandler(404)
 def not_found(error):
     return render_template('not_found.html', error=error)
-
-if __name__ == "__main__":
-    app.secret_key = os.urandom(10)
-    app.run(debug=True, host='0.0.0.0', port=7000)
