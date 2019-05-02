@@ -20,7 +20,6 @@ db = SQLAlchemy()
 
 currentUser = None
 currentHome = None
-login_attempts = 0
 today = dt.datetime.now()
 
 @app.route('/')
@@ -102,10 +101,6 @@ def add_home():
 def do_login():
     global currentUser
     global currentHome
-    global login_attempts
-
-    if login_attempts >= 3:
-        return render_template('login.html', flag='login', error='Max login attempts reached!')
 
     input_email = request.form['form-username']
     input_pass = request.form['form-password']
@@ -119,7 +114,6 @@ def do_login():
             return redirect(url_for('index'))
         else:
             # Password fails
-            login_attempts += 1
             return render_template('login.html', flag='login', error='Password fails. Try again')
     else:
         # User fails
@@ -169,11 +163,9 @@ def simulation():
 def do_logout():
     global currentUser
     global currentHome
-    global login_attempts
 
     currentUser = None
     currentHome = None
-    login_attempts = 0
     session['logged_in'] = False
 
     return render_template('login.html', flag='login')

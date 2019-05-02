@@ -5,11 +5,10 @@ import unittest
 import datetime as dt
 
 from app import app, db
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.exc import IntegrityError
+from faker import Faker
+from models import Base
 from config import test_config
-from models import Base, Users
+from flask_sqlalchemy import SQLAlchemy
 from factories import factory_models as factory
 
 class test_App(unittest.TestCase):
@@ -37,10 +36,6 @@ class test_App(unittest.TestCase):
                                                      'form-city_code' : home.city_code,
                                                      'form-amortization_years_pv' : home.amortization_years_pv,
                                                      'form-amortization_years_bt' : home.amortization_years_bat})
-    def test_index(self):
-        result = self.tester.get('/')
-
-        self.assertEqual(result.status_code, 200)
 
     def test_sign_up_and_add_home(self):
         testing_user = factory.generate_user()
@@ -62,13 +57,50 @@ class test_App(unittest.TestCase):
         self.assertEqual(login_result.status_code, 302)
         self.assertEqual(logout_result.status_code, 200)
 
-    def test_login_fail(self):
-        result = self.tester.post('/login', data = {'form-username' : 'fail@email.com',
+    def test_login_unknown_user(self):
+        fake_email = 'fail@email.com'
+        result = self.tester.post('/login', data = {'form-username' : fake_email,
+                                                    'form-password' : 'test'})
+
+        self.assertIn('User {} does not exists'.format(fake_email), str(result.data))
+
+    def test_login_incorrect_password(self):
+        testing_user = factory.generate_user()
+        self._add_user(testing_user)
+        result = self.tester.post('/login', data = {'form-username' : testing_user.email,
                                                     'form-password' : 'fail'})
 
-        self.assertNotEqual(result.status_code, 302)
+        self.assertIn('Password fails. Try again', str(result.data))
 
-    def test_simulation(self):
+    def test_index_without_logged_in(self):
+        result = self.tester.get('/')
+
+        self.assertIn('Enter username and password', str(result.data))
+        self.assertEqual(result.status_code, 200)
+
+    def test_index_with_logged_in_and_not_home_added(self):
+        testing_user = factory.generate_user()
+        self._add_user(testing_user)
+        self.tester.post('/login', data = {'form-username' : testing_user.email,
+                                                          'form-password' : 'test'})
+        result = self.tester.get('/')
+
+        self.assertIn('Enter your home data', str(result.data))
+        self.assertEqual(result.status_code, 200)
+
+    def test_index_with_logged_in_and_home_added(self):
+        testing_user = factory.generate_user()
+        testing_home = factory.generate_home(None)
+        self._add_user(testing_user)
+        self._add_home(testing_home)
+        self.tester.post('/login', data = {'form-username' : testing_user.email,
+                                                          'form-password' : 'test'})
+        result = self.tester.get('/')
+
+        self.assertIn('Dashboard', str(result.data))
+        self.assertEqual(result.status_code, 200)
+
+    def test_simulation_success(self):
         simulation_date = dt.datetime.now().strftime("%Y-%m-%d")
         testing_user = factory.generate_user()
         testing_home = factory.generate_home(None)
@@ -79,6 +111,31 @@ class test_App(unittest.TestCase):
         result = self.tester.post('/simulation', data = {'form-start-date' : simulation_date})
 
         self.assertEqual(result.status_code, 200)
+
+    def test_simulation_without_file(self):
+        simulation_date = Faker().date_this_year(before_today=True, after_today=False)
+        simulation_date = simulation_date.strftime("%Y-%m-%d")
+        testing_user = factory.generate_user()
+        testing_home = factory.generate_home(None)
+        self._add_user(testing_user)
+        self._add_home(testing_home)
+        self.tester.post('/login', data = {'form-username' : testing_user.email,
+                                           'form-password' : 'test'})
+        result = self.tester.post('/simulation', data = {'form-start-date' : simulation_date})
+
+        self.assertIn('You must upload your Endesa consumption', str(result.data))
+
+    def test_simulation_without_date(self):
+        testing_user = factory.generate_user()
+        testing_home = factory.generate_home(None)
+        self._add_user(testing_user)
+        self._add_home(testing_home)
+        self.tester.post('/login', data = {'form-username' : testing_user.email,
+                                           'form-password' : 'test'})
+        result = self.tester.post('/simulation', data = {'form-start-date' : ''})
+
+        self.assertIn('You must select a simulation date', str(result.data))
+
 
 if __name__ == '__main__':
     unittest.main()
