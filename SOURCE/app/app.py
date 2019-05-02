@@ -140,17 +140,17 @@ def simulation():
             errors.append('You must select a simulation date')
         else:
             start_date = dt.datetime.strptime(simulation_date, '%Y-%m-%d')
-            if start_date.date() == today.date():
+            if 'consumption-file' not in request.files and start_date.date() != today.date():
+                errors.append('You must upload your Endesa consumption')
+            elif start_date.date() == today.date():
                 consumption = c_utils.get_random_values()
             else:
                 upload_file = request.files['consumption-file']
                 consumption_file = c_utils.store_upload_file(upload_file, currentUser.id)
                 consumption = c_utils.read_from_file(consumption_file)
 
-        if 'consumption-file' not in request.files and start_date.date() != today.date():
-            errors.append('You must upload your Endesa consumption')
-        elif consumption == None:
-            errors.append('Your consumption file is invalid')
+                if not consumption:
+                    errors.append('Your consumption file is invalid')
 
         if not errors:
             current_sim = Simulation(currentHome, currentUser, consumption, start_date)

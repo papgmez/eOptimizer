@@ -2,6 +2,7 @@
 # -*- coding:utf-8; mode:python -*-
 
 import unittest
+import datetime as dt
 
 from app import app, db
 from flask import Flask
@@ -27,12 +28,12 @@ class test_App(unittest.TestCase):
         del self.tester
 
     def _add_user(self, testing_user):
-        return self.tester.post('/signup', data={'form-first-name' : testing_user.name,
+        return self.tester.post('/signup', data = {'form-first-name' : testing_user.name,
                                                    'form-last-name' : testing_user.lastname,
                                                    'form-email' : testing_user.email,
                                                    'form-newpassword' : 'test'})
     def _add_home(self, home):
-        return self.tester.post('/add-home', data={'form-pvmodules' : home.pv_modules,
+        return self.tester.post('/add-home', data = {'form-pvmodules' : home.pv_modules,
                                                      'form-city_code' : home.city_code,
                                                      'form-amortization_years_pv' : home.amortization_years_pv,
                                                      'form-amortization_years_bt' : home.amortization_years_bat})
@@ -54,19 +55,30 @@ class test_App(unittest.TestCase):
     def test_login_and_logout(self):
         testing_user = factory.generate_user()
         self._add_user(testing_user)
-        login_result = self.tester.post('/login', data= {'form-username' : testing_user.email,
-                                                   'form-password' : 'test'})
+        login_result = self.tester.post('/login', data = {'form-username' : testing_user.email,
+                                                          'form-password' : 'test'})
         logout_result = self.tester.get('/logout')
 
         self.assertEqual(login_result.status_code, 302)
         self.assertEqual(logout_result.status_code, 200)
 
     def test_login_fail(self):
-        result = self.tester.post('/login', data= {'form-username' : 'fail@email.com',
-                                                   'form-password' : 'fail'})
+        result = self.tester.post('/login', data = {'form-username' : 'fail@email.com',
+                                                    'form-password' : 'fail'})
 
         self.assertNotEqual(result.status_code, 302)
 
+    def test_simulation(self):
+        simulation_date = dt.datetime.now().strftime("%Y-%m-%d")
+        testing_user = factory.generate_user()
+        testing_home = factory.generate_home(None)
+        self._add_user(testing_user)
+        self._add_home(testing_home)
+        self.tester.post('/login', data = {'form-username' : testing_user.email,
+                                           'form-password' : 'test'})
+        result = self.tester.post('/simulation', data = {'form-start-date' : simulation_date})
+
+        self.assertEqual(result.status_code, 200)
 
 if __name__ == '__main__':
     unittest.main()
