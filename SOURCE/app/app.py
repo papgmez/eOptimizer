@@ -3,14 +3,13 @@
 
 import datetime as dt
 import json
-import os
 
 from flask import Flask, request, render_template, session, send_from_directory
-from flask import make_response, abort, redirect, url_for
+from flask import redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.exc import IntegrityError
 
-from models import Base, Users, Homes
+from models import Users, Homes
 from config import prod_config
 from simulation import Simulation
 from helpers import client_consumption as c_utils
@@ -126,7 +125,7 @@ def simulation():
     global currentHome
     global today
 
-    if currentUser is not None and currentHome is not None:
+    if currentUser and currentHome:
         errors = []
         simulation_date = request.form['form-start-date']
 

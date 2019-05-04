@@ -1,24 +1,25 @@
 #!/usr/bin/python3
 # -*- coding: utf-8; mode: python -*-
 
+import os
+import random as rd
+import datetime as dt
+
 from werkzeug.utils import secure_filename
 from config import prod_config
 
-import datetime as dt
-import random as rd
-import os
 
 def read_from_file(filename):
     filepath = "{}/{}".format(prod_config.CONSUMPTIONS_FOLDER, filename)
     consumption_file = open(filepath, "r")
 
     # redundant data
-    for i in range(0, 6):
+    for _ in range(0, 6):
         consumption_file.readline()
 
     # necessary data
     values = []
-    for i in range(0, 24):
+    for _ in range(0, 24):
         hour = consumption_file.readline().split("\t\t\t\t")
         # the value in file is in Wh
         try:
@@ -40,6 +41,6 @@ def store_upload_file(upload_file, userid):
 
 def get_random_values():
     values = []
-    for i in range(0, 24):
+    for _ in range(0, 24):
         values.append(rd.random())
     return values

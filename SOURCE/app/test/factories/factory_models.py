@@ -1,28 +1,31 @@
 #!/usr/bin/python3
 
 import sys
-sys.path.append('../..')
-from models import Users, Homes
-from faker import Faker
 import random
 
-faker_generator = Faker()
+from faker import Faker
+from models import Users, Homes
+
+sys.path.append('../..')
+
+
+FAKER_GENERATOR = Faker()
 
 def generate_user():
     user = Users()
-    user.name = faker_generator.first_name()
-    user.lastname = faker_generator.last_name()
-    user.email = faker_generator.email()
-    user.set_password(faker_generator.password())
+    user.name = FAKER_GENERATOR.first_name()
+    user.lastname = FAKER_GENERATOR.last_name()
+    user.email = FAKER_GENERATOR.email()
+    user.set_password(FAKER_GENERATOR.password())
 
     return user
 
 def generate_home(user_id):
     home = Homes()
-    home.pv_modules = random.randint(1,100)
+    home.pv_modules = random.randint(1, 100)
     home.city_code = '28079'
-    home.amortization_years_pv = random.randint(1,100)
-    home.amortization_years_bat = random.randint(1,100)
+    home.amortization_years_pv = random.randint(1, 100)
+    home.amortization_years_bat = random.randint(1, 100)
     home.UserId = user_id
 
     return home

@@ -29,11 +29,17 @@ C_INT = 0.044
 # CITY_CODE = '45053'
 
 # Api key para el manejo de OpenData AEMET
-AEMET_KEY = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYWJsby5wYWxvbWlubzFAb3V0bG9vay5jb20iLCJqdGkiOiJmOGFhZTdiNi0yYWIzLTQzOTktYjU3Mi0zNDBlYWE2OGUwMDUiLCJpc3MiOiJBRU1FVCIsImlhdCI6MTU0ODU4NTE1NywidXNlcklkIjoiZjhhYWU3YjYtMmFiMy00Mzk5LWI1NzItMzQwZWFhNjhlMDA1Iiwicm9sZSI6IiJ9.4VGEUO4v-ncytcyWuaNwHBBvhhIAW5r-5Es0VAFiLr8'
+AEMET_KEY = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYWJsby5wYWxvbWlubzFAb3V0bG9vay5jb20iLCJqdGki' \
+            'OiJmOGFhZTdiNi0yYWIzLTQzOTktYjU3Mi0zNDBlYWE2OGUwMDUiLCJpc3MiOiJBRU1FVCIsImlhd' \
+            'CI6MTU0ODU4NTE1NywidXNlcklkIjoiZjhhYWU3YjYtMmFiMy00Mzk5LWI1NzItMzQwZWFhNjhlMD' \
+            'A1Iiwicm9sZSI6IiJ9.4VGEUO4v-ncytcyWuaNwHBBvhhIAW5r-5Es0VAFiLr8'
 
 # url api AEMET OpenData
-AEMET_URL_NOW = 'https://opendata.aemet.es/opendata/api/prediccion/especifica/municipio/horaria/$CITY/?api_key={}'.format(AEMET_KEY)
-AEMET_URL_DATE = 'https://opendata.aemet.es/opendata/api/prediccion/provincia/hoy/$PROVINCE/elaboracion/$DATE/?api_key={}'.format(AEMET_KEY)
+AEMET_URL_NOW = 'https://opendata.aemet.es/opendata/api/prediccion/especifica/municipio/' \
+                'horaria/$CITY/?api_key={}'.format(AEMET_KEY)
+AEMET_URL_DATE = 'https://opendata.aemet.es/opendata/api/prediccion/provincia/hoy/' \
+                 '$PROVINCE/elaboracion/$DATE/?api_key={}'.format(AEMET_KEY)
+
 # --------- API Esios REE ---------
 # Token para la API de Esios (Red Electrica de España)
 ESIOS_TOKEN = '879c5ab5bc0211a1ba23527736e3402a0e708f0a5e7c370f0274004e676ee5f6'
@@ -43,9 +49,10 @@ PVPC = '1013' # Precio Voluntario para el Pequeño Consumidor (precio de compra 
 SPOT = '613'  # Precio marginal del intradiario (precio de venta a la red eletrica)
 
 # url api Esios REE
-ESIOS_URL = 'https://api.esios.ree.es/indicators/$INDICATOR?start_date=$START_DATE&end_date=$END_DATE'
+ESIOS_URL = 'https://api.esios.ree.es/indicators/$INDICATOR?' \
+            'start_date=$START_DATE&end_date=$END_DATE'
 
-# # Maxima Potencia Nominal posible (MNP) en W de un modulo fotovoltaico de Potencia Pico 50 W, de cada conjunto difuso del estado de Cielo
+# Maxima Potencia Nominal posible de un modulo de 50 W, de cada conjunto del estado de Cielo
 FUZZY_SETS = {
     'Despejado' : 48,
     'Poco nuboso' :43.16,

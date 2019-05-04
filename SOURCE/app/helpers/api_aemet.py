@@ -18,8 +18,8 @@ def get_weather_today(city):
         data = response.json()[0]
         weather_buffer = create_weather_buffer(data)
         return weather_buffer
-    else:
-        return []
+
+    return []
 
 def get_weather_archive(date, city):
     weather_buffer = []
@@ -35,12 +35,11 @@ def get_weather_archive(date, city):
         raw_info = response.text
         weather_buffer = proccess_weather_archive(raw_info)
         return weather_buffer
-    else:
-        return []
+
+    return []
 
 def create_weather_buffer(data):
-    wb = []
-    buffer_size = 0
+    states_buffer = []
     current_hour = time.strftime("%H")
     prediction_today = data['prediccion']['dia'][0]['estadoCielo']
     prediction_tomorrow = data['prediccion']['dia'][1]['estadoCielo']
@@ -48,17 +47,16 @@ def create_weather_buffer(data):
     # adds the remaining predictions per hour of the day to the buffer
     for hour in prediction_today:
         if int(hour['periodo']) >= int(current_hour):
-            wb.append(hour['descripcion'])
-            buffer_size += 1
+            states_buffer.append(hour['descripcion'])
     # adds tomorrow's predictions per hour until complete the 24 h of the buffer
     for hour in prediction_tomorrow:
-        if buffer_size < 24:
-            wb.append(hour['descripcion'])
-            buffer_size += 1
-    return wb
+        if len(states_buffer) < 24:
+            states_buffer.append(hour['descripcion'])
+
+    return states_buffer
 
 def proccess_weather_archive(raw_text):
-    wb = []
+    states_buffer = []
     occurrences = []
     raw_text = raw_text.lower()
     possible_states = const.FUZZY_SETS.keys()
@@ -72,11 +70,11 @@ def proccess_weather_archive(raw_text):
     interval = 24 // len(occurrences)
 
     for state in occurrences:
-        for i in range(0, interval):
-            wb.append(state)
+        for _ in range(0, interval):
+            states_buffer.append(state)
 
     # To fill the remaining slots in the buffer, concatenates last state of those occurred
-    while len(wb) < 24:
-        wb.append(occurrences[-1])
+    while len(states_buffer) < 24:
+        states_buffer.append(occurrences[-1])
 
-    return wb
+    return states_buffer

@@ -4,11 +4,11 @@
 import unittest
 import datetime as dt
 
-from app import app, db
 from faker import Faker
+from flask_sqlalchemy import SQLAlchemy
+from app import app, db
 from models import Base
 from config import test_config
-from flask_sqlalchemy import SQLAlchemy
 from factories import factory_models as factory
 
 class test_App(unittest.TestCase):

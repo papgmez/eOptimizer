@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-from sqlalchemy import DateTime, Integer, String, Text, Float
+from sqlalchemy import Integer, String
 from sqlalchemy import Column, ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
@@ -24,7 +24,8 @@ class Users(Base):
         return check_password_hash(self.password_hash, password)
 
     def __repr__(self):
-        return (u'<{self.__class__.__name__}: {self.id}, name= {self.name} {self.lastname}, email= {self.email}>'.format(self=self))
+        return (u'<{self.__class__.__name__}: {self.id}, name= {self.name} {self.lastname},' \
+                ' email= {self.email}>'.format(self=self))
 
 class Homes(Base):
     __tablename__ = "homes"
@@ -37,4 +38,5 @@ class Homes(Base):
     user = relationship("Users", backref="Homes")
 
     def __repr__(self):
-        return (u'<{self.__class__.__name__}: {self.id}, city= {self.city_code}, pv_modules= {self.pv_modules}, ownerId= {self.UserId}>'.format(self=self))
+        return (u'<{self.__class__.__name__}: {self.id}, city= {self.city_code}, ' \
+                'pv_modules= {self.pv_modules}, ownerId= {self.UserId}>'.format(self=self))
