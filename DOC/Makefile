@@ -1,8 +1,12 @@
 all:
-	python compile.py uclmTFGesi
+	make compile
+	make clean
 	evince uclmTFGesi.pdf
+
+compile:
+	python compile.py uclmTFGesi
 release:
-	clean
+	make clean
 	cp uclmTFGesi.pdf ../TFG_PalominoGomezPablo.pdf
 clean:
 	$(RM) -rf *.log
