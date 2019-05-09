@@ -1,5 +1,5 @@
 run:
-	cd app/ && python3 run.py runserver -h 0.0.0.0 -p 5000 -d
+	cd app/ && python3 run.py runserver -h 172.31.81.252 -p 5000 -d
 test:
 	cd app/ && nosetests test/
 install:
