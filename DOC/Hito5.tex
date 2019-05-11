@@ -40,7 +40,7 @@ La tabla \textit{Users} hará referencia a los usuarios involucrados en el siste
 \item \textit{password}: Contraseña definida por el usuario para acceder a su cuenta. Puesto que la contraseña es un dato sensible, debe tratarse adecuadamente. Para ello se ha hecho uso del módulo \textit{werkzeug.security}, que se explicará en la siguiente sección de este hito en lo relativo a seguridad.
 \item \textit{home}: Atributo apunta al registro de la tabla \textit{Homes} que contiene el hogar de este usuario.
 \end{itemize}
-Véase el listado\ref{lst:modelUser} el cuál muestra la declaración del modelo \textit{User} heredado de base. Las funciones Integer, String, Column, relationship y declarative\_base son importadas del módulo \textbf{sqlalchemy} y permiten trabajar con abstracción sobre SQL, como se comentó anteriormente. Los métodos de clase \textit{set\_password} y \textit{check\_password} son usados para cambiar y comprobar la contraseña, respectivamente. Ambos llaman a funciones pertencientes al módulo \textit{werkzeug.security} el cuál se explicará más adelante. La función privada \textit{\_\_repr\_\_} simplemente genera un formato para mostrar un objeto Usuario, permitiendo mostrar su nombre, apellidos e email.
+Véase el listado~\ref{lst:modelUser} el cuál muestra la declaración del modelo \textit{User} heredado de base. Las funciones Integer, String, Column, relationship y declarative\_base son importadas del módulo \textbf{sqlalchemy} y permiten trabajar con abstracción sobre SQL, como se comentó anteriormente. Los métodos de clase \textit{set\_password} y \textit{check\_password} son usados para cambiar y comprobar la contraseña, respectivamente. Ambos llaman a funciones pertencientes al módulo \textit{werkzeug.security} el cuál se explicará más adelante. La función privada \textit{\_\_repr\_\_} simplemente genera un formato para mostrar un objeto Usuario, permitiendo mostrar su nombre, apellidos e email.
 \begin{lstlisting}[language=Python,float=ht,caption={Modelo \textit{User}},label={lst:modelUser}]
 class Users(Base):
     __tablename__ = 'usuarios'
@@ -87,7 +87,47 @@ class Homes(Base):
                 'pv_modules= {self.pv_modules}, ownerId= {self.UserId}>'.format(self=self))
 \end{lstlisting}
 \end{itemize}
-Una vez definidos los modelos se puede comenzar a realizar inserciones y consultas a estas tablas en la base de datos mediante las operaciones de SQLAlchemy, pero antes se debe comprobar el correcto funcionamiento de estos modelos. Es por esto que la etapa posterior a la implementación en el ciclo de vida del software son las \textbf{pruebas}. Mediante el framework para la implementación de casos de prueba unitarios \textbf{Nose}~\ref{Nose}. Véase el Anexo B, donde se hace referencia a lo relativo a pruebas en el proyecto.\\
+Una vez definidos los modelos se puede comenzar a realizar inserciones y consultas a estas tablas en la base de datos mediante las operaciones de SQLAlchemy, pero antes se debe comprobar el correcto funcionamiento de estos modelos. Es por esto que la etapa posterior a la implementación en el ciclo de vida del software son las \textbf{pruebas}. Mediante el framework para la implementación de casos de prueba unitarios \textbf{Nose}~\cite{Nose}. Véase el Anexo B, donde se hace referencia a lo relativo a pruebas en el proyecto.\\
 
-Para seguir la guía de buenas prácticas se crean dos bases de datos diferenciadas. Una de ella será la base de datos de \textbf{producción}, que almacenará la información real de usuario y hogares. La segunda será la base de datos de \textbf{test}, donde se realizarán las inserciones, borrados y consultas pertinentes durante el desarrollo de los casos de prueba mencionados anteriormente para garantizar un correcto funcionamiento y coherencia en la aplicación.
-\subsection{Creación de una aplicación web usando Flask}
+Para seguir la guía de buenas prácticas se crean dos bases de datos diferenciadas. Una de ella será la base de datos de \textbf{producción}, que almacenará la información real de usuario y hogares, y será usada por la aplicación web. La segunda será la base de datos de \textbf{test}, donde se realizarán las inserciones, borrados y consultas pertinentes durante el desarrollo de los casos de prueba mencionados anteriormente para garantizar un correcto funcionamiento y coherencia entre la aplicación y la persistencia de la misma.\\
+
+Al arrancar una aplicación que hace uso de la base de datos, se debe hacer una llamada al método \textit{Base.metadata.create\_all} proporcionando como argumento el objeto instanciado de \textit{sqlalchemy.engine.base.Engine}. Esto es necesario ya que permite crear las tablas en la base de datos porporcionada si estas no existen, y si existe, se crearán las nuevas tablas en caso de haberlas y no se eliminan los datos que existen. A partir de dicha llamada, cada objeto que se instancia de cada uno de los modelos se corresponde con un registro de su tabla correspondiente. Después de esto la base de datos estaría totalmente operable desde la aplicación. El ORM de SQLAlchemy permite realizar búsquedas relaccionadas con los objetos instanciados del modelo \textit{Base} y sus tablas relacionadas. Las operaciones se realizan en sesiones, que terminan con un \textit{commit} que persiste los cambios realizados en la sesión en la base de datos. En el listado~\ref{lst:consultaUser} se muestra una consulta para obtener el primer usuario de la tabla \textit{Users}. Nótese que el formato de representación devuelto es el definido en la clase del modelo~\ref{lst:modelUser} mediante el método \textit{\_\_repr\_\_}.
+\begin{lstlisting}[language=Python,float=ht,numbers=none,caption={Consulta para obtener el primer \textit{User}},label={lst:consultaUser}]
+>>> db.session.query(Users).first()
+<Users: 1, name= Pablo Palomino Gomez, email= pablo@eoptimizer.com>
+\end{lstlisting}
+
+Para integrar la persistencia que se ha incorporado al funcionamiento actual, debe refactorizarse la clase Simulation. El constructor pasa de recibir un argumento por atributo de clase a recibir únicamente tres atributos: home, user y date. Toda la información necesaria para una simulación que antes se obtenía a través del fichero de constantes del proyecto (y no entendía de usuarios) ahora se puede obtener de los objetos \textit{User} y \textit{Home} del usuario que realiza la simulación. El tercer parámetro (date) hace referencia a un objeto de tipo datetime correspondiente al día en el que se realiza la simulación.\\
+
+A partir de esta integración, se permite realizar simulaciones dependientes de un usuario, que obtendrá un valor totalmente distinto a si otro usuario realiza la simulación el mismo día, pues cada uno de ellos tiene unos parámetros en su hogar que determinan el resultado, como son el número de módulos fotovoltaicos, la ciudad donde reside o el precio al que obtiene las energías fotovoltaica y de batería, ya que cada usuario define el periodo en el que desea amortizar lo invertido en cada fuente mediante ganancias de esa fuente.
+
+\subsection{Creación de una aplicación web con Flask}
+El siguiente paso tras la integración de persistencia y la implementación de la lógica o \textit{backend} es crear una aplicación web siguiendo la arquitectura \textbf{cliente - servidor}~\cite{Goer04}. En esta arquitectura, cada una de las máquinas que realiza una demanda de información al sistema toma el rol de cliente, y la que responde a estas demandas toma el rol de servidor~\ref{fig:client-server}. Esto permitirá que exista un servidor el cuál realiza simulaciones a petición de clientes, de los que previamente se ha almacenado la información necesaria en base de datos mediante un registro.
+\begin{figure}[!h]
+            \centering
+            \includegraphics[width=7cm]{figs/client-server.png}
+            \caption{Esquema Cliente - Servidor}
+            \label{fig:client-server}
+\end{figure}
+El nombre que tomará dicha aplicación web será \textbf{eOptimizer}, haciendo referencia a su objetivo principal: realizar simulaciones por medio de una optimización. En la figura~\ref{fig:logo} se muestra el logo creado para la aplicación. Dicho logo ha sido diseñado por el propio alumno y se inspira en la eficiencia energética que se consigue mediante el sistema que se propone.
+\begin{figure}[!h]
+            \centering
+            \includegraphics[width=3cm]{figs/logo.png}
+            \caption{Logo de eOptimizer}
+            \label{fig:logo}
+\end{figure}
+Antes de entrar en la implementación de la aplicación debe definirse correctamente el funcionamiento que ha de tener. Esto implica determinar el flujo posible de interación con la aplicación, algo que a la hora de implementar captura de errores y restricciones facilitará mucho la complejidad. Para ello ha de construirse un diagrama de flujo. Este tipo de diagrama describe un sistema informático, y tiene como objetivo planificar, estudiar y diseñar procesos complejos o algoritmos. De entre todas las funcionalidades que pueden implementar los diagramas de flujo, deben mencionarse:
+\begin{itemize}
+\item Mostrar la ejecución del código de un software.
+\item Facilitar la comprensión de la estructura y funcionalidad de una aplicación web.
+\item Explicar visualmente cómo un usuario puede navegar por una página web.
+\end{itemize}
+Para crear un diagrama de flujo debe tenerse en cuenta el alcance del sistema. En el caso de este trabajo fin de grado, un usuario (rol de cliente) interactuará con la aplicación web (servidor) con el objetivo de realizar una \textbf{simulación} del consumo eléctrico de un día determinado que habría tenido su hogar mediante el sistema propuesto, comparándolo frente a su situación actual, por tanto la entrada al diagrama de flujo debe ser el hecho de acceder a la aplicación web, y la salida será la información pertinente a la simulación realizada.\\
+
+Lo primero que debe hacer un usuario es identificarse, pues en el servidor debe tenerse en cuenta el usuario de la base de datos que está interactuando con el sistema para realizar la simulación, ya que necesita su información asociada. Por ello, el usuario deberá introducir sus credenciales para poder acceder. Si un usuario nunca antes ha accedido a eOptimizer, deberá registrarse. Una vez haya introducido la información de usuario para su registro, esta se insertará en base de datos y si todo va correctamente, el siguiente paso es introducir la información asociada a su hogar, que será empleada para realizar sus simulaciones. Cuando se haya introducido se insertará en base de datos, teniendo persistida toda la información necesaria del usuario en curso, por lo que se permitiría el acceso al índice o \textit{dashboard} de la web. Desde allí un usuario podrá realizar simulaciones, introduciendo los datos necesarios para la misma, como son la fecha que desea simular y el fichero de consumo de Endesa que hubo en su hogar ese día. Si esta información es correcta, el \textit{backend} realizará la optimización habiendo obtenido previamente la información de las APIs AEMET y Esios relativa al día de simulación, mostrando los resultados obtenidos al cliente. En la figura~\ref{fig:diagrama-flujo} se muestra el diagrama de flujo de la aplicación que permite visualizar todo el funcionamiento de manera mas sencilla.
+\begin{figure}[!h]
+            \centering
+            \includegraphics[width=15cm]{figs/diagrama_flujo.png}
+            \caption{Diagrama de flujo de eOptimizer}
+            \label{fig:diagrama-flujo}
+\end{figure}
