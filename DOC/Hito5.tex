@@ -11,7 +11,7 @@ SQLAlchemy puede trabajar con bases de datos de SQLite, Postgresql, MySQL, Oracl
 \subsection{Modelos User y Home}
 Se deben determinar los datos que se van a persistir en el sistema. Puesto que se tratará de una aplicación web con la que interactuarán usuarios, resulta interesante almacenarlos. Cada uno de estos usuarios realizará simulaciones del sistema. Como se vió anteriormente, cuando se instancia un objeto de la clase Simulation, el constructor de la misma recibe varios argumentos necesarios para llevar a cabo la simulación, de los cuales la mayoría son información acerca del hogar en el que se realizará dicha simulación (número de módulos fotovoltaicos, código de la ciudad del hogar, etc). La persistencia en base de datos de la información del hogar de cada usuario mejoraría esta situación, pues la mayoría de la información que necesita la clase Simulation sería proporcionada del hogar almacenado en base de datos de ese usuario. Por lo tanto, son necesarias dos tablas en la base de datos: \textit{Users} y \textit{Homes}, entre las cuáles existe una relación \textit{one to one}. Este tipo de relación SQL hace que ambas tablas tengan un atributo de referencia a la otra que se conoce como \textit{\textbf{foreign key}}, la cuál lo convierte en una relación bidireccional. Cada \textit{User} tendrá un \textit{Home} y viceversa. Para crear las tablas y mostrar la estructura lógica de cada una, así como sus limitaciones y atributos, se debe crear antes un \textbf{modelo de base de datos} que sea capaz de \textit{mapear} cada objeto con su tabla en la base de datos.\\
 
-En primer lugar se debe definir la clase Base mediante la función \textit{sqlalchemy.ext.declarative.declarative\_base()} que hará el papel de superclase de cada modelo. Así, cada modelo heredado de Base corresponde con una tabla de base de datos, cuyo nombre se encuentra en el atributo \textit{\_\_tablename\_\_}. Cada objeto que se instancie la clase del modelo corresponde con un registro en base de datos. En el listado~\ref{lst:declarateModel} se muestra la sintaxis de creación de un modelo. Tras \textit{\_\_tablename\_\_} se declaran las columna que tendrá la tabla de ese modelo, indicando el tipo de dato que contiene y una serie de argumentos. Algunos de los que se han usado son:
+En primer lugar se debe definir la clase Base mediante \textit{sqlalchemy.ext.declarative.declarative\_base()}. Ésta clase hará el papel de superclase de cada modelo. Así, cada modelo heredado de Base corresponde con una tabla de base de datos, cuyo nombre se encuentra en el atributo \textit{\_\_tablename\_\_}. Cada objeto que se instancie la clase del modelo corresponde con un registro en base de datos. En el listado~\ref{lst:declarateModel} se muestra la sintaxis de creación de un modelo. Tras \textit{\_\_tablename\_\_} se declaran las columna que tendrá la tabla de ese modelo, indicando el tipo de dato que contiene y una serie de argumentos. Algunos de los que se han usado son:
 \begin{itemize}
        \item \textbf{\textit{primary\_key}:} Cuando toma el valor \textit{True} indica que ese atributo será la clave primaria de la tabla y se usará como parámetro para instanciar a la subclase de Base.
        \item \textbf{\textit{index}:} Con \textit{True} indica que se desea que dicho atributo sea indizado y permita un rápido acceso a los registros.
@@ -40,7 +40,7 @@ La tabla \textit{Users} hará referencia a los usuarios involucrados en el siste
 \item \textit{password}: Contraseña definida por el usuario para acceder a su cuenta. Puesto que la contraseña es un dato sensible, debe tratarse adecuadamente. Para ello se ha hecho uso del módulo \textit{werkzeug.security}, que se explicará en la siguiente sección de este hito en lo relativo a seguridad.
 \item \textit{home}: Atributo apunta al registro de la tabla \textit{Homes} que contiene el hogar de este usuario.
 \end{itemize}
-Véase el listado\ref{lst:modelUser} el cuál muestra la declaración del modelo \textit{User} heredado de base. Las funciones Integer, String, Column, relationship y declarative\_base son importadas del módulo \textbf{sqlalchemy} y permiten trabajar con abstracción sobre SQL, como se comentó antes.
+Véase el listado\ref{lst:modelUser} el cuál muestra la declaración del modelo \textit{User} heredado de base. Las funciones Integer, String, Column, relationship y declarative\_base son importadas del módulo \textbf{sqlalchemy} y permiten trabajar con abstracción sobre SQL, como se comentó anteriormente. Los métodos de clase \textit{set\_password} y \textit{check\_password} son usados para cambiar y comprobar la contraseña, respectivamente. Ambos llaman a funciones pertencientes al módulo \textit{werkzeug.security} el cuál se explicará más adelante. La función privada \textit{\_\_repr\_\_} simplemente genera un formato para mostrar un objeto Usuario, permitiendo mostrar su nombre, apellidos e email.
 \begin{lstlisting}[language=Python,float=ht,caption={Modelo \textit{User}},label={lst:modelUser}]
 class Users(Base):
     __tablename__ = 'usuarios'
@@ -62,5 +62,32 @@ class Users(Base):
                 ' email= {self.email}>'.format(self=self))
 \end{lstlisting}
 \item \textbf{Modelo Home}
+La tabla \textit{Homes} representa la casa de cada usuario. Los atributos que tendrá cada registro de esta tabla en base de datos son los siguientes:
+\begin{itemize}
+\item \textit{city\_code}: Atributo de tipo String que hace referencia a la ciudad donde se encuentra la casa. Esto es necesario a la hora de realizar las llamadas a la API AEMET~\cite{Aemet} pues se debe proporcionar dicho código, por lo tanto este atributo no puede ser nulo.
+\item \textit{pv\_modules}: Almacena el número de módulos fotovoltaicos que tendrá el hogar del usuario, por lo tanto es un atributo de tipo Integer que no puede tomar valor nulo, ya que es un dato que determina el resultado de una simulación.
+\item \textit{amortization\_years\_pv}: Almacena un entero que representa el número de años en los que el usuario desea amortizar la inversión realizada en la adquisición de los módulos fotovoltaicos. El valor de este campo determina el precio en €/KWh que tendrá la energía fotovoltaica, y por ello tampoco puede ser nulo.
+\item \textit{amortization\_years\_bat}: Similar al atributo anterior pero en el contexto de la obtención de la batería. En función del valor de este atributo se calcula el precio que tiene para este usuario la obtención de energía de baterías.
+\item \textit{user}: Registro de la tabla \textit{Users} con el que mantiene una relación \textit{one to one} y representa el usuario propietario del hogar.
 \end{itemize}
+Mediante el método privado \textit{\_\_repr\_\_} se forma un formato para mostrar un registro de esta tabla, dando información acerca de la ciudad, número de módulos fotovoltaicos y id del usuario propietario.
+\begin{lstlisting}[language=Python,float=ht,caption={Modelo \textit{Home}},label={lst:modelHome}]
+class Homes(Base):
+      __tablename__ = "homes"
+      id = Column(Integer, primary_key=True)
+      city_code = Column(String(100), nullable=False)
+      pv_modules = Column(Integer, nullable=False)
+      amortization_years_pv = Column(Integer, nullable=False)
+      amortization_years_bat = Column(Integer, nullable=False)
+      UserId = Column(Integer, ForeignKey('usuarios.id'), nullable=False)
+      user = relationship("Users", backref="Homes")
+
+      def __repr__(self):
+          return (u'<{self.__class__.__name__}: {self.id}, city= {self.city_code}, ' \
+                'pv_modules= {self.pv_modules}, ownerId= {self.UserId}>'.format(self=self))
+\end{lstlisting}
+\end{itemize}
+Una vez definidos los modelos se puede comenzar a realizar inserciones y consultas a estas tablas en la base de datos mediante las operaciones de SQLAlchemy, pero antes se debe comprobar el correcto funcionamiento de estos modelos. Es por esto que la etapa posterior a la implementación en el ciclo de vida del software son las \textbf{pruebas}. Mediante el framework para la implementación de casos de prueba unitarios \textbf{Nose}~\ref{Nose}. Véase el Anexo B, donde se hace referencia a lo relativo a pruebas en el proyecto.\\
+
+Para seguir la guía de buenas prácticas se crean dos bases de datos diferenciadas. Una de ella será la base de datos de \textbf{producción}, que almacenará la información real de usuario y hogares. La segunda será la base de datos de \textbf{test}, donde se realizarán las inserciones, borrados y consultas pertinentes durante el desarrollo de los casos de prueba mencionados anteriormente para garantizar un correcto funcionamiento y coherencia en la aplicación.
 \subsection{Creación de una aplicación web usando Flask}
