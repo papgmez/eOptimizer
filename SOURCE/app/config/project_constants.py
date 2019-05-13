@@ -2,6 +2,12 @@
 
 # Fichero de Constantes
 # =====================
+# DB2 IBM Cloud
+IBM_USER = 'dwm91559'
+IBM_KEY = 'zswksj730cmk90%5Eq'
+IBM_HOSTNAME = 'dashdb-txn-sbox-yp-lon02-02.services.eu-gb.bluemix.net'
+IBM_PORT = '50000'
+IBM_DB = 'BLUDB'
 # Constantes respecto a EF (energia fotovoltaica)
 # --------------------------------------------------
 # Precio de cada modulo fotovoltaico (€)
