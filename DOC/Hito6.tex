@@ -1,0 +1,28 @@
+El objetivo de esta iteración será la integración de la aplicación web \textbf{eOptimizer} en la nube.\\
+
+La computación en la nube (\textit{cloud computing}) permite ubicuidad en el acceso a un conjunto de recursos compartido, como pueden ser servidores, bases de datos, contenedores, almacenamiento, servicios, etc. Estos recursos pueden ser aprovisionados o liberados con facilidad y bajo demanda, teniendo una facturación por uso y siendo accedidos a través de la red, lo que da lugar a que esta tendencia cada vez esté mas en auge. Los recursos a disposición del usuario son ilimitados, teniendo a su disposición arquitecturas de computación realmente complejas y modernas sin gran esfuerzo.\\
+Antes del \textit{cloud computing} el hecho de crear un servidor que funcionase 24 horas al día, 7 días a la semana era algo costoso, ya que no solo implica la inversión de la máquina si no que conlleva unos costes de mantenimiento (alimentación y red constantes, mejora de componentes desfasados a lo largos del tiempo, mantenimiento técnico, etc). Con esta nueva tendencia, es posible contratar el servicio deseado facturando únicamente por uso sin necesidad de todos los gastos anteriores.\\
+
+El primer paso es analizar que recursos en la nube son necesarios para la aplicación web de este trabajo fin de grado. Existen un gran tipo de recursos disponibles de distintos proveedores:
+\begin{itemize}
+\item Instancias
+\item Bases de Datos SQL
+\item Bases de Datos NoSQL
+\item Almacenamiento en la nube
+\item IP virtuales SSL
+\end{itemize}
+
+Por un lado es interesante que la persistencia del sistema cuente con un recurso propio, para lo que sería necesario una base de datos SQL, pues se utiliza el framework SQLAlchemy que trabaja sobre bases de datos SQL. El proveedor elegido para la instancia de este recurso ha sido la plataforma \textbf{IBM Cloud}
+\begin{figure}[H]
+            \centering
+            \includegraphics[width=7cm]{figs/ibm_logo.png}
+            \caption{Logo de la plataforma IBM Cloud}
+            \label{fig:IBMCloud}
+\end{figure}
+Además la aplicación web de este trabajo necesita de un servidor que ha de estar funcionando constantemente, para el que sería necesario una instancia. El proveedor elegido para este recurso ha sido \textbf{Amazon Web Services} (AWS)
+\begin{figure}[H]
+            \centering
+            \includegraphics[width=6cm]{figs/aws_logo.png}
+            \caption{Logo de Amazon Web Services}
+            \label{fig:AWS}
+\end{figure}

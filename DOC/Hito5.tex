@@ -37,7 +37,7 @@ La tabla \textit{Users} hará referencia a los usuarios involucrados en el siste
 \item \textit{name}: Representa el nombre del usuario. Este dato es de tipo String y no puede ser nulo.
 \item \textit{lastname}: Representa los apellidos del usuario. Toma exactamente las mismas características que el anterior.
 \item \textit{email}: Como su propio nombre indica almacena el correo electrónico del usuario. No puede ser nulo y debe ser único, pues este atributo identificará a cada usuario. Además es un atributo indizado, pues se realizarán consultas a base de datos a través de él.
-\item \textit{password}: Contraseña definida por el usuario para acceder a su cuenta. Puesto que la contraseña es un dato sensible, debe tratarse adecuadamente. Para ello se ha hecho uso del módulo \textit{werkzeug.security}, que se explicará en la siguiente sección de este sprint en lo relativo a seguridad.
+\item \textit{password}: Contraseña definida por el usuario para acceder a su cuenta. Puesto que la contraseña es un dato sensible, debe tratarse adecuadamente. Para ello se ha hecho uso del módulo \textit{werkzeug.security}, que se explicará en la siguiente sección de esta iteración en lo relativo a seguridad.
 \item \textit{home}: Atributo apunta al registro de la tabla \textit{Homes} que contiene el hogar de este usuario.
 \end{itemize}
 Véase el listado~\ref{lst:modelUser} el cuál muestra la declaración del modelo \textit{User} heredado de base. Las funciones Integer, String, Column, relationship y declarative\_base son importadas del módulo \textbf{sqlalchemy} y permiten trabajar con abstracción sobre SQL, como se comentó anteriormente. Los métodos de clase \textit{set\_password} y \textit{check\_password} son usados para cambiar y comprobar la contraseña, respectivamente. Ambos llaman a funciones pertencientes al módulo \textit{werkzeug.security} el cuál se explicará más adelante. La función privada \textit{\_\_repr\_\_} simplemente genera un formato para mostrar un objeto Usuario, permitiendo mostrar su nombre, apellidos e email.
@@ -134,7 +134,7 @@ Lo primero que debe hacer un cliente es identificarse, pues en el servidor debe 
             \label{fig:diagrama-flujo}
 \end{figure}
 
-Una vez definido el flujo que debe seguir la aplicación web, el siguiente paso en este sprint es la implementación del servidor. Para ello se hace uso de \textbf{Flask}~\cite{Grinb14}. Flask es un pequeño framework -autodenominado microframework- para desarrollo web con Python. Sigue una filosofía minimalista por lo que con un pequeño número de líneas de código permite crear aplicaciones web. Este framework tiene dos dependencias principales:
+Una vez definido el flujo que debe seguir la aplicación web, el siguiente paso de esta iteración es la implementación del servidor. Para ello se hace uso de \textbf{Flask}~\cite{Grinb14}. Flask es un pequeño framework -autodenominado microframework- para desarrollo web con Python. Sigue una filosofía minimalista por lo que con un pequeño número de líneas de código permite crear aplicaciones web. Este framework tiene dos dependencias principales:
 \begin{itemize}
 \item \textbf{Werkzeug}: Porporciona los componentes necesarios de \textit{routing}, \textit{debugging} y WSGI (\textit{Web Server Gateway Interface}).
 \item \textbf{Jinja2}: Porporciona las herramientas para la integración de \textit{templates} html en un servidor Flask.
@@ -219,7 +219,7 @@ Para la implementación del \textit{frontend} y desarrollo web se ha utilizado l
             \label{fig:simulationView}
 \end{figure}
 
-En el listado~\ref{lst:simulationReport} del Anexo A se mostró el resultado de una simulación durante el sprint 4. Dicha información se corresponde con el fichero de reporte de simulación, que a partir de ahora se puede descargar en la vista Simulation (Figura~\ref{fig:simulationView}). Además la información de la simulación es procesada por horas en la tabla \textbf{energy distribution}, que mediante funciones de javascript muestra barras de distribución de la energía por horas, con el fin de facilitar la comprensión del usuario y hacerlo más visible. Véase la figura~\ref{fig:energyDistrib}, donde se muestra la tabla en las horas comprendidas entre la 13:00 y las 23:00 de la optimización del día 16 de Abril de 2019.
+En el listado~\ref{lst:simulationReport} del Anexo A se mostró el resultado de una simulación durante la iteración 4. Dicha información se corresponde con el fichero de reporte de simulación, que a partir de ahora se puede descargar en la vista Simulation (Figura~\ref{fig:simulationView}). Además la información de la simulación es procesada por horas en la tabla \textbf{energy distribution}, que mediante funciones de javascript muestra barras de distribución de la energía por horas, con el fin de facilitar la comprensión del usuario y hacerlo más visible. Véase la figura~\ref{fig:energyDistrib}, donde se muestra la tabla en las horas comprendidas entre la 13:00 y las 23:00 de la optimización del día 16 de Abril de 2019.
 \begin{figure}[H]
             \centering
             \includegraphics[width=18cm]{figs/energy_distrib.png}
@@ -228,6 +228,6 @@ En el listado~\ref{lst:simulationReport} del Anexo A se mostró el resultado de 
 \end{figure}
 
 
-Como salida de este sprint se obtiene la versión totalmente funcional de la aplicación web integrada con el \textit{backend} para optimizar simulaciones. Actualmente solo es posible ejecutarlo en la máquina local, siendo dependiente del software y dependencias propios de la misma. En el siguiente sprint se buscará la integración en la nube de la aplicación.\\
+Como salida de esta iteración se obtiene la versión totalmente funcional de la aplicación web integrada con el \textit{backend} para optimizar simulaciones. Actualmente solo es posible ejecutarlo en la máquina local, siendo dependiente del software y dependencias propios de la misma. En la siguiente iteración se buscará la integración en la nube de la aplicación.\\
 
 Los tests relativos a la aplicación web (\textit{routing} y vistas) que demuestran la correcta funcionalidad son explicados en el Anexo B.

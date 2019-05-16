@@ -15,7 +15,7 @@ siendo a el coeficiente de la variable x y c constante.\\
 
 \subsection{Variables del PSR}
 
-En los sprints 1 y 2 se identificaron las variables del problema, las cuáles están divididas en tres grupos: variables de entrada, variables de salida y variables de control. Sin embargo conviene mencionar cuáles de estas variables son las propias del problema de satisfacción de restricciones, y cuáles formarán las restricciones. El objetivo del problema es obtener valores de energía para los paneles fotovoltaicos, baterías y red eléctrica, de tal modo que se cubra la demanda energética del hogar y que el gasto económico sea el menor. Es por esto que las variables propias del problema de satisfacción de restricciones serán:
+En las iteraciones 1 y 2 se identificaron las variables del problema, las cuáles están divididas en tres grupos: variables de entrada, variables de salida y variables de control. Sin embargo conviene mencionar cuáles de estas variables son las propias del problema de satisfacción de restricciones, y cuáles formarán las restricciones. El objetivo del problema es obtener valores de energía para los paneles fotovoltaicos, baterías y red eléctrica, de tal modo que se cubra la demanda energética del hogar y que el gasto económico sea el menor. Es por esto que las variables propias del problema de satisfacción de restricciones serán:
 \begin{itemize}
 \item \textbf{Energía fotovoltaica (EF)}. Energía obtenida de los módulos fotovoltaicos.~\ref{eq:dom_ef}
 \begin{equation}
@@ -88,7 +88,7 @@ Cómo se ha comentado antes, un problema de satisfacción de restricciones está
 
 Un PSR que cuenta únicamente con variables y restricciones para esas variables podrá tener numerosas soluciones, representadas como una tupla con valores para cada variable. Añadiendo un objetivo al PSR se consigue unificar la solución, pues de todas esas soluciones, sólo una optimizará un objetivo concreto, y contendrá los valores óptimos de cada variable para ello.\\
 
-Como se ha comentado a lo largo del desarrollo de este trabajo fin de grado, el objetivo del problema es \textbf{minimizar el gasto económico} producido mediante la optimización de energía en cada simulación de 24 horas, por lo tanto se buscarán valores de las variables que, además de satisfacer el conjunto de restricciones, sean óptimos para que el gasto económico sea mínimo. Éste gasto económico es dependiente del precio en la hora t de cada una de las energías que representan las variables. De estos precios se habló y se implementó la forma de obtenerlos en el sprint 1. Sus valores son constantes en cada hora t. Dicho esto, la función objetivo a minimizar está formada por el sumatorio de los gastos económico en cada hora t, por lo que representa el gasto económico de toda la simulación.~\ref{eq:funcionObjetivo}
+Como se ha comentado a lo largo del desarrollo de este trabajo fin de grado, el objetivo del problema es \textbf{minimizar el gasto económico} producido mediante la optimización de energía en cada simulación de 24 horas, por lo tanto se buscarán valores de las variables que, además de satisfacer el conjunto de restricciones, sean óptimos para que el gasto económico sea mínimo. Éste gasto económico es dependiente del precio en la hora t de cada una de las energías que representan las variables. De estos precios se habló y se implementó la forma de obtenerlos en la iteración 1. Sus valores son constantes en cada hora t. Dicho esto, la función objetivo a minimizar está formada por el sumatorio de los gastos económico en cada hora t, por lo que representa el gasto económico de toda la simulación.~\ref{eq:funcionObjetivo}
 \begin{equation}
 \label{eq:funcionObjetivo}
 f(x) = \sum_{i=0}^{23} EF_{i}P_{i}^{F} + ER_{i}P_{i}^{R_{PVPC}} + EB_{i}P_{i}^{B_{out}} - CB_{i}P_{i}^{B_{in}} - CR_{i}P_{i}^{R_{SPOT}}
@@ -133,4 +133,4 @@ Las funciones de esta clase sirven para calcular algunos de los atributos anteri
         \label{fig:simulation}
 \end{figure}
 
-En el próximo sprint se implementará cada una de las restricciones para permitir ejecutar la simulación.
+En la próxima iteración se implementará cada una de las restricciones para permitir ejecutar la simulación.
