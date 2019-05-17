@@ -55,13 +55,13 @@
 		<thead>
 		  <tr>
 		    <th scope="col">Hour</th>
-		    <th scope="col">EF</th>
-		    <th scope="col">ER</th>
-		    <th scope="col">EB</th>
-		    <th scope="col">C</th>
-		    <th scope="col">CR</th>
-		    <th scope="col">CB</th>
-		    <th scope="col">C int</th>
+		    <th scope="col" data-toggle="tooltip" data-placement="top" title="Photovoltaic energy">EF</th>
+		    <th scope="col" data-toggle="tooltip" data-placement="top" title="Power grid energy">ER</th>
+		    <th scope="col" data-toggle="tooltip" data-placement="top" title="Battery energy">EB</th>
+		    <th scope="col" data-toggle="tooltip" data-placement="bottom" title="Home Consumption">C</th>
+		    <th scope="col" data-toggle="tooltip" data-placement="bottom" title="Energy discharged into the grid">CR</th>
+		    <th scope="col" data-toggle="tooltip" data-placement="bottom" title="Energy to charge the battery">CB</th>
+		    <th scope="col" data-toggle="tooltip" data-placement="bottom" title="System consumption">C int</th>
 		    <th scope="col">Energy Generated</th>
 		    <th scope="col">Energy Consumed</th>
 		  </tr>
@@ -79,17 +79,17 @@
 		    <td>{{ simulation['hours'][i]['C_int'] }} Wh</td>
 		    <td>
 		      <div class="progress">
-			<div class="progress-bar progress-bar-striped progress-bar-animated bg-success" name="progress-bar-ef" role="progressbar" style="width: {{ simulation['hours'][i]['EF_rate'] }}%"> <strong>EF</strong></div>
-			<div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" name="progress-bar-er" role="progressbar" style="width: {{ simulation['hours'][i]['ER_rate'] }}%"> <strong>ER</strong></div>
-			<div class="progress-bar progress-bar-striped progress-bar-animated" name="progress-bar-eb" role="progressbar" style="width: {{ simulation['hours'][i]['EB_rate'] }}%"><strong>EB</strong></div>
+			<div class="progress-bar progress-bar-striped progress-bar-animated bg-success" name="progress-bar-ef" role="progressbar" style="width: {{ simulation['hours'][i]['EF_rate'] }}%" data-toggle="tooltip" data-placement="top" title="Photovoltaic energy"> <strong>EF</strong></div>
+			<div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" name="progress-bar-er" role="progressbar" style="width: {{ simulation['hours'][i]['ER_rate'] }}%" data-toggle="tooltip" data-placement="top" title="Power grid energy"> <strong>ER</strong></div>
+			<div class="progress-bar progress-bar-striped progress-bar-animated" name="progress-bar-eb" role="progressbar" style="width: {{ simulation['hours'][i]['EB_rate'] }}%" data-toggle="tooltip" data-placement="top" title="Battery energy"><strong>EB</strong></div>
 		      </div>
 		    </td>
 		    <td>
 		      <div class="progress">
-			<div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" name="progress-bar-c" role="progressbar" style="width: {{ simulation['hours'][i]['C_rate'] }}%"> <strong>C</strong></div>
-			<div class="progress-bar progress-bar-striped progress-bar-animated" name="progress-bar-cr" role="progressbar" style="width: {{ simulation['hours'][i]['CR_rate'] }}%"> <strong>CR</strong></div>
-			<div class="progress-bar progress-bar-striped progress-bar-animated bg-success" name="progress-bar-cb" role="progressbar" style="width: {{ simulation['hours'][i]['CB_rate'] }}%"><strong>CB</strong></div>
-			<div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" name="progress-bar-cint" role="progressbar" style="width: {{ simulation['hours'][i]['Cint_rate'] }}%"><strong>Cint</strong></div>
+			<div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" name="progress-bar-c" role="progressbar" style="width: {{ simulation['hours'][i]['C_rate'] }}%" data-toggle="tooltip" data-placement="bottom" title="Home Consumption"><strong>C</strong></div>
+			<div class="progress-bar progress-bar-striped progress-bar-animated" name="progress-bar-cr" role="progressbar" style="width: {{ simulation['hours'][i]['CR_rate'] }}%" data-toggle="tooltip" data-placement="bottom" title="Energy discharged into the grid"><strong>CR</strong></div>
+			<div class="progress-bar progress-bar-striped progress-bar-animated bg-success" name="progress-bar-cb" role="progressbar" style="width: {{ simulation['hours'][i]['CB_rate'] }}%" data-toggle="tooltip" data-placement="bottom" title="Energy to charge the battery"><strong>CB</strong></div>
+			<div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" name="progress-bar-cint" role="progressbar" style="width: {{ simulation['hours'][i]['Cint_rate'] }}%" data-toggle="tooltip" data-placement="bottom" title="System consumption"><strong>Cint</strong></div>
 		      </div>
 		    </td>
 		  </tr>
@@ -111,11 +111,11 @@
 		<thead>
 		  <tr>
 		    <th scope="col">Hour</th>
-		    <th scope="col">EF price</th>
-		    <th scope="col">ER price</th>
-		    <th scope="col">EB price</th>
-		    <th scope="col">CR price</th>
-		    <th scope="col">CB price</th>
+		    <th scope="col" data-toggle="tooltip" data-placement="top" title="Price of generate photovoltaic energy">EF price</th>
+		    <th scope="col" data-toggle="tooltip" data-placement="top" title="Price of power grid energy (PVPC)">ER</th>
+		    <th scope="col" data-toggle="tooltip" data-placement="top" title="Price of discharge the battery">EB</th>
+		    <th scope="col" data-toggle="tooltip" data-placement="bottom" title="Price of discharge energy into the grid (SPOT)">CR</th>
+		    <th scope="col" data-toggle="tooltip" data-placement="bottom" title="Price of charge the battery">CB</th>
 		    <th scope="col">Energy Generated</th>
 		    <th scope="col">Energy Consumed</th>
 		  </tr>
@@ -131,17 +131,17 @@
 		    <td>{{ simulation['hours'][i]['CB_price'] }} €/KWh</td>
 		    <td>
 		      <div class="progress">
-			<div class="progress-bar progress-bar-striped progress-bar-animated bg-success" name="progress-bar-ef" role="progressbar" style="width: {{ simulation['hours'][i]['EF_rate'] }}%"> <strong>EF</strong></div>
-			<div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" name="progress-bar-er" role="progressbar" style="width: {{ simulation['hours'][i]['ER_rate'] }}%"> <strong>ER</strong></div>
-			<div class="progress-bar progress-bar-striped progress-bar-animated" name="progress-bar-eb" role="progressbar" style="width: {{ simulation['hours'][i]['EB_rate'] }}%"><strong>EB</strong></div>
+			<div class="progress-bar progress-bar-striped progress-bar-animated bg-success" name="progress-bar-ef" role="progressbar" style="width: {{ simulation['hours'][i]['EF_rate'] }}%" data-toggle="tooltip" data-placement="top" title="Photovoltaic energy"> <strong>EF</strong></div>
+			<div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" name="progress-bar-er" role="progressbar" style="width: {{ simulation['hours'][i]['ER_rate'] }}%" data-toggle="tooltip" data-placement="top" title="Power grid energy"> <strong>ER</strong></div>
+			<div class="progress-bar progress-bar-striped progress-bar-animated" name="progress-bar-eb" role="progressbar" style="width: {{ simulation['hours'][i]['EB_rate'] }}%" data-toggle="tooltip" data-placement="top" title="Battery energy"><strong>EB</strong></div>
 		      </div>
 		    </td>
 		    <td>
 		      <div class="progress">
-			<div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" name="progress-bar-c" role="progressbar" style="width: {{ simulation['hours'][i]['C_rate'] }}%"> <strong>C</strong></div>
-			<div class="progress-bar progress-bar-striped progress-bar-animated" name="progress-bar-cr" role="progressbar" style="width: {{ simulation['hours'][i]['CR_rate'] }}%"> <strong>CR</strong></div>
-			<div class="progress-bar progress-bar-striped progress-bar-animated bg-success" name="progress-bar-cb" role="progressbar" style="width: {{ simulation['hours'][i]['CB_rate'] }}%"><strong>CB</strong></div>
-			<div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" name="progress-bar-cint" role="progressbar" style="width: {{ simulation['hours'][i]['Cint_rate'] }}%"><strong>Cint</strong></div>
+			<div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" name="progress-bar-c" role="progressbar" style="width: {{ simulation['hours'][i]['C_rate'] }}%" data-toggle="tooltip" data-placement="bottom" title="Home Consumption"> <strong>C</strong></div>
+			<div class="progress-bar progress-bar-striped progress-bar-animated" name="progress-bar-cr" role="progressbar" style="width: {{ simulation['hours'][i]['CR_rate'] }}%" data-toggle="tooltip" data-placement="bottom" title="Energy discharged into the grid"> <strong>CR</strong></div>
+			<div class="progress-bar progress-bar-striped progress-bar-animated bg-success" name="progress-bar-cb" role="progressbar" style="width: {{ simulation['hours'][i]['CB_rate'] }}%" data-toggle="tooltip" data-placement="bottom" title="Energy to charge the battery"><strong>CB</strong></div>
+			<div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" name="progress-bar-cint" role="progressbar" style="width: {{ simulation['hours'][i]['Cint_rate'] }}%" data-toggle="tooltip" data-placement="bottom" title="System consumption"><strong>Cint</strong></div>
 		      </div>
 		    </td>
 		  </tr>
