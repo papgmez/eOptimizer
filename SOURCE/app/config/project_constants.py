@@ -4,7 +4,6 @@
 # =====================
 # DB2 IBM Cloud
 IBM_USER = 'dwm91559'
-IBM_KEY = 'zswksj730cmk90%5Eq'
 IBM_HOSTNAME = 'dashdb-txn-sbox-yp-lon02-02.services.eu-gb.bluemix.net'
 IBM_PORT = '50000'
 IBM_DB = 'BLUDB'
@@ -30,10 +29,6 @@ BAT_CAPACITY = 21
 C_INT = 0.044
 
 # --------- API Aemet OpenData ---------
-# Codigos de la API OpenData de AEMET
-# Consuegra (Toledo)
-# CITY_CODE = '45053'
-
 # Api key para el manejo de OpenData AEMET
 AEMET_KEY = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYWJsby5wYWxvbWlubzFAb3V0bG9vay5jb20iLCJqdGki' \
             'OiJmOGFhZTdiNi0yYWIzLTQzOTktYjU3Mi0zNDBlYWE2OGUwMDUiLCJpc3MiOiJBRU1FVCIsImlhd' \
