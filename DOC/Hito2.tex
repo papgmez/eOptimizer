@@ -64,6 +64,12 @@ La lógica difusa~\cite{Morc11} permite representar matemáticamente la \textbf{
 En la teoría de conjuntos de la lógica clásica, el grado de pertenencia puede tomar solo los valores 0 y 1, que representan que el elemento pertenece o no pertenece al conjunto. En la lógica difusa existe el concepto de \textbf{conjunto difuso}~\cite{Zad65}, establecido por Zadeh. Para trabajar con valores difusos se realiza un proceso denominado \textit{fuzzificación} que da resultados difusos. Estos resultados se someten a un proceso de \textit{defuzzificación} para transformarse en valores discretos (llamados \textit{crisp}), que tendrán un \textbf{grado de pertenecia} a los conjuntos difusos el cuál será un valor en el intervalo [0, 1], y representa cuánto pertenece al conjunto.\\
 
 Así pues, hay un claro ejemplo de conjuntos difusos con los estados meteorológicos. En la Figura~\ref{fig:estadoCielo} la API de AEMET~\cite{Aemet} define los siguientes estados meteorológicos posibles (imagen obtenida de \textcopyright AEMET).
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=17cm]{figs/estadoCieloAEMET.png}
+	\caption{Estados del cielo posibles AEMET}
+	\label{fig:estadoCielo}
+\end{figure}
 Como se puede observar existe un gran número de estados meteorológicos posibles, pero no todos deben ser conjuntos difusos. Esto es porque en un gran número de ellos un módulo fotovoltaico no genera energía, debido a que son estados con tiempo muy contraproducente para la energía solar fotovoltaica. En estos estados el valor máximo a generar por los módulos será de 0 watios.\\Los estados favorables (donde un módulo genera una potencia mayor a 0 watios) serán tomados como conjuntos difusos. En la tabla~\ref{tab:estadosFavorables} se muestran cuáles son estos estados.
 
 Por ejemplo, no se puede determinar cuántos watios se producen como máximo con un tiempo \textit{Despejado} o \textit{Cubierto con nubes altas}, pero podemos mostrar los conjuntos difusos y gráficamente comprobar su distribución, para obtener un valor discreto de cada conjunto difuso, denominado el \textbf{centroide} o centro de gravedad del conjunto difuso. Este proceso es conocido como razonamiento aproximado a partir de inferencia difusa. La inferencia difusa permite obtener un valor de salida para un valor de entrada empleando la teoría de conjuntos difusos.\\Un ejemplo de cuestión a resolver es: \textit{¿Qué potencia pico se puede obtener de un módulo fotovoltaico si hay intervalos nubosos?}. Cómo hemos comentado anteriormente, la respuesta sería el centroide del conjunto difuso \textit{Intervalos Nubosos}.\\El centroide es el punto que divide el conjunto difuso en dos partes de igual masa. En la ecuación~\ref{eq:centroide} se muestra el procedimiento para calcularlo, realizando el sumatorio de las potencias tomadas por su grado de pertenencia al conjunto dividido entre el sumatorio de dichos grados de pertenencia. En la tabla~\ref{tab:estadosFavorables} se incluye el valor del centroide de cada conjunto difuso.\\
@@ -71,14 +77,8 @@ Por ejemplo, no se puede determinar cuántos watios se producen como máximo con
         \label{eq:centroide}
         Centroide = \frac{\sum_{x=i}^{n} x \mu_{A}(x)}{\sum_{x=i}^{n} \mu_{A}(x)}
 \end{equation}
-
 Para representar los conjuntos difusos, se parte del hipotético caso en el que cada conjunto difuso desciende de manera ligeramente mas inclinada que asciende, representando el factor de adaptación de un módulo fotovoltaico a un nuevo estado meteorológico. En la figura~\ref{fig:fuzzySets} se puede observar el gráfico de los conjuntos difusos definidos en la tabla~\ref{tab:estadosFavorables}. En el eje horizontal se encuentra la potencia máxima posible del módulo fotovoltaico en watios y en el eje vertical el grado de pertenencia a los conjuntos difusos [0,1]. Si avanzamos en el eje horizontal, vemos que el estado meteorológico es cambiante hacia estados favorables, y viceversa, ya que esto es directamente proporcional a la máxima potencia posible del módulo.
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=17cm]{figs/estadoCieloAEMET.png}
-	\caption{Estados del cielo posibles AEMET}
-	\label{fig:estadoCielo}
-\end{figure}
+
 Cada conjunto difuso es una función PI o \textbf{trapezoidal}, ya que no existe un único punto donde el grado de pertenencia al conjunto es 1, si no que se mantiene ese valor de pertenencia hasta que el módulo comienza a experimentar un cambio en el estado del cielo y se debe adaptar a dicho nuevo estado.
 
 \begin{figure}[h]
@@ -89,7 +89,7 @@ Cada conjunto difuso es una función PI o \textbf{trapezoidal}, ya que no existe
 \end{figure}
 
 Tal y cómo se comentó en la iteración anterior, se utilizan módulos fotovoltaicos con una potencia nominal máxima de 50 watios, que solo podría ser alcanzada en el estado meteorológico óptimo (\textit{Despejado}), y en función de este dato, se toman los valores para obtener los centroides.
-\begin{table}[hp]
+\begin{table}[H]
         \centering
         \begin{tabular}{|c|l|c|}
                 \hline

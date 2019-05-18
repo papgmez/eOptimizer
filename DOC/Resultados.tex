@@ -1,16 +1,321 @@
 \chapter{Resultados}
 \label{cap:Resultados}
-En este capítulo se explican los resultados obtenidos en cada una de las iteraciones en el desarrollo de este trabajo fin de grado y cómo se relacionan con los objetivos definidos. Cada sección representa una iteración en el avance hacia el objetivo, donde a partir de la iteración 4 se realiza una integración continua hasta el hito final, pues dan como salida una versión funcional del objetivo.
+En este capítulo se explican los resultados obtenidos en cada una de las iteraciones en el desarrollo de este trabajo fin de grado y cómo se relacionan con los objetivos definidos.\\
+
+Cada sección representa una iteración en el avance hacia el objetivo, donde a partir de la iteración 4 se realiza una integración continua hasta el hito final, pues dan como salida una versión funcional del objetivo. Es por esto que las historias de usuario anteriores a la iteración 4 tienen una prioridad alta.
 
 \section{Identificación y adquisición de las variables del sistema}
+\textbf{Historias de Usuario}\\
+
+\begin{table}[H]
+        \centering
+        \begin{tabular}{|p{0.3\linewidth}|p{0.3\linewidth}|}
+          \hline
+          \multicolumn{2}{|c|}{Historia de usuario}\\ \hline
+          \multicolumn{2}{|c|}{\textbf{Identificar las variables de entrada}}\\ \hline
+          \textbf{Número:} 0 & \textbf{Prioridad:} Alta\\ \hline
+          \textbf{Estimacion:} 1 día & \textbf{Iteracion:} 1\\ \hline
+          \multicolumn{2}{|l|}{\textbf{Desarrollador responsable:} Pablo Palomino Gómez}\\ \hline
+          \multicolumn{2}{|p{0.6\linewidth}|}{\textbf{Descripcion:} Identificar cuáles son las variables de entrada al sistema definido en el objetivo y sus dependencias}\\ \hline
+        \end{tabular}
+        \caption{Historia de usuario 0}
+        \label{tab:hist0}
+\end{table}
+\begin{table}[H]
+        \centering
+        \begin{tabular}{|p{0.3\linewidth}|p{0.3\linewidth}|}
+          \hline
+          \multicolumn{2}{|c|}{Historia de usuario}\\ \hline
+          \multicolumn{2}{|c|}{\textbf{Implementar módulos para el manejos de las APIs necesarias}}\\ \hline
+          \textbf{Número:} 1 & \textbf{Prioridad:} Normal\\ \hline
+          \textbf{Estimacion:} 10 días & \textbf{Iteracion:} 1\\ \hline
+          \multicolumn{2}{|l|}{\textbf{Desarrollador responsable:} Pablo Palomino Gómez}\\ \hline
+          \multicolumn{2}{|p{0.6\linewidth}|}{\textbf{Descripcion:} Se deben identificar las APIs de las que se solicitará información real necesaria para determinar los valores de las variables del sistema}\\ \hline
+        \end{tabular}
+        \caption{Historia de usuario 1}
+        \label{tab:hist1}
+\end{table}
+\begin{table}[H]
+        \centering
+        \begin{tabular}{|p{0.3\linewidth}|p{0.3\linewidth}|}
+          \hline
+          \multicolumn{2}{|c|}{Historia de usuario}\\ \hline
+          \multicolumn{2}{|c|}{\textbf{Identificar las variables de salida}}\\ \hline
+          \textbf{Número:} 2 & \textbf{Prioridad:} Alta\\ \hline
+          \textbf{Estimacion:} 1 día & \textbf{Iteracion:} 1\\ \hline
+          \multicolumn{2}{|l|}{\textbf{Desarrollador responsable:} Pablo Palomino Gómez}\\ \hline
+          \multicolumn{2}{|p{0.6\linewidth}|}{\textbf{Descripcion:} Identificar cuáles son las variables de salida del sistema definido en el objetivo y sus dependencias}\\ \hline
+        \end{tabular}
+        \caption{Historia de usuario 2}
+        \label{tab:hist2}
+\end{table}
+\begin{table}[H]
+        \centering
+        \begin{tabular}{|p{0.3\linewidth}|p{0.3\linewidth}|}
+          \hline
+          \multicolumn{2}{|c|}{Historia de usuario}\\ \hline
+          \multicolumn{2}{|c|}{\textbf{Identificar las variables de control}}\\ \hline
+          \textbf{Número:} 3 & \textbf{Prioridad:} Alta\\ \hline
+          \textbf{Estimacion:} 1 día & \textbf{Iteracion:} 1\\ \hline
+          \multicolumn{2}{|l|}{\textbf{Desarrollador responsable:} Pablo Palomino Gómez}\\ \hline
+          \multicolumn{2}{|p{0.6\linewidth}|}{\textbf{Descripcion:} Identificar cuáles son las variables de control del sistema definido en el objetivo y sus dependencias}\\ \hline
+        \end{tabular}
+        \caption{Historia de usuario 3}
+        \label{tab:hist3}
+\end{table}
+\textbf{Desarrollo}\\
+
 \input{Hito1.tex}
 \section{Aplicación de lógica difusa para la determinación de los estados meteorológicos}
+\textbf{Historias de Usuario}\\
+
+\begin{table}[H]
+        \centering
+        \begin{tabular}{|p{0.3\linewidth}|p{0.3\linewidth}|}
+          \hline
+          \multicolumn{2}{|c|}{Historia de usuario}\\ \hline
+          \multicolumn{2}{|c|}{\textbf{Hallar los conjuntos difusos que se deben tratar}}\\ \hline
+          \textbf{Número:} 4 & \textbf{Prioridad:} Alta\\ \hline
+          \textbf{Estimacion:} 2 días & \textbf{Iteracion:} 2\\ \hline
+          \multicolumn{2}{|l|}{\textbf{Desarrollador responsable:} Pablo Palomino Gómez}\\ \hline
+          \multicolumn{2}{|p{0.6\linewidth}|}{\textbf{Descripcion:} Identificar los conjuntos difusos de estados meteorológicos}\\ \hline
+        \end{tabular}
+        \caption{Historia de usuario 4}
+        \label{tab:hist4}
+\end{table}
+\begin{table}[H]
+        \centering
+        \begin{tabular}{|p{0.3\linewidth}|p{0.3\linewidth}|}
+          \hline
+          \multicolumn{2}{|c|}{Historia de usuario}\\ \hline
+          \multicolumn{2}{|c|}{\textbf{Obtener un valor numérico de los estados meteorlógicos}}\\ \hline
+          \textbf{Número:} 5 & \textbf{Prioridad:} Alta\\ \hline
+          \textbf{Estimacion:} 2 días & \textbf{Iteracion:} 2\\ \hline
+          \multicolumn{2}{|l|}{\textbf{Desarrollador responsable:} Pablo Palomino Gómez}\\ \hline
+          \multicolumn{2}{|p{0.6\linewidth}|}{\textbf{Descripcion:} Dotar de valor discreto los conjuntos difusos mediante el cálculo de centroides}\\ \hline
+        \end{tabular}
+        \caption{Historia de usuario 5}
+        \label{tab:hist5}
+\end{table}
+\textbf{Desarrollo}\\
+
 \input{Hito2.tex}
 \section{Creación de las relaciones y restricciones propias del modelo}
+\textbf{Historias de Usuario}\\
+\begin{table}[H]
+        \centering
+        \begin{tabular}{|p{0.3\linewidth}|p{0.3\linewidth}|}
+          \hline
+          \multicolumn{2}{|c|}{Historia de usuario}\\ \hline
+          \multicolumn{2}{|c|}{\textbf{Identificar las restricciones y función objetivo del PSR}}\\ \hline
+          \textbf{Número:} 6 & \textbf{Prioridad:} Alta\\ \hline
+          \textbf{Estimacion:} 3 días & \textbf{Iteracion:} 3\\ \hline
+          \multicolumn{2}{|l|}{\textbf{Desarrollador responsable:} Pablo Palomino Gómez}\\ \hline
+          \multicolumn{2}{|p{0.6\linewidth}|}{\textbf{Descripcion:} Determinar el dominio de cada variable e identificar las restricciones del PSR}\\ \hline
+        \end{tabular}
+        \caption{Historia de usuario 6}
+        \label{tab:hist6}
+\end{table}
+\begin{table}[H]
+        \centering
+        \begin{tabular}{|p{0.3\linewidth}|p{0.3\linewidth}|}
+          \hline
+          \multicolumn{2}{|c|}{Historia de usuario}\\ \hline
+          \multicolumn{2}{|c|}{\textbf{Implementar la clase Simulation }}\\ \hline
+          \textbf{Número:} 7 & \textbf{Prioridad:} Alta\\ \hline
+          \textbf{Estimacion:} 5 días & \textbf{Iteracion:} 3\\ \hline
+          \multicolumn{2}{|l|}{\textbf{Desarrollador responsable:} Pablo Palomino Gómez}\\ \hline
+          \multicolumn{2}{|p{0.6\linewidth}|}{\textbf{Descripcion:} Implementar la clase de la que se instanciarán objetos que representarán simulaciones. Debe estudiarse la información que ha de contener un objeto Simulation}\\ \hline
+        \end{tabular}
+        \caption{Historia de usuario 7}
+        \label{tab:hist7}
+\end{table}
+\textbf{Desarrollo}\\
+
 \input{Hito3.tex}
 \section{Generación optimizada de energía mediante programación lineal}
+\textbf{Historias de Usuario}\\
+
+\begin{table}[H]
+        \centering
+        \begin{tabular}{|p{0.3\linewidth}|p{0.3\linewidth}|}
+          \hline
+          \multicolumn{2}{|c|}{Historia de usuario}\\ \hline
+          \multicolumn{2}{|c|}{\textbf{Hallar un medio de optimización del PSR}}\\ \hline
+          \textbf{Número:} 8 & \textbf{Prioridad:} Alta\\ \hline
+          \textbf{Estimacion:} 5 días & \textbf{Iteracion:} 4\\ \hline
+          \multicolumn{2}{|l|}{\textbf{Desarrollador responsable:} Pablo Palomino Gómez}\\ \hline
+          \multicolumn{2}{|p{0.6\linewidth}|}{\textbf{Descripcion:} Investigar sobre un medio de optimización de un objetivo sujeto a un número muy grande de restricciones}\\ \hline
+        \end{tabular}
+        \caption{Historia de usuario 8}
+        \label{tab:hist8}
+\end{table}
+\begin{table}[H]
+        \centering
+        \begin{tabular}{|p{0.3\linewidth}|p{0.3\linewidth}|}
+          \hline
+          \multicolumn{2}{|c|}{Historia de usuario}\\ \hline
+          \multicolumn{2}{|c|}{\textbf{Implementar las restricciones identificadas anteriormente}}\\ \hline
+          \textbf{Número:} 9 & \textbf{Prioridad:} Alta\\ \hline
+          \textbf{Estimacion:} 7 días & \textbf{Iteracion:} 4\\ \hline
+          \multicolumn{2}{|l|}{\textbf{Desarrollador responsable:} Pablo Palomino Gómez}\\ \hline
+          \multicolumn{2}{|p{0.6\linewidth}|}{\textbf{Descripcion:} Implementar en la clase Simulation las restricciones que se identificaron en la iteración anterior para poder ser utilizadas en la optimización}\\ \hline
+        \end{tabular}
+        \caption{Historia de usuario 9}
+        \label{tab:hist9}
+\end{table}
+\begin{table}[H]
+        \centering
+        \begin{tabular}{|p{0.3\linewidth}|p{0.3\linewidth}|}
+          \hline
+          \multicolumn{2}{|c|}{Historia de usuario}\\ \hline
+          \multicolumn{2}{|c|}{\textbf{Implementar la optimización y realizar una simulación}}\\ \hline
+          \textbf{Número:} 10 & \textbf{Prioridad:} Alta\\ \hline
+          \textbf{Estimacion:}10 días & \textbf{Iteracion:} 4\\ \hline
+          \multicolumn{2}{|l|}{\textbf{Desarrollador responsable:} Pablo Palomino Gómez}\\ \hline
+          \multicolumn{2}{|p{0.6\linewidth}|}{\textbf{Descripcion:} Implementar un método en la clase simulation llamado \textit{optimize()} que realice la optimización a través de las variables de clase, restricciones y valores necesarios, y procesar el resultado en un fichero de reporte con la información asociada}\\ \hline
+        \end{tabular}
+        \caption{Historia de usuario 10}
+        \label{tab:hist10}
+\end{table}
+\textbf{Desarrollo}\\
+
 \input{Hito4.tex}
 \section{Persistencia de datos y creación de la aplicación web}
+\textbf{Historias de Usuario}\\
+
+\begin{table}[H]
+        \centering
+        \begin{tabular}{|p{0.3\linewidth}|p{0.3\linewidth}|}
+          \hline
+          \multicolumn{2}{|c|}{Historia de usuario}\\ \hline
+          \multicolumn{2}{|c|}{\textbf{Investigar y elegir un \textit{framework} de base de datos para Python}}\\ \hline
+          \textbf{Número:} 11 & \textbf{Prioridad:} Media\\ \hline
+          \textbf{Estimacion:}2 días & \textbf{Iteracion:} 5\\ \hline
+          \multicolumn{2}{|l|}{\textbf{Desarrollador responsable:} Pablo Palomino Gómez}\\ \hline
+          \multicolumn{2}{|p{0.6\linewidth}|}{\textbf{Descripcion:} Estudiar y elegir un marco de trabajo para el uso de bases de datos SQL en el lenguaje Python}\\ \hline
+        \end{tabular}
+        \caption{Historia de usuario 11}
+        \label{tab:hist11}
+\end{table}
+\begin{table}[H]
+        \centering
+        \begin{tabular}{|p{0.3\linewidth}|p{0.3\linewidth}|}
+          \hline
+          \multicolumn{2}{|c|}{Historia de usuario}\\ \hline
+          \multicolumn{2}{|c|}{\textbf{Implementar los modelos de la base de datos}}\\ \hline
+          \textbf{Número:} 12 & \textbf{Prioridad:} Media\\ \hline
+          \textbf{Estimacion:}10 días & \textbf{Iteracion:} 5\\ \hline
+          \multicolumn{2}{|l|}{\textbf{Desarrollador responsable:} Pablo Palomino Gómez}\\ \hline
+          \multicolumn{2}{|p{0.6\linewidth}|}{\textbf{Descripcion:} Se deben definir las tablas que contendrá la base de datos. Implementar los modelos de dichas tablas, crear la base de datos con las tablas y realizar los tests necesarios}\\ \hline
+        \end{tabular}
+        \caption{Historia de usuario 12}
+        \label{tab:hist12}
+\end{table}
+\begin{table}[H]
+        \centering
+        \begin{tabular}{|p{0.3\linewidth}|p{0.3\linewidth}|}
+          \hline
+          \multicolumn{2}{|c|}{Historia de usuario}\\ \hline
+          \multicolumn{2}{|c|}{\textbf{Implementar las rutas y lógica de la aplicación Flask}}\\ \hline
+          \textbf{Número:} 13 & \textbf{Prioridad:} Media\\ \hline
+          \textbf{Estimacion:}10 días & \textbf{Iteracion:} 5\\ \hline
+          \multicolumn{2}{|l|}{\textbf{Desarrollador responsable:} Pablo Palomino Gómez}\\ \hline
+          \multicolumn{2}{|p{0.6\linewidth}|}{\textbf{Descripcion:} El objetivo es identificar los \textit{endpoints} que contendrá la aplicación Flask e implementar la lógica necesaria para realizar una simulación mediante una petición al \textit{endpoint} pertinente}\\ \hline
+        \end{tabular}
+        \caption{Historia de usuario 13}
+        \label{tab:hist13}
+\end{table}
+\begin{table}[H]
+        \centering
+        \begin{tabular}{|p{0.3\linewidth}|p{0.3\linewidth}|}
+          \hline
+          \multicolumn{2}{|c|}{Historia de usuario}\\ \hline
+          \multicolumn{2}{|c|}{\textbf{Implementar la autenticación en la aplicación}}\\ \hline
+          \textbf{Número:} 14 & \textbf{Prioridad:} Media\\ \hline
+          \textbf{Estimacion:}7 días & \textbf{Iteracion:} 5\\ \hline
+          \multicolumn{2}{|l|}{\textbf{Desarrollador responsable:} Pablo Palomino Gómez}\\ \hline
+          \multicolumn{2}{|p{0.6\linewidth}|}{\textbf{Descripcion:} Hallar un medio de autenticación de usuarios y control de sesiones en la aplicación e implementar la lógica necesaria para autenticarse mediante el acceso al \textit{endpoint} pertinente}\\ \hline
+        \end{tabular}
+        \caption{Historia de usuario 14}
+        \label{tab:hist14}
+\end{table}
+\begin{table}[H]
+        \centering
+        \begin{tabular}{|p{0.3\linewidth}|p{0.3\linewidth}|}
+          \hline
+          \multicolumn{2}{|c|}{Historia de usuario}\\ \hline
+          \multicolumn{2}{|c|}{\textbf{Implementarla vista de inicio de sesión}}\\ \hline
+          \textbf{Número:} 15 & \textbf{Prioridad:} Media\\ \hline
+          \textbf{Estimacion:}5 días & \textbf{Iteracion:} 5\\ \hline
+          \multicolumn{2}{|l|}{\textbf{Desarrollador responsable:} Pablo Palomino Gómez}\\ \hline
+          \multicolumn{2}{|p{0.6\linewidth}|}{\textbf{Descripcion:} Debe crearse la vista html para inicio de sesión o creación de una cuenta y enlazarla con el endpoint correspondiente en la aplicación Flask así como los tests necesarios}\\ \hline
+        \end{tabular}
+        \caption{Historia de usuario 15}
+        \label{tab:hist15}
+\end{table}
+\begin{table}[H]
+        \centering
+        \begin{tabular}{|p{0.3\linewidth}|p{0.3\linewidth}|}
+          \hline
+          \multicolumn{2}{|c|}{Historia de usuario}\\ \hline
+          \multicolumn{2}{|c|}{\textbf{Implementarla vista de \textit{dashboard}}}\\ \hline
+          \textbf{Número:} 16 & \textbf{Prioridad:} Media\\ \hline
+          \textbf{Estimacion:}5 días & \textbf{Iteracion:} 5\\ \hline
+          \multicolumn{2}{|l|}{\textbf{Desarrollador responsable:} Pablo Palomino Gómez}\\ \hline
+          \multicolumn{2}{|p{0.6\linewidth}|}{\textbf{Descripcion:} Debe crearse la vista html de inicio o panel de control. Debe contener información además de un formulario para realizar simulaciones}\\ \hline
+        \end{tabular}
+        \caption{Historia de usuario 16}
+        \label{tab:hist16}
+\end{table}
+\begin{table}[H]
+        \centering
+        \begin{tabular}{|p{0.3\linewidth}|p{0.3\linewidth}|}
+          \hline
+          \multicolumn{2}{|c|}{Historia de usuario}\\ \hline
+          \multicolumn{2}{|c|}{\textbf{Implementarla vista de resultados de simulación}}\\ \hline
+          \textbf{Número:} 17 & \textbf{Prioridad:} Media\\ \hline
+          \textbf{Estimacion:}10 días & \textbf{Iteracion:} 5\\ \hline
+          \multicolumn{2}{|l|}{\textbf{Desarrollador responsable:} Pablo Palomino Gómez}\\ \hline
+          \multicolumn{2}{|p{0.6\linewidth}|}{\textbf{Descripcion:} Debe crearse la vista html que muestre los resultados de realizar una simulación. Debe procesarse y mostrarse toda la información necesaria así como permitir descargar el fichero de reporte de simulación. Tambien deben implementarse los tests pertinentes}\\ \hline
+        \end{tabular}
+        \caption{Historia de usuario 17}
+        \label{tab:hist17}
+\end{table}
+\textbf{Desarrollo}\\
+
 \input{Hito5.tex}
 \section{Migración de la aplicación a la nube mediante una \textit{IaaS}}
+\textbf{Historias de Usuario}\\
+
+\begin{table}[H]
+        \centering
+        \begin{tabular}{|p{0.3\linewidth}|p{0.3\linewidth}|}
+          \hline
+          \multicolumn{2}{|c|}{Historia de usuario}\\ \hline
+          \multicolumn{2}{|c|}{\textbf{Identificar los recursos que deben migrarse}}\\ \hline
+          \textbf{Número:} 18 & \textbf{Prioridad:} Baja\\ \hline
+          \textbf{Estimacion:}4 horas & \textbf{Iteracion:} 6\\ \hline
+          \multicolumn{2}{|l|}{\textbf{Desarrollador responsable:} Pablo Palomino Gómez}\\ \hline
+          \multicolumn{2}{|p{0.6\linewidth}|}{\textbf{Descripcion:}Identificar los recursos del sistema que pueden migrarse a la nube y elegir proveedores para ello}\\ \hline
+        \end{tabular}
+        \caption{Historia de usuario 18}
+        \label{tab:hist18}
+\end{table}
+\begin{table}[H]
+        \centering
+        \begin{tabular}{|p{0.3\linewidth}|p{0.3\linewidth}|}
+          \hline
+          \multicolumn{2}{|c|}{Historia de usuario}\\ \hline
+          \multicolumn{2}{|c|}{\textbf{Migrar los recursos elegidos y hacer accesible la aplicación desde Internet}}\\ \hline
+          \textbf{Número:} 19 & \textbf{Prioridad:} Baja\\ \hline
+          \textbf{Estimacion:}10 días & \textbf{Iteracion:} 6\\ \hline
+          \multicolumn{2}{|l|}{\textbf{Desarrollador responsable:} Pablo Palomino Gómez}\\ \hline
+          \multicolumn{2}{|p{0.6\linewidth}|}{\textbf{Descripcion:} Migrar cada uno de los recursos elegidos a la nube y hacer funcional la aplicación tras ello. Perimitr el acceso desde Internet al sistema y programar su ejecución constante}\\ \hline
+        \end{tabular}
+        \caption{Historia de usuario 19}
+        \label{tab:hist19}
+\end{table}
+\textbf{Desarrollo}\\
+
 \input{Hito6.tex}
