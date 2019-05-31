@@ -1,17 +1,11 @@
 Cómo se comento en el capítulo relativo al Objetivo del trabajo fin de grado, éste se aborda como un \textbf{problema de satisfacción de restricciones}.\\
 
-La programación por restricciones es una metodología software que permite resolver problemas de gran complejidad, típicamente NP. Ésta metodología ha generado mucha espectación en el área de la inteligencia artificial desde la década de los 60, ya que tiene un gran potencial para la resolución de problemas reales. La idea básica de la programación por restricciones es primero declarar una serie de restricciones sobre el dominio del problema que atañe, para después dar con soluciones que satisfacen las anteriores restricciones de la forma más optima posible. Así, un problema de satisfacción de restricciones~\cite{Russ06} está caracterizado por:
+La programación por restricciones es una metodología software que permite resolver problemas de gran complejidad, típicamente NP. Un problema de satisfacción de restricciones~\cite{Russ06} está caracterizado por:
 \begin{itemize}
 	\item Un conjunto de variables, donde cada variable dispone de un dominio de valores que puede tomar.
 	\item Un conjunto de restricciones, que permite conocer las posibles combinaciones de las variables.
 	\item La solución al PSR será la asignación de valores a las variables de forma que se satisfacen las restricciones y se alcanza el objetivo, representado típicamente como una función a optimizar.
 \end{itemize}
-Las restricciones se caracterizan por su \textbf{aridad}, que viene a ser el número de variables que involucra. Pudiendo ser unarias, si solo involucran una variable; binarias, si involucran dos variables; y n-arias, si involucran más de dos variables. Se deben tener en cuenta un tipo de restricción adicional, ya que están presentes en este trabajo, como son las \textbf{restricciones lineales}, expresadas teóricamente de la forma~\ref{eq:rest_lineal}
-\begin{equation}
-  \label{eq:rest_lineal}
-  \sum_{i}^{n} a_{i}x_{i} (<,\leq,=,\geq,>,\neq) c
-\end{equation}
-siendo a el coeficiente de la variable x y c constante.\\
 
 \subsection{Variables del PSR}
 

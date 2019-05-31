@@ -5,9 +5,6 @@ all:
 
 compile:
 	python compile.py uclmTFGesi
-release:
-	make clean
-	cp uclmTFGesi.pdf ../TFG_PalominoGomezPablo.pdf
 clean:
 	$(RM) -rf *.log
 	$(RM) -rf *~

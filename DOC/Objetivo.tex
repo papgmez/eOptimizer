@@ -1,82 +1,46 @@
-\chapter{Objetivos e hipótesis de trabajo}
+\chapter{Objetivos}
 \label{cap:Objetivo}
-
-
+A continuación se expone el objetivo de este trabajo así como una serie de objetivos parciales que se pretenden alcanzar durante el desarrollo y que toman parte en el objetivo principal.
 \section{Objetivo Principal}
-El objetivo principal a abordar será la construcción de un sistema inteligente para la simulación de la \textbf{distribución óptima} de energía entre \textbf{elementos generadores} y \textbf{elementos consumidores} en el hogar teniendo en cuenta que toda la energía generada debe ser consumida de una u otra forma.
-
-El objetivo del sistema es ajustar en cada momento la cantidad de energía obtenida de cada elemento de los mencionados anteriormente con el objetivo de minimizar el gasto económico dedicado en el hogar.
-Este objetivo puede ser abordado como un problema de satisfacción de restricciones (PSR).
-Cómo se puede observar en la Figura 2, la funcionalidad del sistema sería la de modelar cada una de las salidas en función del valor de cada una de las entradas, que representan el conjunto de variables del problema de satisfacción de restricciones, el cuál se definirá mas adelante.
-
-\begin{figure}[!h]
-	\centering
-	\includegraphics[width=7cm]{figs/Esquema.png}
-	\caption{Esquema del sistema}
-\end{figure}
-
-En este sistema las fuentes de suministro de energía (entradas) son:
+El objetivo principal de este trabajo fin de grado es la construcción de un sistema inteligente para la simulación de la \textbf{distribución óptima} de energía entre \textbf{elementos generadores} y \textbf{elementos consumidores} en el hogar.\\
+Las fuentes de suministro de energía (elementos generadores) son:
 \begin{itemize}
 	\item Módulos fotovoltaicos
 	\item Red eléctrica
 	\item Baterías de almacenaje
 \end{itemize}
-Como fuentes de consumo (salidas) existen:
+Como fuentes de consumo (elementos consumidores) existen:
 \begin{itemize}
 	\item Consumo energético del hogar
 	\item Consumo propio del sistema que se propone
 	\item Carga de baterías de almacenaje
 	\item Venta al mercado eléctrico como particular
 \end{itemize}
+En la Figura~\ref{fig:schema} se muestra un esquema del sistema para facilitar la compresión de su funcionalidad. El sistema debe ser capaz de ajustar automáticamente en cada momento la cantidad de energía obtenida de los mencionados anteriormente con el objetivo de minimizar el gasto económico dedicado en el hogar.
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=7cm]{figs/Esquema.png}
+	\caption{Esquema del sistema}
+        \label{fig:schema}
+\end{figure}
 
 \section{Objetivos Parciales}
 A lo largo del trabajo habrá que satisfacer una serie de subobjetivos necesarios para lograr el objetivo principal tales como:
 \begin{enumerate}
 	\item \textbf{Identificación y adquisición de los datos y variables que definen el sistema:}
-	Estudio de las entradas del sistema y el grado de importancia que tiene cada una en cada situación. La información meteorológica será obtenida utilizando una API oficial de AEMET~\cite{Aemet}, y los datos del mercado eléctrico serán obtenidos utilizando la API oficial e-sios de Red Eléctrica de España S.A.~\cite{Esios}
+	Estudio de las entradas del sistema y el grado de importancia que tiene cada una en cada situación. La información meteorológica será obtenida utilizando una API oficial de AEMET~\cite{Aemet}, y los datos del mercado eléctrico serán obtenidos utilizando la API oficial e-sios de Red Eléctrica de España S.A.~\cite{Ree}
 
-	\item \textbf{Establecer las relaciones y restricciones propias del consumo eléctrico:}
+	\item \textbf{Establecer las relaciones y restricciones propias del modelo:}
 	Las variables obtenidas en el objetivo anterior estarán sujetas a unas restricciones que nos permitirán conocer las combinaciones posibles de valores, teniendo en cuenta que toda la energía generada debe ser consumida de alguna forma, ya sea por medio de venta a la red, o cargada en baterías de almacenaje en caso de superar la energía demandada por el consumo que se realiza.
 
-	\item \textbf{Añadir una IA para la generación optimizada de energía y dar lugar a una planificación:}
+	\item \textbf{Añadir una inteligencia artificial para la generación optimizada de energía y dar lugar a una planificación:}
 	Una vez obtenidos los datos y variables del problema y conociendo el grado de implicación de los mismos, se creará un modelo del sistema que dará una planificación temporal de 24 horas. Esto se podrá llevar a cabo incorporando inteligencia artificial.
 
-	\item \textbf{Simular la planificación:}
-	  Se llevará a cabo la simulación de la planificación realizando un seguimiento y una comprobación de la desviación que se puede haber producido con respecto a los datos reales. A partir de lo deducido en la simulación anterior, se tomará la decisión de ajustar o no el modelo para futuras predicciones.
+      \item \textbf{Hacer usable el sistema para realizar simulaciones a demanda:}
+        Una vez se disponga de la funcionalidad de realizar simulaciones, se creará una aplicación web que permitirá interactuar a usuarios con el sistema, pudiendo realizar simulaciones de un día concreto y comparar los resultados obtenidos con lo ocurrido realmente a través de la compañía eléctrica.
 
-        \item \textbf{Hacer usable el sistema para realizar simulaciones a demanda:}
+      \item \textbf{Integración del sistema en la nube:}
+        Cuando se cuente con una aplicación funcional, deberá integrarse en la nube para no tener dependencia de una máquina concreta haciendo honor a la tendencía cada vez más extendida del \textit{cloud computing}.
 
 \end{enumerate}
-
-Introduce y motiva la problemática (i.e.\emph{\ ¿cuál es el problema que se plantea y porqué es interesante su resolución?})
-
-Debe concretar y exponer detalladamente el problema a resolver, el entorno de trabajo, la situación y qué se pretende obtener. También puede contemplar las limitaciones y condicionantes a considerar para la resolución del problema (lenguaje de construcción, equipo físico, equipo lógico de base o de apoyo, etc.). Si se considera necesario, esta sección puede titularse \emph{Objetivos del TFG e hipótesis de trabajo}. En este caso, se añadirán las hipótesis de trabajo que el alumno pretende demostrar con su TFG.
-
-Una de las tareas más complicadas al proponer un TFG es plantear su \textsf{Objetivo}. La dificultad deriva de la falta de consenso respecto de lo que se entiende por \emph{objetivo} de un trabajo de esta naturaleza. En primer lugar se debe distinguir entre dos tipos de objetivo:
-
-\begin{enumerate}
-	\item La \emph{finalidad específica} del TFG que se plantea para resolver una problemática concreta aplicando los métodos y herramientas adquiridos durante la formación académica. Por ejemplo, \emph{<<Desarrollo de una aplicación software para gestionar reservas hoteleras \emph{on-line}>>}.
-
-	\item El \emph{propósito académico} que la realización de un TFG tiene en la formación de un graduado. Por ejemplo, la \emph{adquisición de competencias específicas de la especialización} cursada.
-\end{enumerate}
-
-En el ámbito de la memoria del TFG se tiene que definir el primer tipo de objetivo, mientras que el segundo tipo de objetivo es el que se añade al elaborar la propuesta de un TFG presentada ante un comité para su aprobación. Este segundo tipo de objetivo no debe incluirse en el apartado correspondiente de la memoria y en todo caso puede valorarse su satisfacción en la sección de resultados y conclusiones.
-
-Un objetivo bien planteado para el TFG debe estar determinado en términos del \emph{<<producto final>>} esperado que resuelve un problema específico. Es por tanto un sustantivo que debería ser \emph{concreto} y \emph{medible}. El \textsf{Objetivo} planteado puede pertenecer una de las categorías que se indica a continuación:
-\begin{itemize}
-	\item \emph{Diseño y desarrollo de <<artefactos>>} (habitual en las ingenierías),
-	\item \emph{Estudio} que ofrece información novedosa sobre un tema (usual en las ramas de ciencias y humanidades), y
-	\item \emph{Validación de una hipótesis} de partida (propio de los trabajos científicos y menos habitual en el caso de los TFG).
-\end{itemize}
-
-Estas categorías no son excluyentes, de modo que es posible plantear un trabajo cuyo objetivo sea el diseño y desarrollo de un <<artefacto>> y éste implique un estudio previo o la validación de alguna hipótesis para guiar el proceso. En este caso y cuando el objetivo sea lo suficientemente amplio puede ser conveniente su descomposición en elementos más simples hablando de \emph{subobjetivos}. Por ejemplo, un programa informático puede descomponerse en módulos o requerir un estudio previo para plantear un nuevo algoritmo que será preciso validar.
-
-La descomposición de un objetivo principal en subobjetivos u objetivos secundarios debería ser natural (no forzada), bien justificada y sólo pertinente en los TFG de gran amplitud.
-
-Junto con la definición del objetivo del TFG se puede especificar los \emph{requisitos} que debe satisfacer la solución aportada. Estos requisitos especifican \emph{características} que debe poseer la solución y \emph{restricciones} que acotan su alcance. En el caso de TFG cuyo objetivo es el desarrollo de un <<artefacto>> los requisitos pueden ser \emph{funcionales} y \emph{no funcionales}.
-
-Al redactar el objetivo de un TFG se debe evitar confundir los medios con el fin. Así es habitual encontrarse con objetivos definidos en términos de las \emph{acciones} (verbos) o \emph{tareas} que será preciso realizar para llegar al verdadero objetivo. Sin embargo, a la hora de planificar el desarrollo del trabajo si es apropiado descomponer todo el trabajo en \emph{hitos} y estos en \emph{tareas} para facilitar dicha \emph{planificación}.
-
-%El motivo de tal confusión deriva de <<mezclar>> la definición de la finalidad específica del TFG con el propósito académico del mismo.
-
-La categoría del objetivo planteado justifica modificaciones en la organización genérica de la memoria del TFG. Así en el caso de estudios y validación de hipótesis el apartado de resultados y conclusiones debería incluir los resultados de experimentación y los comentarios de cómo dichos resultados validan o refutan la hipótesis planteada.

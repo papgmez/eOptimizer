@@ -1,0 +1,76 @@
+\chapter{Motivación y antecedentes}
+\label{cap:Antecedentes}
+En este capítulo se habla acerca de la motivación que lleva al alumno a realizar este trabajo fin de grado y se exponen los conceptos de ciencias de la computación más importantes relacionados con este trabajo.\\
+
+Actualmente la demanda energética no deja de crecer, por ello deben llevarse a cabo medidas para reducir el consumo elevado de energía, lo que se conoce como eficiencia energética. La eficiencia energética~\cite{GarSa12} se refiere al empleo de medios de optimización en la producción y aprovechamiento de la energía, con el objetivo de proteger el medio ambiente. Esto ha pasado a ser una necesidad debido a que las emisiones de $ CO_{2} $ van en aumento y el cambio climático es un hecho.\\
+
+Por otro lado, puesto que las fuentes de energía fósil y nuclear son finitas, podría llegar el día en el que no se pueda satisfacer la demanda energética, salvo que se apueste por los métodos alternativos de obtención de energía. Es aquí donde entran en juego las energías renovables. Una de ellas es la energía solar~\cite{Perp12}, que permite el aprovechamiento de la radiación electromagnética del sol. Resulta interesante su estudio, debido a que es tan abundante que se considera inagotable: la cantidad de energía que el Sol vierte diariamente sobre la Tierra es diez mil veces mayor que la consumida al día en todo el planeta. Finalmente, además de ser una energía inagotable, es una energía limpia, una muy buena alternativa a los combustibles fósiles o energía nuclear. \\
+
+Teniendo en cuenta estos dos antecedentes, existe una motivación a la hora de obtener la energía demandada de la forma mas óptima y limpia posible. Además, también debe tenerse en cuenta el factor económico. Actualmente la mayoría de particulares tienen una única fuente de suministro de energía que vendría a ser la compañía eléctrica de la cuál son clientes, importando la totalidad de la energía que su hogar demanda a dicha compañía, a un precio establecido PVPC~\cite{Ree14} (Precio voluntario al pequeño consumidor) que representa el precio máximo de referencia que pueden contratar los consumidores con hasta 10 Kwh de potencia contratada. Su valor tiene una discriminación horaria, lo que hace que en las horas de mayor consumo el precio sea mas alto. Sería interesante poder reducir la cantidad de energía que se obtiene de esta fuente en las horas pico (horas de máximo consumo donde el PVPC suele alcanzar el valor alto) y obtenerla de otra fuente cuyo precio sea menor, para así obtener un promedio mucho mas barato que con una única fuente de energía.\\
+
+Con este trabajo fin de grado se busca demostrar es posible obtener la energía demandada utilizando fuentes alternativas, incluso beneficiándose de un ahorro económico por ello gracias a las ciencias de la computación, que van a permitir optimizar el consumo de cada fuente según corresponda. Los conceptos más importantes que deben conocerse para entender como se aplican en este trabajo fin de grado se exponen a continuación.
+
+\section{Sistema Inteligente}
+Un agente inteligente es aquel que emprende la mejor acción posible ante una situación dada. El campo de la inteligencia artificial~\cite{Russ06} se centra en construir sistemas inteligentes que piensan como humanos, actúan como humanos, piensan racionalmente y actúan racionalmente. Como se puede observar, los cuatro enfoques están divididos en dos grupos: el primero se centra en los humanos y el segundo en la racionalidad. Un agente es racional si hace lo correcto en base a su conocimiento.El enfoque humano debe ser una ciencia empírica mientras que el enfoque racional se basa en una combinación de matemáticas e ingeniería. Estos cuatro enfoques de la inteligencia artificial han coexistido a lo largo de la historia.\\
+\begin{itemize}
+\item{El enfoque de la prueba de Turing (Actuar como humanos)}\\
+
+  La prueba de Turing tenía como objetivo proporcionar una definición operacional y satisfactoria de inteligencia. Una máquina superaría la prueba si el examinador no fuese capaz de distinguir si el evaluado es una persona o un computador mediante una secuencia de preguntas. Para superarla un computador debe ser capaz de procesar el lenguaje natural, representar el conocimiento, contar con razonamiento automático y aprendizaje automático.
+\item{El enfoque del modelo cognitivo (Pensar como humanos)}\\
+
+Para determinar si una máquina es capaz de pensar de forma similar a un humano primero debe conocerse un mecanismo para ver como piensan los humanos: la ciencia cognitiva, en cuyo campo interdisciplinar convergen modelos computacionales de inteligencia artificial y técnicas de psicología intentando comprender el funcionamiento de la mente humana.
+\item{El enfoque de las \textit{leyes del pensamiento} (Pensar racionalmente)}\\
+
+  El \textit{modus operandi} de la mente humana se rige por silogismos, que son esquemas de estructuras de argumentación mediante los que se llega a conclusiones correctas si se parte de premisas correctas.
+\item{El enfoque del agente racional (Actuar racionalmente)}\\
+
+  Un agente racional actúa intentando alcanzar el mejor resultado y, en caso de haber incertidumbre, el mejor resultado esperado.
+\end{itemize}
+La inteligencia artificial y por ende los sistemas inteligentes tienen aplicación en numerosos ámbitos:
+\begin{itemize}
+\item{Resolución de problemas}
+\item{Teoría de juegos}
+\item{Robótica y automatización}
+\item{Procesamiento del lenguaje natural}
+\end{itemize}
+
+\section{Problema de Satisfacción de Restricciones}
+La programación por restricciones es una metodología software que permite resolver problemas de gran complejidad, típicamente NP. Ésta metodología ha generado mucha espectación en el área de la inteligencia artificial desde la década de los 60, ya que tiene un gran potencial para la resolución de problemas reales. La idea básica de la programación por restricciones es primero declarar una serie de restricciones sobre el dominio del problema que atañe, para después dar con soluciones que satisfacen las anteriores restricciones de la forma más optima posible. Así, un problema de satisfacción de restricciones~\cite{Russ06} está caracterizado por:
+\begin{itemize}
+	\item Un conjunto de variables, donde cada variable dispone de un dominio de valores que puede tomar.
+	\item Un conjunto de restricciones, que permite conocer las posibles combinaciones de las variables.
+	\item La solución al PSR será la asignación de valores a las variables de forma que se satisfacen las restricciones y se alcanza el objetivo, representado típicamente como una función a optimizar.
+\end{itemize}
+Las restricciones se caracterizan por su \textbf{aridad}, que viene a ser el número de variables que involucra. Pudiendo ser unarias, si solo involucran una variable; binarias, si involucran dos variables; y n-arias, si involucran más de dos variables. Se deben tener en cuenta un tipo de restricción adicional, ya que están presentes en este trabajo, como son las \textbf{restricciones lineales}, expresadas teóricamente de la forma~\ref{eq:rest_lineal}
+\begin{equation}
+  \label{eq:rest_lineal}
+  \sum_{i}^{n} a_{i}x_{i} (<,\leq,=,\geq,>,\neq) c
+\end{equation}
+siendo a el coeficiente de la variable x y c constante.\\
+\section{Programación Lineal}
+La programación lineal~\cite{Loom64} tiene como objetivo optimizar una función lineal cuyas variables están sujetas a un conjunto de restricciones lineales.
+Se trata de un campo de la matemática muy efectivo para la resolución de problemas donde se desea sacar el mayor provecho de una situación.\\
+
+Históricamente, el concepto de programación lineal debe su nombre a John Von Neumann (1947), uno de los matemáticos más importantes del siglo XX gracias a sus contribuciones en las ciencias de la computación; y a George Dantzig (1947), cuyo trabajo intentaba asignar 70 puestos de trabajo a 70 personas mediante programación lineal. Las permutaciones necesarias para la asignación óptima de dichos puestos era factorial de 70 (70!), algo enorme, pues el número de combinaciones de variables es inmenso. Curiosamente, mediante programación lineal el problema se resuelve en un momento pues el número de combinaciones se reduce en su mayor parte. La programación lineal puede ser aplicable a numerosos problemas comunes tales como:
+\begin{itemize}
+\item Asignación de horarios a profesores en un centro educativo para obtener la mayor productividad a la par que comodidad para profesor y alumno.
+\item Distribución de elementos en almacenes de tal modo que se reduzca el costo de almacenamiento teniendo en cuenta la limitada capacidad.
+\item Distribución de bienes entre compradores y consumidores de tal modo que las ganancias del intermediario sean máximas.
+\end{itemize}
+Cómo se puede observar, el problema de este trabajo fin de grado está muy relacionado con el último ejemplo, pues se distribuye cantidad de energía entre fuentes de entrada y fuentes de salida de manera óptima para garantizar un gasto mínimo de consumo energético.\\
+
+Para un problema de programación lineal pueden existir varios casos en su resolución:
+\begin{itemize}
+\item Existe una solución óptima.
+\item Existen varias soluciones óptimas.
+\item No existe solución.
+\item Existen soluciones infinitas.
+\end{itemize}
+La situación deseada es la primera, pero puede ocurrir alguno de los otro casos. Estas situaciones pueden resolverse convirtiendo las restricciones que son inecuaciones (desigualdades) en igualdades.\\
+
+Existen varios métodos de programación lineal. El más utilizado es conocido como el \textbf{método Simplex}, pues es muy potente debido a que se basa en evaluar solo algunos puntos extremos mediante dos condiciones:
+\begin{itemize}
+\item \textbf{Optimalidad}. La solución inferior relativa al punto de solución actual no se tiene en cuenta.
+  \item \textbf{Factibilidad}. Una vez se encuentra una solución básica factible, sólo apareceran soluciones factibles.
+\end{itemize}
+Otro método de programación lineal es el método de ramificación y acotamiento \textit{branch and bound}, el cuál divide el problema en varios subproblemas de programación lineal, acotamiento que permite obtener soluciones óptimas que se mejorar por cada subproblema.\\
