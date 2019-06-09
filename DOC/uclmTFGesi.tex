@@ -39,7 +39,7 @@
 \usepackage[			% Márgenes del documento
 	top=2.5cm,			% Margen superior
 	bottom=2.5cm,		% Margen inferior
-	inner=2.75cm,		% Margen al interior (Margen mayor debido a la encuadernacion. Asegurarse)
+	inner=3.5cm,		% Margen al interior (Margen mayor debido a la encuadernacion. Asegurarse)
 	outer=2cm			% Margen al exterior
 ]{geometry}
 
@@ -276,8 +276,10 @@
 }
 % -------------------------
 
-
-
+%--- Acrónimos
+\usepackage[acronym,nomain,nonumberlist,toc]{glossaries}
+\input{./Acronimos}
+\makeglossaries
 
 % -------------------------
 %
@@ -373,7 +375,7 @@ La copia y distribución de esta obra está permitida en todo el mundo, sin rega
 \begin{center}
 \emph{(... versión del resumen en español ...)}
 \end{center}
-El resumen debe ocupar como máximo una página y en dicho espacio proporcionará información crucial sobre el \emph{`qué'} (problemática que trata de resolver el TFG), el \emph{`cómo'} (metodología para llegar a los resultados) y los objetivos alcanzados.
+El consumo de energía juega un papel muy importante en el progreso y bienestar de la sociedad.
 \end{abstract}
 %---
 
@@ -489,6 +491,9 @@ Versión del resumen en inglés. En los trabajos cuyo idioma principal sea el in
 %\pdfbookmark[0]{\listalgorithmcfname}{idx_loa}% idx_loa.0 % Bookmark en PDF
 \listofalgorithms % Índice de algoritmos creados con algortihm2e
 
+\cleardoublepage
+\phantomsection % OJO: Necesario con hyperref
+\printglossary[title={Listado de acrónimos}]
 
 
 
@@ -547,16 +552,6 @@ Versión del resumen en inglés. En los trabajos cuyo idioma principal sea el in
 \include{./Resultados}
 \include{./Conclusiones}
 % -------------------------
-
-
-
-
-
-
-
-
-
-
 
 
 

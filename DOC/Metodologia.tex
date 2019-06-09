@@ -1,33 +1,77 @@
 \chapter{Metodología de trabajo}
 \label{cap:Metodologia}
+Este capítulo recoge la metodología de desarrollo y trabajo empleadas en este \gls{TFG}. Para conseguir flexibilidad e inmediatez en el desarrollo se empleará una metodología ágil, las cuáles tienen la particularidad de seguir un modelo iterativo e incremental, que da lugar a una toma de decisiones a corto plazo lo que se traduce en ampliar requisitos y soluciones en cada iteración en función de las necesidades. Esto proporciona inmediatez y funcionalidad en el proyecto lo que hace que exista una mayor motivación e implicación en el mismo. Además, permite encontrar y solucionar errores a lo largo del trabajo y hace que el cliente esté mas implicado debido a las numerosas entregas a lo largo del desarrollo del trabajo. La metodología de desarrollo y gestión de proyectos elegida ha sido \textit{Extreme Programming} (\gls{XP}).
 \section{Extreme Programming}
-En el proyecto se emplea como metodología software un modelo iterativo e incremental,
-que da lugar a una toma de decisiones a corto plazo lo que se traduce en ampliar requisitos y
-soluciones en cada iteración (sprint) en función de las necesidades. Esto proporciona inmediatez
-y funcionalidad en el proyecto lo que hace que exista una mayor motivación e implicación en
-el mismo. Además, permite encontrar y solucionar errores a lo largo del trabajo y hace que el
-cliente esté mas implicado debido a las numerosas entregas a lo largo del desarrollo del trabajo.
-
-Como metodología de desarrollo y gestión de proyecto se usará \textbf{Extreme Programming (XP)}.\\
-La programación extrema~\cite{Newk02} es un método ligero de desarrollo iterativo e incremental formulado por Kent Beck. Consta de varios períodos:
-\begin{description}
-	\item  \textbf{Exploración:}
-	Período donde el objetivo será identificar, priorizar y estimar los requisitos del trabajo, por lo tanto se obtendrá como salida un documento de especificación de requisitos. El cliente expone sus necesidades y los programadores deben eliminar la ambigüedad para asegurarse de que los objetivos pueden ser alcanzados.
-
-	\item \textbf{Punto de Fijación:}
-	Se trata de una prueba rápida para profundizar en un determinado aspecto. Este punto se puede concretar durante la exploración o en cualquier otro momento en el que el equipo necesite resolver una cuestión.
-
-	\item \textbf{Planificación de la Versión:}
-	Cada versión del sistema proporciona un valor de negocio al cliente, quien, en cada planificación de versión, selecciona las historias o requisitos que van a ser implementados. Esto proporciona el máximo valor de negocio aunque no sea lo más acertado técnicamente.
-
-	\item \textbf{Planificación de la Iteración:}
-	Cada versión se divide en varias iteraciones. La longitud de iteración del trabajo se decide al principio y se mantiene constante durante el desarrollo. El equipo proporciona al cliente una estimación que representa cuanto trabajo se puede hacer en la iteración y el cliente selecciona que es lo que se implementará durante la iteración. Por lo tanto, se mantiene el marco de trabajo anteriormente mencionado en la planificación de la versión.
-
-	\item \textbf{Desarrollo:}
-	El software se desarrolla para un caso de prueba. Cuando éste consigue satisfacerse se pasa al siguiente caso de prueba. Para integrar el código en el sistema principal se deben satisfacer todas las pruebas. Durante el desarrollo el equipo no debe intentar anticiparse a tareas futuras, solo centrarse en la tarea actual.
-
-\end{description}
-
+La programación extrema~\cite{Newk02} es un método ligero de desarrollo iterativo e incremental formulado por Kent Beck.
+\subsection{Etapas de XP}
+\begin{itemize}
+	\item  \textbf{Exploración:} Período donde el objetivo será identificar, priorizar y estimar los requisitos del trabajo, por lo tanto se obtendrá como salida un documento de especificación de requisitos. El cliente expone sus necesidades y los programadores deben eliminar la ambigüedad para asegurarse de que los objetivos pueden ser alcanzados.
+	\item \textbf{Punto de Fijación:} Se trata de una prueba rápida para profundizar en un determinado aspecto. Este punto se puede concretar durante la exploración o en cualquier otro momento en el que el equipo necesite resolver una cuestión.
+	\item \textbf{Planificación de la Versión:} Cada versión del sistema proporciona un valor de negocio al cliente, quien, en cada planificación de versión, selecciona las historias o requisitos que van a ser implementados. Esto proporciona el máximo valor de negocio aunque no sea lo más acertado técnicamente.
+	\item \textbf{Planificación de la Iteración:} Cada versión se divide en varias iteraciones. La longitud de iteración del trabajo se decide al principio y se mantiene constante durante el desarrollo. El equipo proporciona al cliente una estimación que representa cuanto trabajo se puede hacer en la iteración y el cliente selecciona que es lo que se implementará durante la iteración. Por lo tanto, se mantiene el marco de trabajo anteriormente mencionado en la planificación de la versión.
+	\item \textbf{Desarrollo:} El software se desarrolla por tareas llamadas historias de usuario. Durante el desarrollo el equipo no debe intentar anticiparse a tareas futuras, solo centrarse en la tarea actual.
+\end{itemize}
+\subsection{Historias de usuario de XP}
+\section{Herramientas de apoyo al desarrollo ágil}
+\subsection{Git}
+Git es un software de control de versiones que permite el mantenimiento y desarrollo colaborativo de proyectos software. Fue creado por Linus Torvalds. Mediante su uso se consigue eficiencia y confiabilidad en el software gracias a numerosas funciones como ramificación del proyecto, histórico de cambios y versiones, etc. Git es software libre distribuido bajo la Licencia \gls{GLP} v2.
+\subsection{Github}
+GitHub, Inc es una plataforma de desarrollo colaborativo para proyectos que utiliza el sistema de control de versiones Git. Github proporciona gráficos de información y estadísticas sobre los desarrolladores implicados en un proyecto, herramientas para facilitar el trabajo colaborativo que permiten ver diferencias entre distintas versiones del código, crear \textit{merge requests}, creación de tableros Kanban, etc. En 2018 GitHub fue obtenida por la compañía Microsoft.
+\subsection{Toggl}
+Toggl es una herramienta empleada para el seguimiento de tiempo (\textit{time tracker}). Este tipo de herramientas son usadas en el desarrollo ágil de proyectos software, donde el tiempo de desarrollo de cada tarea es importante para la planificación. Permite crear informes del tiempo registrado, muy útil para conocer el tiempo empleado en un desarrollo con respecto a su estimación.
+\subsection{Tablero Kanban}
+El método Kanban es empleado en desarrollo software para gestionar el trabajo en curso. Divide el trabajo a realizar en tarjetas que se colocan en una especie de tablero virtual de varias columnas que representan estados, como \textit{To Do} (tareas por comenzar), \textit{In Progress} (tareas en ejecución) y \textit{Done} (tareas completadas). En este \gls{TFG} se ha complementado la metodología \gls{XP} con Kanban, donde cada iteración de \gls{XP} se toma como un tablero y cada historia de usuario de dicha iteración es una tarjeta. De esta manera el trabajo a realizar en una iteración se encuentra estructurado.
+\subsection{Slack}
+Slack es un software de comunicación empleado en equipos de desarrollo con numerosas funciones como integración con Github y otras herramientas, creación de canales, conversaciones privadas y compartición de archivos.
 \section{Medios a utilizar}
 \subsection{Medios Hardware}
+\begin{itemize}
+\item \textbf{Computadora:} Ordenador portátil personal del alumno cuyas especificaciones se encuentran en la Tabla~\ref{tab:pc}.
+  \begin{table}[H]
+        \centering
+        \begin{tabular}{|l|l|}
+                \hline
+                \textbf{Modelo} & Dell XPS 13 9370 \\ \hline
+                \textbf{Procesador} & Intel Core i7 8th Gen \\ \hline
+                \textbf{Tarjeta gráfica} & Intel UHD Graphics 620 \\ \hline
+                \textbf{Memoria} & 8 GB DDR3\\ \hline
+                \textbf{Disco} & SSD PCIe 256 GB\\ \hline
+        \end{tabular}
+        \caption{Computador personal del alumno}
+        \label{tab:pc}
+\end{table}
+\end{itemize}
 \subsection{Medios Software}
+\begin{itemize}
+\item \textbf{Lenguajes de programación}
+  \begin{itemize}
+  \item \textbf{Python3~\cite{Goer04}:} Se trata de un lenguaje de programación interpretado con una sintaxis sencilla y multiparadigma (soporta orientación a objetos, programación imperativa y programación funcional). Además, consta de librerías para el desarrollo de la arquitectura Cliente/Servidor, para la creación de aplicaciones distribuidas en las que las tareas son ejecutadas en un servidor, a través de las peticiones de clientes. Es un lenguaje muy utilizado en ingeniería y computación científica.
+  \item \textbf{Javascript:} Lenguaje de programación interpretado, típicamente usado para el desarrollo de páginas web. Soporta el paradigma de la programación orientada a objetos, programación funcional e imperativa.
+  \item \textbf{Bash:} Lenguaje de consola que sirve para interpretar órdenes en un sistema. Es el intérprete de comandos por defecto de la mayoría de distribuciones GNU/Linux y macOs.
+  \item \textbf{\LaTeX{}:} Es un sistema de creación de textos y documentos profesionales y de alta calidad. Cuenta con una gran variedad de comandos o macros para el desarrollo del lenguaje TEX.
+  \end{itemize}
+\item \textbf{Frameworks y librerías}
+  \begin{itemize}
+  \item \textbf{SciPy~\cite{Scip}:} Se trata de extensiones y bibliotecas para Python dedicadas a desarrollos estadísticos y herramientas matemáticas.
+  \item \textbf{Flask~\cite{Flask}:} Es un microframework para Python cuya funcionalidad es el desarrollo de aplicaciones web de forma rápida y liviana.
+  \item \textbf{SQLAlchemy~\cite{SqlAl}:} Proporciona un kit de herramientas SQL para el lenguaje Python que permiten manejar bases de datos de manera eficiente
+  \item \textbf{Jinja2:} Proporciona las herramientas para la integración de \textit{templates} html en una aplicación Flask.
+  \item \textbf{nose:} Framework para implementación de casos de prueba en proyectos Python.
+  \item \textbf{Pylint3:} Comprobador de errores y guías de estilo en el código fuente para el lenguaje Python sujeto a las buenas prácticas de dicho lenguaje.
+  \item \textbf{requests:} Biblioteca para trabajar con solicitudes HTTP para el lenguaje Python.
+  \item \textbf{Faker:} Biblioteca de generación de información aleatoria de numerosos tipos empleada en los casos de prueba.
+  \item \textbf{virtualenv: } Herramienta para el desarrollo en Python, que permite la creación de un entorno aislado, donde se pueden instalar paquetes y dependencias sin interferir con el sistema.
+  \item \textbf{API AEMET OpenData~\cite{Aemet}:} \gls{API} oficial de \gls{AEMET} que proporciona información meteorológica de de numerosos tipos a demanda de los clientes.
+  \item \textbf{API REE e-sios~\cite{Ree}:} \gls{API} oficial de \gls{REE} que proporciona información acerca de los precios del mercado eléctrico a demanda de los clientes.
+  \item \textbf{Bootstrap~\cite{Boots}:} Librería de desarrollo web que proporciona un conjunto de herramientas para crear sitios web.
+  \end{itemize}
+\item \textbf{Herramientas de desarrollo}
+  \begin{itemize}
+  \item \textbf{GNU Emacs:} Es un editor de texto del proyecto GNU muy utilizado en programación altamente ampliable y editable, con numerosas funciones y extensiones que hacen de Emacs una herramienta muy potente pero también liviana.
+  \item \textbf{draw.io:} Es una herramienta online totalmente libre que permite la creación de una gran variedad de diagramas y gráficos.
+  \end{itemize}
+\item \textbf{Sistemas operativos}
+  \begin{itemize}
+  \item \textbf{Ubuntu 18.10:} Es una distribución GNU/Linux de código abierto desarrollada por Canonical Ltd.
+  \end{itemize}
+\end{itemize}
