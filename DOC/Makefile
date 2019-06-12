@@ -21,3 +21,7 @@ clean:
 	$(RM) -rf *.idx
 	$(RM) -rf *.gz
 	$(RM) -rf *.xml
+	$(RM) -rf *.acn
+	$(RM) -rf *.acr
+	$(RM) -rf *.alg
+	$(RM) -rf *.ist

@@ -2,16 +2,62 @@
 \label{cap:Metodologia}
 Este capítulo recoge la metodología de desarrollo y trabajo empleadas en este \gls{TFG}. Para conseguir flexibilidad e inmediatez en el desarrollo se empleará una metodología ágil, las cuáles tienen la particularidad de seguir un modelo iterativo e incremental, que da lugar a una toma de decisiones a corto plazo lo que se traduce en ampliar requisitos y soluciones en cada iteración en función de las necesidades. Esto proporciona inmediatez y funcionalidad en el proyecto lo que hace que exista una mayor motivación e implicación en el mismo. Además, permite encontrar y solucionar errores a lo largo del trabajo y hace que el cliente esté mas implicado debido a las numerosas entregas a lo largo del desarrollo del trabajo. La metodología de desarrollo y gestión de proyectos elegida ha sido \textit{Extreme Programming} (\gls{XP}).
 \section{Extreme Programming}
-La programación extrema~\cite{Newk02} es un método ligero de desarrollo iterativo e incremental formulado por Kent Beck.
-\subsection{Etapas de XP}
+La programación extrema~\cite{Newk02} es una metodología de desarrollo iterativo e incremental formulada por Kent Beck en 1996. La programación extrema se apoya en cinco pilares fundamentales:
 \begin{itemize}
-	\item  \textbf{Exploración:} Período donde el objetivo será identificar, priorizar y estimar los requisitos del trabajo, por lo tanto se obtendrá como salida un documento de especificación de requisitos. El cliente expone sus necesidades y los programadores deben eliminar la ambigüedad para asegurarse de que los objetivos pueden ser alcanzados.
-	\item \textbf{Punto de Fijación:} Se trata de una prueba rápida para profundizar en un determinado aspecto. Este punto se puede concretar durante la exploración o en cualquier otro momento en el que el equipo necesite resolver una cuestión.
-	\item \textbf{Planificación de la Versión:} Cada versión del sistema proporciona un valor de negocio al cliente, quien, en cada planificación de versión, selecciona las historias o requisitos que van a ser implementados. Esto proporciona el máximo valor de negocio aunque no sea lo más acertado técnicamente.
-	\item \textbf{Planificación de la Iteración:} Cada versión se divide en varias iteraciones. La longitud de iteración del trabajo se decide al principio y se mantiene constante durante el desarrollo. El equipo proporciona al cliente una estimación que representa cuanto trabajo se puede hacer en la iteración y el cliente selecciona que es lo que se implementará durante la iteración. Por lo tanto, se mantiene el marco de trabajo anteriormente mencionado en la planificación de la versión.
-	\item \textbf{Desarrollo:} El software se desarrolla por tareas llamadas historias de usuario. Durante el desarrollo el equipo no debe intentar anticiparse a tareas futuras, solo centrarse en la tarea actual.
+\item \textbf{Simplicidad:} Se procura desarrollar solo aquello que se necesita.
+\item \textbf{Comunicación:} Los análisis, desarrollos y problemas se debaten e intentan solucionar en equipo.
+\item \textbf{Coraje:} Pues \gls{XP} requiere una mejora continua del software. Esto conlleva contar con cierto valor para cambiar y restructurar software que se encuentra totalemente funcional, asumiendo riesgos.
+\item \textbf{\textit{Feedback:}} Debe producirse una retroalimentación continua entre todos los usuarios implicados en el proyecto.
+\item \textbf{Respeto:} Los desarrolladores deben valorar el conocimiento del objetivo del cliente y el cliente debe valorar la decisión de llevar a cabo dicho objetivo por parte de los desarrolladores.
+\end{itemize}
+\subsection{Prácticas técnicas de XP}
+\gls{XP} muestra un total de doce prácticas técnicas que garantizan una mejora en los resultados de un proyecto software.~\cite{BaEu11}
+\begin{enumerate}
+\item Comunicación cara a cara con el cliente.
+\item Para garantizar la calidad del equipo no debe asumirse una responsabilidad que requiera un esfuerzo mayor que el disponible.
+\item Buscar paralelismos o metáforas entre el sistema y la vida real con el objetivo de facilitar su comprensión.
+\item Diseño simple, legible y entendible.
+\item Refactorizar el código cuando sea posible, pues ha sido desarrollado sin detalles secundarios para garantizar inmediatez. (Mejora continua)
+\item Desarrollar software en \textit{Pair programming} siempre que sea posible. Por motivos evidentes, esta técnica no ha podido llevarse a cabo en el desarrollo de este \gls{TFG}.
+\item Realizar entregas cortas siempre que sea posible añadiendo funcionalidades en cada iteración del desarrollo.
+\item Dar gran importancia al \textit{testing} del proyecto. Esto se consigue mediante la implementación de casos de prueba unitarios, entornos de prueba, etc.
+\item Desarrollar un código siguiendo criterios de estandarización y buenas prácticas.
+\item Todo el equipo debe conocer bien el sistema y cómo se está desarrollando.
+\item Seguir una integración continua durante el desarrollo.
+\item Seguir la siguiente planificación durante el desarrollo por cada iteración:
+  \begin{enumerate}
+  \item El cliente muestra el objetivo y requisitos deseados al equipo de desarrollo siguiendo el formato de \textbf{historias de usuario}.
+  \item El equipo estima los desarrollos de dichas historias y los presenta al cliente.
+  \item El cliente determina cuáles serán las historias de usuario que se desarrollarán y el orden de las mismas, dentro de unas limitaciones funcionales.
+    \end{enumerate}
+\end{enumerate}
+\subsection{Roles de un equipo XP}
+En un proyecto que sigue la metodología \gls{XP} se distinguen cinco roles principales entre las personas implicadas. En el caso particular de este \gls{TFG}, estos roles son repartidos entre los directores y el alumno:
+\begin{itemize}
+\item \textbf{Programador:} Encargado de implementar el código del proyecto. Es el rol principal del alumno en este \gls{TFG}.
+\item \textbf{Cliente:} Encargado de definir el objetivo del sistema. Está muy implicado en el proyecto pues es el encargado de crear las historias de usuario. Este rol es tomado por los directores de este \gls{TFG}.
+\item \textbf{\textit{Tester}:} Encargado de implementar los casos de prueba del proyecto. Rol desempeñado por el alumno.
+\item \textbf{\textit{Tracker}:} Encargado de realizar las estimaciones tanto de las iteraciones como de las historias de usuario. Rol desempeñado por el estudiante.
+  \item \textbf{\textit{Coach}:} Encargado de conducir al equipo en el preceso de desarrollo. Capaz de aportar soluciones a problemas o errores en cierto momento y tomar responsabilidades. Rol desempeñado por los directores en este \gls{TFG}.
+
 \end{itemize}
 \subsection{Historias de usuario de XP}
+Las historias de usuario son representaciones de requisitos que se emplean en algunas metodologías ágiles. Las historias de usuario han de ser negociables, pequeñas, estimables y verificables. En el caso particular de \gls{XP} son escritas y priorizadas por los clientes, y estimadas por el equipo. Generalmente, la estimación de una historia de usuario debe ser como mínimo 10 horas y como máximo un par de semanas. Si rebasa dicho límite tal vez la tarea sea demasiado compleja para ser una historia de usuario y debería dividirse. Esta estimación entre otros apectos debe ser discutida entre clientes y desarrolladores, lo cuáles deben llegar a un consenso. En este \gls{TFG} las historias de usuario siguen el formato de la Tabla~\ref{tab:histModel}
+\begin{table}[H]
+        \centering
+        \begin{tabular}{|p{0.3\linewidth}|p{0.3\linewidth}|}
+          \hline
+          \multicolumn{2}{|c|}{Historia de usuario}\\ \hline
+          \multicolumn{2}{|c|}{\textbf{Título de la Historia de Usuario}}\\ \hline
+          \textbf{Número:} 0  & \textbf{Prioridad:} Normal  \\ \hline
+          \textbf{Estimación:} 0 días  & \textbf{Iteración:} 0 \\ \hline
+          \multicolumn{2}{|l|}{\textbf{Desarrollador responsable:} Pablo Palomino Gómez}\\ \hline
+          \multicolumn{2}{|p{0.6\linewidth}|}{\textbf{Descripción:} Breve descripción en lenguaje natural del objetivo.}\\ \hline
+        \end{tabular}
+        \caption{Modelo de Historia de Usuario para este TFG}
+        \label{tab:histModel}
+\end{table}
+
 \section{Herramientas de apoyo al desarrollo ágil}
 \subsection{Git}
 Git es un software de control de versiones que permite el mantenimiento y desarrollo colaborativo de proyectos software. Fue creado por Linus Torvalds. Mediante su uso se consigue eficiencia y confiabilidad en el software gracias a numerosas funciones como ramificación del proyecto, histórico de cambios y versiones, etc. Git es software libre distribuido bajo la Licencia \gls{GLP} v2.
