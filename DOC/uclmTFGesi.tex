@@ -33,7 +33,7 @@
 
 \usepackage[utf8]{inputenx} % Codificación de entrada
 \usepackage[english,spanish,es-tabla,es-noindentfirst]{babel} % Internacionalización
-%\usepackage{indentfirst} % Para asegurar sangrado en 1ª línea tras sección (necesario con varios idiomas)
+\usepackage{indentfirst} % Para asegurar sangrado en 1ª línea tras sección (necesario con varios idiomas)
 
 %--- Geometría de las páginas del documento
 \usepackage[			% Márgenes del documento
@@ -122,18 +122,6 @@
 %--- Paquetes especiales para Informática
 \usepackage{listings}	% Inclusión de listados de código
 
-% Inclusión de algoritmos
-\usepackage[
-	lined,
-	boxruled,
-	algochapter,
-	commentsnumbered,
-\ifspanish
-	spanish
-\else
-	english
-\fi
-]{algorithm2e}
 
 
 
@@ -489,7 +477,6 @@ Versión del resumen en inglés. En los trabajos cuyo idioma principal sea el in
 \phantomsection % OJO: Necesario con hyperref
 %\addcontentsline{toc}{chapter}{\listalgorithmcfname} % Añade la lista de algoritmos al TOC (también a bookmarks en PDF)
 %\pdfbookmark[0]{\listalgorithmcfname}{idx_loa}% idx_loa.0 % Bookmark en PDF
-\listofalgorithms % Índice de algoritmos creados con algortihm2e
 
 \cleardoublepage
 \phantomsection % OJO: Necesario con hyperref
