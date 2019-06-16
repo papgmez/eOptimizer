@@ -28,12 +28,12 @@ IBM Cloud combina una plataforma como servicio (\gls{PaaS}) y una infraestructur
 Puesto que es necesario una base de datos SQL el recurso elegido ha sido \textbf{Db2}. Este servicio ofrece una base de datos SQL de 200 MB en su versión gratuita con copias de seguridad y permitiendo cinco conexiones simultáneas, algo más que suficiente para lo necesario en este \gls{TFG}. Una vez adquirido el recurso se permite el acceso a una consola de gestión de la base de datos que permite ver información acerca de las conexiones recibidas, información de la base de datos como tablas y registros existentes, almacenamiento restante, etc.\\El primer paso tras la obtención del recurso es generar las credenciales del servicio. Estas credenciales son proporcionadas en formato \gls{JSON} y contienen información como hostname, usuario, puerto, ssldsn, uri, etc. Para realizar la integración de esta base de datos de producción remota en la aplicación web antes debe instalarse en la máquina del servidor el controlador ibm\_db\_sa que permite las conexiones entre db2 y el framework SQLAlchemy.\\El siguiente paso es actualizar en el fichero de configuración de la aplicación Flask para producción la constante \textbf{SQLALCHEMY\_DATABASE\_URI} (listado~\ref{lst:Db2URI}) que actualmente se encuentra apuntando a una base de datos local sqlite. Su nuevo valor será el URI generado anteriormente en las credenciales del servicio. El URI es un identificador de recursos uniforme, que permite apuntar inequívocamente a la base de datos de IBM, pues contiene toda la información necesaria (usuario, key, puerto, host, etc). Cada uno de estos valores se ha añadido al fichero de constantes del proyecto (\textit{project\_constants}) excepto la contraseña, que por medida de seguridad es obtenida de las variables de entorno. Cuando la instancia de la aplicación Flask se inicia con la nueva configuración, la conexión con la base de datos de IBM se realiza y las operaciones son efectuadas en ella. Como anotación, la base de datos de test sigue siendo utilizada en local, pues no tiene sentido instanciar en la nube una base de datos con este fin ya que tras ejecutar los test es limpiada y no contiene información relevante.\\
 \begin{lstlisting}[language=Python,float=ht,numbers=none,caption={URI de Db2 para SQLAlchemy en \textit{prod\_config}},label={lst:Db2URI}]
 SQLALCHEMY_DATABASE_URI = 'db2://{}:{}@{}:{}/{}'.format(
-                                      const.IBM_USER,
-                                      os.environ['DB2_EOPTIMIZER_KEY'],
-                                      const.IBM_HOSTNAME,
-                                      const.IBM_PORT,
-                                      const.IBM_DB
-                                      )
+                              const.IBM_USER,
+                              os.environ['DB2_EOPTIMIZER_KEY'],
+                              const.IBM_HOSTNAME,
+                              const.IBM_PORT,
+                              const.IBM_DB
+                           )
 \end{lstlisting}
 
 Por otro lado, la aplicación web de este trabajo necesita de un servidor que ha de estar funcionando constantemente, para el cuál sería necesario una instancia. El proveedor elegido para este recurso ha sido \textbf{Amazon Web Services}~\cite{AWS} (Figura~\ref{fig:AWS}).

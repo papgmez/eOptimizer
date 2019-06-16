@@ -38,10 +38,10 @@ Las restricciones estarán definidas en función de dichas variables y cada solu
 \subsection{Restricciones del PSR}
 A continuación se determinan las restricciones a las que está sometido el modelo en una hora t:
 \begin{itemize}
-\item \textbf{Toda la energía generada debe ser consumida} (~\ref{eq:restr1}).\\ \\Hace referencia al principio básico de la energía, la energía que se produce se consume de un modo u otro, no es posible que la suma de las variables correspondientes a la generación de energía (EB, ER y EF) sea distinta a la suma de las variables que hacen referencia al consumo de energía (CR, CB, $ C_{int} $ y C). Esto debe producirse en cada una de las horas de la simulación. Así, tenemos una restricción lineal y n-aria correspondiente a la suma de las 24 horas correspondientes a una simulación, por lo que ésta restricciones a efectos prácticos es tomada como 24 restricciones a cumplir.
+\item \textbf{Toda la energía generada debe ser consumida} (~\ref{eq:restr1}).\\ \\Hace referencia al principio básico de la energía, la energía que se produce se consume de un modo u otro, no es posible que la suma de las variables correspondientes a la generación de energía (EB, ER y EF) sea distinta a la suma de las variables que hacen referencia al consumo de energía (CR, CB, $ C_{int} $ y C). Esto debe producirse en cada una de las horas de la simulación. Así, tenemos una restricción lineal y n-aria correspondiente a las 24 horas correspondientes a una simulación, por lo que ésta restricciones a efectos prácticos es tomada como 24 restricciones a cumplir.
 \begin{equation}
         \label{eq:restr1}
-        \sum_{i=0}^{23} EF_{i}+ER_{i}+EB_{i} = CR_{i}+CB_{i}+C_{int}+C
+        \forall_{i} \in [0, 1, 2, ..., 24) : EF_{i}+ER_{i}+EB_{i} = CR_{i}+CB_{i}+C_{int}+C
 \end{equation}
 
 \item \textbf{No se puede producir energía fotovoltaica durante la noche} (~\ref{eq:restr2}).\\ \\Algo obvio, pues sin luz solar la energía fotovoltaica no es posible. Esto no está controlado en la API AEMET, ya que las peticiones relativas a la noche no reflejan una descripción propia del tiempo nocturno, si no que devuelve los mismos valores independientemente de si existe luz solar, por lo que debe manejarse mediante una restricción. Para este trabajo las horas de la noche serán las pertenecientes al intervalo temporal desde las 22:00 pm hasta las 7:00 am. Como posible trabajo futuro, podría determinarse este intervalo en función de la estación del año para que pueda ser un intervalo con mayor grado de efectividad. Se trata de una restricción unaria, donde para ciertos valores de t, EF debe ser 0. Es por esto que esta restricción a efectos prácticos es tomada como nueve restricciones (las nueve horas de noche definidas anteriormente)
@@ -53,19 +53,19 @@ A continuación se determinan las restricciones a las que está sometido el mode
 \item \textbf{La energía fotovoltaica generada no puede ser mayor que la máxima energía fotovoltaica en t} (~\ref{eq:restr3}).\\ \\No se puede superar el umbral de generación de energía fotovoltaica establecido por la potencia nominal máxima de esa hora t, pues se estaría violando la capacidad real de producción de los módulos fotovoltaicos del sistema. Es una restricción lineal unaria, ya que la energía fotovoltaica máxima de cada hora t es constante, pues como se comentó anteriormente, sólo es dependiente del número de módulos fotovoltaicos y la situación meteorológica (obtenida de la API AEMET). A efectos prácticos, esta restricción es tomada como 24 restricciones a cumplir referentes a las 24 horas de la simulación.
 \begin{equation}
         \label{eq:restr3}
-        \sum_{i=0}^{23} EF_{i} \leq EF_{i}^{max}
+        \forall_{i} \in [0, 1, 2, ..., 24) : EF_{i} \leq EF_{i}^{max}
 \end{equation}
 
 \item \textbf{La energía obtenida de la batería no puede ser mayor que el nivel de batería actual teniendo en cuenta la profundidad máxima de descarga} (~\ref{eq:restr4}).\\ \\Básicamente no se puede obtener una cantidad de energía mayor a la posible en esa hora t, que vendrá determinada por la diferencia entre el  nivel de carga disponible al comienzo de esa hora y la capacidad máxima de la batería por la profundidad de descarga (50\%), para evitar daños en su ciclo de vida útil. Restricción unaria, pues solo involucra la variable EB, ya que el resto de elementos de la restricción son constantes en una hora t (nivel de carga actual, capacidad máxima de la batería y profundida de descarga). Al igual que las restricciones anteriores es lineal y a efectos prácticos representa 24 restricciones a cumplir.
 \begin{equation}
         \label{eq:restr4}
-        \sum_{i=0}^{23} EB_{i} \leq nivel_{i-1} - capacidad_{max} * profundidad_{descarga}
+        \forall_{i} \in [0, 1, 2, ..., 24) : EB_{i} \leq nivel_{i-1} - capacidad_{max} * profundidad_{descarga}
 \end{equation}
 
 \item \textbf{El consumo para cargar la batería no puede ser mayor que la capacidad de la misma menos el nivel restante después de t} (~\ref{eq:restr5}).\\Parecido a la restricción anterior, en esta se modela el hecho de cargar la batería (CB) en cada hora t, el cuál está condicionado por la cantidad de batería restante para completar la carga (100\%), obtenido mediante la diferencia entre la capacidad máxima de la misma y lo consumido en la hora t (nivel de carga antes de comenzar la hora t menos la energía consumida de batería en t). Restricción binaria pues involucra tanto el consumo de batería (CB) como la energía de batería (EB), siendo la capacidad máxima de la batería y el nivel de carga en t constantes. Es tomado como 24 restricciones ya que debe cumplirse en cada una de las 24 horas de una simulación.
 \begin{equation}
         \label{eq:restr5}
-        \sum_{i=0}^{23} CB_{i} \leq capacidad_{max}- (nivel_{i-1} - EB_{i})
+        \forall_{i} \in [0, 1, 2, ..., 24) : CB_{i} \leq capacidad_{max}- (nivel_{i-1} - EB_{i})
 \end{equation}
 
 \end{itemize}
