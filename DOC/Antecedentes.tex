@@ -1,10 +1,6 @@
-\chapter{Motivación y antecedentes}
+\chapter{Antecedentes}
 \label{cap:Antecedentes}
-En este capítulo se habla acerca de la motivación que lleva al alumno a realizar este \gls{TFG} y se exponen los conceptos de ciencias de la computación más importantes relacionados con este trabajo.\\
-
-Tal y como se ha comentado en el Capítulo~\ref{cap:Introduccion}, existe una gran demanda energética, que desemboca en un encarecimiento de la energía eléctrica cada vez mayor. Aparte está el factor moral, pues la energía fósil es finita y sus medios de extracción son altamente contaminantes. Teniendo en cuenta estos dos antecedentes, existe una motivación a la hora de apostar por medios de extracción de energía renovables y por la eficiencia energética. Actualmente la mayoría de particulares tienen una única fuente de suministro de energía que vendría a ser la compañía eléctrica de la cuál son clientes, importando la totalidad de la energía que su hogar demanda a dicha compañía, a un precio establecido \gls{PVPC}~\cite{Ree14} (Precio voluntario al pequeño consumidor) que representa el precio máximo de referencia que pueden contratar los consumidores con hasta 10 Kwh de potencia contratada. Su valor tiene una discriminación horaria, lo que hace que en las horas de mayor consumo el precio sea mas alto. Sería interesante poder reducir la cantidad de energía que se obtiene de esta fuente en las horas pico (horas de máximo consumo donde el \gls{PVPC} suele alcanzar el valor alto) y obtenerla de otra fuente cuyo precio sea menor, para así obtener un promedio mucho mas barato que con una única fuente de energía. Esto puede lograrse añadiendo nuevas fuentes al hogar, como puede ser la instalación de placas fotovoltaicas. Este procedimiento está regulado, pues en el año 2015 mediante el Real Decreto 900/2015~\cite{Boe15} se establecieron unas condiciones para la instalación de placas fotovoltaicas, lo que se conoce coloquialmente como el "impuesto al sol". Por suerte, para potencias contratadas no superiores a 10 Kwh, no se pasa este impuesto, así que no es problema para el desarrollo y aplicación del sistema. Para tener el mínimo gasto posible, habría que obtener la cantidad óptima de cada una de las fuentes en cada momento, lo que supone un oficio tedioso y difícil para el ser humano.\\
-
-Con este \gls{TFG} se busca demostrar que es posible obtener la energía demandada utilizando fuentes alternativas, incluso beneficiándose de un ahorro económico por ello gracias a la computación, que van a permitir optimizar el consumo de cada fuente según corresponda. Los conceptos teóricos de las ciencias de la computación más importantes para entender como se aplican en este \gls{TFG} se exponen a continuación.
+En este capítulo se exponen los conceptos de ciencias de la computación más importantes relacionados con este trabajo y el estado del arte actual.\\
 
 \section{Sistema Inteligente}
 Un agente inteligente es aquel que emprende la mejor acción posible ante una situación dada. El campo de la inteligencia artificial~\cite{Russ06} se centra en construir sistemas inteligentes que piensan como humanos, actúan como humanos, piensan racionalmente y actúan racionalmente. Como se puede observar, los cuatro enfoques están divididos en dos grupos: el primero se centra en los humanos y el segundo en la racionalidad. Un agente es racional si hace lo correcto en base a su conocimiento.El enfoque humano debe ser una ciencia empírica mientras que el enfoque racional se basa en una combinación de matemáticas e ingeniería. Estos cuatro enfoques de la inteligencia artificial han coexistido a lo largo de la historia.\\
@@ -68,3 +64,27 @@ Existen varios métodos de programación lineal. El más utilizado es conocido c
   \item \textbf{Factibilidad}. Una vez se encuentra una solución básica factible, sólo apareceran soluciones factibles.
 \end{itemize}
 Otro método de programación lineal es el método de ramificación y acotamiento \textit{branch and bound}, el cuál divide el problema en varios subproblemas de programación lineal, acotamiento que permite obtener soluciones óptimas que se mejora por cada subproblema.\\
+
+\section{Estado del Arte}
+Tal y como se ha comentado en el Capítulo~\ref{cap:Introduccion}, existe una gran demanda energética que desemboca en un encarecimiento de la energía eléctrica cada vez mayor. Esto hace que sea una problemática en la que se ha trabajado tanto en el ámbito comercial como en la investigación.\\
+
+En el ámbito de la investigación se han encontrado varios estudios relacionados. Uno de ellos es una tesis doctoral perteneciente a la Universidad de Alicante: Modelado y simulación de la distribución de energía eléctrica en sistemas genéricos consistentes en diversas fuentes y múltiples modos de transmisión~\cite{Valdi13}. El trabajo de investigación de esta tesis doctoral aborda el problema de la distribución eléctrica en sistemas genéricos con varias fuentes de energía (eólica, hidroeléctrica, solar, etc). En este caso el sistema se implementa como un sistema multiagente en el que existen, cooperan y se comunican agentes que representan las fuentes energéticas, los consumos y los servicios. En la Figura~\ref{fig:tesis} se muestra la interfaz de usuario de este sistema, donde mediante unos parámetros de configuración se realiza la distribución de energía entre cada uno de los agentes involucrados.\\
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=10cm]{figs/tesis.png}
+	\caption{Formulario de optimización de la aplicación perteneciente a la tesis doctoral de la Universidad de Alicante}
+        \label{fig:tesis}
+\end{figure}
+
+En el ámbito comercial, existen varias aplicaciones móviles y web relacionadas con esta temática. A continuación se exponen algunas de ellas:
+\begin{itemize}
+\item \textbf{Mi.Luz (\ref{fig:miluz}):} Se trata de una aplicación móvil disponible para iOS y Android que permite conocer el precio del KWh en cada momento del día, para que así el usuario establezca el consumo eléctrico en su hogar en las horas más baratas.
+  \begin{figure}[!h]
+	\centering
+	\includegraphics[width=4cm]{figs/miluz.png}
+	\caption{Dashboard de la aplicación Mi.Luz}
+        \label{fig:miluz}
+\end{figure}
+\item \textbf{Área Personal - Endesa:} Endesa brinda a sus clientes un área personal donde permite consultar el consumo realizado en un día determinado en su hogar, desglosado en horas. Además permite la descarga de ficheros con el consumo del hogar. Esta funcionalidad será de utilidad en este \gls{TFG}.
+\item \textbf{Virtual Energy Advisor:} Aplicación ganadora del premio \textit{Barcelona Smart City App Hack}. Mediante la introducción de facturas del hogar y perfil. A partir de ello, la aplicación ofrece información adaptada en tiempo real, previsiones de consumo y alertas en las horas de menor precio.
+\end{itemize}
