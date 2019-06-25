@@ -91,18 +91,20 @@ Para integrar la persistencia que se ha incorporado al funcionamiento actual, de
 A partir de esta integración, se permite realizar simulaciones dependientes de un usuario, que obtendrá un valor totalmente distinto a si otro usuario realiza la simulación el mismo día, pues cada uno de ellos tiene unos parámetros en su hogar que determinan el resultado, como son el número de módulos fotovoltaicos, la ciudad donde reside o el precio al que obtiene las energías fotovoltaica y de batería, ya que cada usuario define el periodo en el que desea amortizar lo invertido en cada fuente mediante ganancias de esa fuente.
 
 \subsection{Implementación de una aplicación Flask}
-El siguiente paso tras la integración de persistencia y la implementación de la lógica o \textit{backend} es crear una aplicación web siguiendo la arquitectura \textbf{cliente - servidor}~\cite{Goer04}. En esta arquitectura, cada una de las máquinas que realiza una demanda de información al sistema toma el rol de cliente, y la que responde a estas demandas toma el rol de servidor (Figura~\ref{fig:client-server}). Esto permitirá que exista un servidor el cuál realiza simulaciones a petición de clientes, de los que previamente se ha almacenado la información necesaria en base de datos mediante un registro.
+El siguiente paso tras la integración de persistencia y la implementación de la lógica o \textit{backend} es crear una aplicación web siguiendo la arquitectura \textbf{cliente-servidor}~\cite{Goer04}.\\
+
+En la arquitectura Cliente-Servidor cada una de las máquinas que realiza una demanda de información al sistema toma el rol de cliente, y la que responde a estas demandas toma el rol de servidor (Figura~\ref{fig:client-server}). Esto permitirá que exista un servidor el cuál realiza simulaciones a petición de clientes, de los que previamente se ha almacenado la información necesaria en base de datos mediante un registro.
 \begin{figure}[!h]
             \centering
-            \includegraphics[width=9cm]{figs/client-server.png}
-            \caption{Esquema Cliente - Servidor}
+            \includegraphics[width=14cm]{figs/client-server.png}
+            \caption{Esquema Cliente-Servidor}
             \label{fig:client-server}
 \end{figure}
 
 El nombre que tomará dicha aplicación web será \textbf{eOptimizer}, haciendo referencia a su objetivo principal: realizar simulaciones por medio de una optimización. En la figura~\ref{fig:logo} se muestra el logo creado para la aplicación. Dicho logo ha sido diseñado por el propio alumno y se inspira en la eficiencia energética que se consigue mediante el sistema que se propone.
 \begin{figure}[!h]
             \centering
-            \includegraphics[width=3cm]{figs/logo.png}
+            \includegraphics[width=5cm]{figs/logo.png}
             \caption{Logo de eOptimizer}
             \label{fig:logo}
 \end{figure}

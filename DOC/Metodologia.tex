@@ -1,23 +1,23 @@
 \chapter{Metodología de trabajo}
 \label{cap:Metodologia}
-Este capítulo recoge la metodología de desarrollo y trabajo empleadas en este \gls{TFG}. Para conseguir flexibilidad e inmediatez en el desarrollo se empleará una metodología ágil, las cuáles tienen la particularidad de seguir un modelo iterativo e incremental, que da lugar a una toma de decisiones a corto plazo lo que se traduce en ampliar requisitos y soluciones en cada iteración en función de las necesidades. Esto proporciona inmediatez y funcionalidad en el proyecto lo que hace que exista una mayor motivación e implicación en el mismo. Además, permite encontrar y solucionar errores a lo largo del trabajo y hace que el cliente esté mas implicado debido a las numerosas entregas a lo largo del desarrollo del trabajo. La metodología de desarrollo y gestión de proyectos elegida ha sido \textit{Extreme Programming} (\gls{XP}).
+Este capítulo recoge la metodología de desarrollo y trabajo empleadas en este \gls{TFG}. Para conseguir flexibilidad e inmediatez en el desarrollo se empleará una metodología ágil. Estas metodologías tienen la particularidad de seguir un modelo iterativo e incremental, que da lugar a una toma de decisiones a corto plazo lo que se traduce en ampliar requisitos y soluciones en cada iteración en función de las necesidades. Además, permiten encontrar y solucionar errores a lo largo del trabajo y hacen que el cliente esté mas implicado. La metodología de desarrollo y gestión de proyectos elegida ha sido \textit{Extreme Programming} (\gls{XP}).
 \section{Extreme Programming}
 La programación extrema~\cite{Newk02} es una metodología de desarrollo iterativo e incremental formulada por Kent Beck en 1996. La programación extrema se apoya en cinco pilares fundamentales:
 \begin{itemize}
 \item \textbf{Simplicidad:} Se procura desarrollar solo aquello que se necesita.
 \item \textbf{Comunicación:} Los análisis, desarrollos y problemas se debaten e intentan solucionar en equipo.
-\item \textbf{Coraje:} Pues \gls{XP} requiere una mejora continua del software. Esto conlleva contar con cierto valor para cambiar y restructurar software que se encuentra totalemente funcional, asumiendo riesgos.
+\item \textbf{Coraje:} Pues \gls{XP} requiere una mejora continua del software. Esto conlleva contar con cierto valor para cambiar y restructurar software que se encuentra funcional, asumiendo riesgos.
 \item \textbf{\textit{Feedback:}} Debe producirse una retroalimentación continua entre todos los usuarios implicados en el proyecto.
 \item \textbf{Respeto:} Los desarrolladores deben valorar el conocimiento del objetivo del cliente y el cliente debe valorar la decisión de llevar a cabo dicho objetivo por parte de los desarrolladores.
 \end{itemize}
-\subsection{Prácticas técnicas de XP}
-\gls{XP} muestra un total de doce prácticas técnicas que garantizan una mejora en los resultados de un proyecto software.~\cite{BaEu11}
+\subsection{Técnicas prácticas de XP}
+\gls{XP} muestra un total de doce prácticas que garantizan una mejora en los resultados de un proyecto software~\cite{BaEu11}.
 \begin{enumerate}
 \item Comunicación cara a cara con el cliente.
 \item Para garantizar la calidad del equipo no debe asumirse una responsabilidad que requiera un esfuerzo mayor que el disponible.
 \item Buscar paralelismos o metáforas entre el sistema y la vida real con el objetivo de facilitar su comprensión.
 \item Diseño simple, legible y entendible.
-\item Refactorizar el código cuando sea posible, pues ha sido desarrollado sin detalles secundarios para garantizar inmediatez. (Mejora continua)
+\item Refactorizar el código cuando sea posible, pues ha sido desarrollado sin detalles secundarios para garantizar inmediatez (Mejora continua).
 \item Desarrollar software en \textit{Pair programming} siempre que sea posible. Por motivos evidentes, esta técnica no ha podido llevarse a cabo en el desarrollo de este \gls{TFG}.
 \item Realizar entregas cortas siempre que sea posible añadiendo funcionalidades en cada iteración del desarrollo.
 \item Dar gran importancia al \textit{testing} del proyecto. Esto se consigue mediante la implementación de casos de prueba unitarios, entornos de prueba, etc.
@@ -32,17 +32,17 @@ La programación extrema~\cite{Newk02} es una metodología de desarrollo iterati
     \end{enumerate}
 \end{enumerate}
 \subsection{Roles de un equipo XP}
-En un proyecto que sigue la metodología \gls{XP} se distinguen cinco roles principales entre las personas implicadas. En el caso particular de este \gls{TFG}, estos roles son repartidos entre los directores y el alumno:
+En un proyecto que sigue la metodología \gls{XP} se distinguen cinco roles principales entre las personas implicadas. En el caso particular de este \gls{TFG}, están roles son repartidos entre los directores y el alumno:
 \begin{itemize}
 \item \textbf{Programador:} Encargado de implementar el código del proyecto. Es el rol principal del alumno en este \gls{TFG}.
 \item \textbf{Cliente:} Encargado de definir el objetivo del sistema. Está muy implicado en el proyecto pues es el encargado de crear las historias de usuario. Este rol es tomado por los directores de este \gls{TFG}.
 \item \textbf{\textit{Tester}:} Encargado de implementar los casos de prueba del proyecto. Rol desempeñado por el alumno.
 \item \textbf{\textit{Tracker}:} Encargado de realizar las estimaciones tanto de las iteraciones como de las historias de usuario. Rol desempeñado por el estudiante.
-  \item \textbf{\textit{Coach}:} Encargado de conducir al equipo en el preceso de desarrollo. Capaz de aportar soluciones a problemas o errores en cierto momento y tomar responsabilidades. Rol desempeñado por los directores en este \gls{TFG}.
+  \item \textbf{\textit{Coach}:} Encargado de conducir al equipo en el proceso de desarrollo. Capaz de aportar soluciones a problemas o errores en cierto momento y tomar responsabilidades. Rol desempeñado por los directores en este \gls{TFG}.
 
 \end{itemize}
 \subsection{Historias de usuario de XP}
-Las historias de usuario son representaciones de requisitos que se emplean en algunas metodologías ágiles. Las historias de usuario han de ser negociables, pequeñas, estimables y verificables. En el caso particular de \gls{XP} son escritas y priorizadas por los clientes, y estimadas por el equipo. Generalmente, la estimación de una historia de usuario debe ser como mínimo 10 horas y como máximo un par de semanas. Si rebasa dicho límite tal vez la tarea sea demasiado compleja para ser una historia de usuario y debería dividirse. Esta estimación entre otros apectos debe ser discutida entre clientes y desarrolladores, lo cuáles deben llegar a un consenso. En este \gls{TFG} las historias de usuario siguen el formato de la Tabla~\ref{tab:histModel}
+Las historias de usuario son representaciones de requisitos que se emplean en algunas metodologías ágiles. Las historias de usuario han de ser negociables, pequeñas, estimables y verificables. En el caso particular de \gls{XP} son escritas y priorizadas por los clientes, y estimadas por el equipo. Generalmente, la estimación de una historia de usuario debe ser como mínimo de 10 horas y como máximo de un par de semanas. Si rebasa dicho límite tal vez la tarea sea demasiado compleja para ser una historia de usuario y debería dividirse. Esta estimación entre otros apectos debe ser discutida entre clientes y desarrolladores, lo cuáles deben llegar a un consenso. En este \gls{TFG} las historias de usuario siguen el formato de la Tabla~\ref{tab:histModel}.
 \begin{table}[H]
         \centering
         \begin{tabular}{|p{0.3\linewidth}|p{0.3\linewidth}|}
@@ -59,17 +59,19 @@ Las historias de usuario son representaciones de requisitos que se emplean en al
 \end{table}
 
 \section{Herramientas de apoyo al desarrollo ágil}
+A continuación se exponen las herramientas y aplicaciones software que se han empleado para facilitar el desarrollo ágil del software.
 \subsection{Git}
 Git es un software de control de versiones que permite el mantenimiento y desarrollo colaborativo de proyectos software. Fue creado por Linus Torvalds. Mediante su uso se consigue eficiencia y confiabilidad en el software gracias a numerosas funciones como ramificación del proyecto, histórico de cambios y versiones, etc. Git es software libre distribuido bajo la Licencia \gls{GLP} v2.\\
 \subsection{Github}
-GitHub, Inc es una plataforma de desarrollo colaborativo para proyectos que utiliza el sistema de control de versiones Git. Github proporciona gráficos de información y estadísticas sobre los desarrolladores implicados en un proyecto, herramientas para facilitar el trabajo colaborativo que permiten ver diferencias entre distintas versiones del código, crear \textit{merge requests}, creación de tableros Kanban, etc. En 2018 GitHub fue obtenida por la compañía Microsoft.
+GitHub Inc. es una plataforma de desarrollo colaborativo para proyectos que utiliza el sistema de control de versiones Git. Github proporciona gráficos de información y estadísticas sobre los desarrolladores implicados en un proyecto, herramientas para facilitar el trabajo colaborativo que permiten ver diferencias entre distintas versiones del código, crear \textit{merge requests}, creación de tableros Kanban, etc. En 2018 GitHub fue adquirida por la compañía Microsoft.
 \subsection{Toggl}
-Toggl es una herramienta empleada para el seguimiento de tiempo (\textit{time tracker}). Este tipo de herramientas son usadas en el desarrollo ágil de proyectos software, donde el tiempo de desarrollo de cada tarea es importante para la planificación. Permite crear informes del tiempo registrado, muy útil para conocer el tiempo empleado en un desarrollo con respecto a su estimación.
+Toggl es una herramienta empleada para el seguimiento de tiempo (\textit{time tracker}). Este tipo de herramientas son usadas en el desarrollo ágil de proyectos software, donde el tiempo de desarrollo de cada tarea es importante para la planificación. Permite crear informes del tiempo registrado, muy útiles para conocer el tiempo empleado en un desarrollo con respecto a su estimación.
 \subsection{Tablero Kanban}
 El método Kanban es empleado en desarrollo software para gestionar el trabajo en curso. Divide el trabajo a realizar en tarjetas que se colocan en una especie de tablero virtual de varias columnas que representan estados, como \textit{To Do} (tareas por comenzar), \textit{In Progress} (tareas en ejecución) y \textit{Done} (tareas completadas). En este \gls{TFG} se ha complementado la metodología \gls{XP} con Kanban, donde cada iteración de \gls{XP} se toma como un tablero y cada historia de usuario de dicha iteración es una tarjeta. De esta manera el trabajo a realizar en una iteración se encuentra estructurado.
 \subsection{Slack}
 Slack es un software de comunicación empleado en equipos de desarrollo con numerosas funciones como integración con Github y otras herramientas, creación de canales, conversaciones privadas y compartición de archivos.
 \section{Medios a utilizar}
+A continuación se habla acerca de los medios hardware y software empleados para el desarrollo de este \gls{TFG}.
 \subsection{Medios Hardware}
 \begin{itemize}
 \item \textbf{Computadora:} Ordenador portátil personal del alumno cuyas especificaciones se encuentran en la Tabla~\ref{tab:pc}.
@@ -83,7 +85,7 @@ Slack es un software de comunicación empleado en equipos de desarrollo con nume
                 \textbf{Memoria} & 8 GB DDR3\\ \hline
                 \textbf{Disco} & SSD PCIe 256 GB\\ \hline
         \end{tabular}
-        \caption{Computador personal del alumno}
+        \caption{Especificaciones técnicas del computador del alumno}
         \label{tab:pc}
 \end{table}
 \end{itemize}
@@ -91,29 +93,29 @@ Slack es un software de comunicación empleado en equipos de desarrollo con nume
 \begin{itemize}
 \item \textbf{Lenguajes de programación}
   \begin{itemize}
-  \item \textbf{Python3~\cite{Goer04}:} Se trata de un lenguaje de programación interpretado con una sintaxis sencilla y multiparadigma (soporta orientación a objetos, programación imperativa y programación funcional). Además, consta de librerías para el desarrollo de la arquitectura Cliente/Servidor, para la creación de aplicaciones distribuidas en las que las tareas son ejecutadas en un servidor, a través de las peticiones de clientes. Es un lenguaje muy utilizado en ingeniería y computación científica.
+  \item \textbf{Python3~\cite{Goer04}:} Se trata de un lenguaje de programación interpretado con una sintaxis sencilla y multiparadigma (soporta orientación a objetos, programación imperativa y programación funcional). Además, consta de librerías de desarrollo de arquitecturas Cliente/Servidor para la creación de aplicaciones distribuidas en las que las tareas son ejecutadas en un servidor a través de las peticiones de clientes. Es un lenguaje muy utilizado en ingeniería y computación científica.
   \item \textbf{Javascript:} Lenguaje de programación interpretado, típicamente usado para el desarrollo de páginas web. Soporta el paradigma de la programación orientada a objetos, programación funcional e imperativa.
-  \item \textbf{Bash:} Lenguaje de consola que sirve para interpretar órdenes en un sistema. Es el intérprete de comandos por defecto de la mayoría de distribuciones GNU/Linux y macOs.
-  \item \textbf{\LaTeX{}:} Es un sistema de creación de textos y documentos profesionales y de alta calidad. Cuenta con una gran variedad de comandos o macros para el desarrollo del lenguaje TEX.
+  \item \textbf{Bash:} Es el intérprete de comandos por defecto de la mayoría de distribuciones GNU/Linux y macOs.
+  \item \textbf{\LaTeX{}:} Es un sistema de creación de textos y documentos profesionales de alta calidad. Cuenta con una gran variedad de comandos o macros para el desarrollo del lenguaje TEX.
   \end{itemize}
 \item \textbf{Frameworks y librerías}
   \begin{itemize}
   \item \textbf{SciPy~\cite{Scip}:} Se trata de extensiones y bibliotecas para Python dedicadas a desarrollos estadísticos y herramientas matemáticas.
   \item \textbf{Flask~\cite{Flask}:} Es un microframework para Python cuya funcionalidad es el desarrollo de aplicaciones web de forma rápida y liviana.
-  \item \textbf{SQLAlchemy~\cite{SqlAl}:} Proporciona un kit de herramientas SQL para el lenguaje Python que permiten manejar bases de datos de manera eficiente
+  \item \textbf{SQLAlchemy~\cite{SqlAl}:} Proporciona un kit de herramientas SQL para el lenguaje Python que permite manejar bases de datos de manera eficiente
   \item \textbf{Jinja2:} Proporciona las herramientas para la integración de \textit{templates} html en una aplicación Flask.
   \item \textbf{nose:} Framework para implementación de casos de prueba en proyectos Python.
   \item \textbf{Pylint3:} Comprobador de errores y guías de estilo en el código fuente para el lenguaje Python sujeto a las buenas prácticas de dicho lenguaje.
   \item \textbf{requests:} Biblioteca para trabajar con solicitudes HTTP para el lenguaje Python.
   \item \textbf{Faker:} Biblioteca de generación de información aleatoria de numerosos tipos empleada en los casos de prueba.
   \item \textbf{virtualenv: } Herramienta para el desarrollo en Python, que permite la creación de un entorno aislado, donde se pueden instalar paquetes y dependencias sin interferir con el sistema.
-  \item \textbf{API AEMET OpenData~\cite{Aemet}:} \gls{API} oficial de \gls{AEMET} que proporciona información meteorológica de de numerosos tipos a demanda de los clientes.
-  \item \textbf{API REE e-sios~\cite{Ree}:} \gls{API} oficial de \gls{REE} que proporciona información acerca de los precios del mercado eléctrico a demanda de los clientes.
+  \item \textbf{API AEMET OpenData~\cite{Aemet}:} \gls{API} oficial de \gls{AEMET} que proporciona información meteorológica.
+  \item \textbf{API REE e-sios~\cite{Ree}:} \gls{API} oficial de \gls{REE} que proporciona información acerca de los precios del mercado eléctrico.
   \item \textbf{Bootstrap~\cite{Boots}:} Librería de desarrollo web que proporciona un conjunto de herramientas para crear sitios web.
   \end{itemize}
 \item \textbf{Herramientas de desarrollo}
   \begin{itemize}
-  \item \textbf{GNU Emacs:} Es un editor de texto del proyecto GNU muy utilizado en programación altamente ampliable y editable, con numerosas funciones y extensiones que hacen de Emacs una herramienta muy potente pero también liviana.
+  \item \textbf{GNU Emacs:} Es un editor de texto del proyecto GNU muy utilizado en programación, altamente ampliable y editable, con numerosas funciones y extensiones.
   \item \textbf{draw.io:} Es una herramienta online totalmente libre que permite la creación de una gran variedad de diagramas y gráficos.
   \end{itemize}
 \item \textbf{Sistemas operativos}

@@ -5,43 +5,43 @@ En este capítulo se exponen los conceptos de ciencias de la computación más i
 \section{Sistema Inteligente}
 Un agente inteligente es aquel que emprende la mejor acción posible ante una situación dada. El campo de la inteligencia artificial~\cite{Russ06} se centra en construir sistemas inteligentes que piensan como humanos, actúan como humanos, piensan racionalmente y actúan racionalmente. Como se puede observar, los cuatro enfoques están divididos en dos grupos: el primero se centra en los humanos y el segundo en la racionalidad. Un agente es racional si hace lo correcto en base a su conocimiento.El enfoque humano debe ser una ciencia empírica mientras que el enfoque racional se basa en una combinación de matemáticas e ingeniería. Estos cuatro enfoques de la inteligencia artificial han coexistido a lo largo de la historia.\\
 \begin{itemize}
-\item{El enfoque de la prueba de Turing (Actuar como humanos)}\\
+\item{El enfoque de la prueba de Turing (Actuar como humanos).}\\
 
   La prueba de Turing tenía como objetivo proporcionar una definición operacional y satisfactoria de inteligencia. Una máquina superaría la prueba si el examinador no fuese capaz de distinguir si el evaluado es una persona o un computador mediante una secuencia de preguntas. Para superarla un computador debe ser capaz de procesar el lenguaje natural, representar el conocimiento, contar con razonamiento automático y aprendizaje automático.
-\item{El enfoque del modelo cognitivo (Pensar como humanos)}\\
+\item{El enfoque del modelo cognitivo (Pensar como humanos).}\\
 
 Para determinar si una máquina es capaz de pensar de forma similar a un humano primero debe conocerse un mecanismo para ver como piensan los humanos: la ciencia cognitiva, en cuyo campo interdisciplinar convergen modelos computacionales de inteligencia artificial y técnicas de psicología intentando comprender el funcionamiento de la mente humana.
-\item{El enfoque de las \textit{leyes del pensamiento} (Pensar racionalmente)}\\
+\item{El enfoque de las \textit{leyes del pensamiento} (Pensar racionalmente).}\\
 
   El \textit{modus operandi} de la mente humana se rige por silogismos, que son esquemas de estructuras de argumentación mediante los que se llega a conclusiones correctas si se parte de premisas correctas.
-\item{El enfoque del agente racional (Actuar racionalmente)}\\
+\item{El enfoque del agente racional (Actuar racionalmente).}\\
 
   Un agente racional actúa intentando alcanzar el mejor resultado y, en caso de haber incertidumbre, el mejor resultado esperado.
 \end{itemize}
 La inteligencia artificial y por ende los sistemas inteligentes tienen aplicación en numerosos ámbitos:
 \begin{itemize}
-\item{Resolución de problemas}
-\item{Teoría de juegos}
-\item{Robótica y automatización}
-\item{Procesamiento del lenguaje natural}
+\item{Resolución de problemas.}
+\item{Teoría de juegos.}
+\item{Robótica y automatización.}
+\item{Procesamiento del lenguaje natural.}
 \end{itemize}
 
 \section{Problema de Satisfacción de Restricciones}
-La programación por restricciones es una metodología software que permite resolver problemas de gran complejidad, típicamente NP. Esta metodología ha generado mucha expectación en el área de la inteligencia artificial desde la década de los 60, ya que tiene un gran potencial para la resolución de problemas reales. La idea básica de la programación por restricciones permite declarar una serie de restricciones sobre el dominio del problema que atañe, para después dar con soluciones que satisfacen las anteriores restricciones de la forma más optima posible. Así, un problema de satisfacción de restricciones~\cite{Russ06} está caracterizado por:
+La programación por restricciones es una metodología software que permite resolver problemas de gran complejidad, típicamente NP. Esta metodología ha generado mucha expectación en el área de la inteligencia artificial desde la década de los 60, ya que tiene un gran potencial para la resolución de problemas reales. La idea básica de este tipo de programación permite declarar una serie de restricciones sobre el dominio del problema, para después dar con soluciones que satisfacen las anteriores restricciones de la forma más optima posible. Así, un problema de satisfacción de restricciones~\cite{Russ06} está caracterizado por:
 \begin{itemize}
 	\item Un conjunto de variables, donde cada variable toma variables en un dominio.
 	\item Un conjunto de restricciones, que permite representar las posibles combinaciones de valores válidos de las variables.
 	\item La solución al \gls{PSR} será la asignación de valores a las variables de forma que se satisfacen las restricciones y se alcanza el objetivo, representado típicamente como una función a optimizar.
 \end{itemize}
-Las restricciones se caracterizan por su \textbf{aridad}, que viene a ser el número de variables que involucra. Pudiendo ser unarias, si solo involucran una variable; binarias, si involucran dos variables; y n-arias, si involucran más de dos variables. Se deben tener en cuenta un tipo de restricción adicional, ya que están presentes en este trabajo, como son las \textbf{restricciones lineales}, tal y como se representa en la Ecuación~\ref{eq:rest_lineal}
+Las restricciones se caracterizan por su \textbf{aridad}, que viene a ser el número de variables que involucra. Pudiendo ser unarias, si solo involucran una variable; binarias, si involucran dos variables; y n-arias, si involucran más de dos variables. Además, existe un tipo de restricción adicional, como son las \textbf{restricciones lineales}, tal y como se representa en la Ecuación~\ref{eq:rest_lineal}.
 \begin{equation}
   \label{eq:rest_lineal}
   \forall_{i} \in A :  a_{i}x_{i} (<,\leq,=,\geq,>,\neq) c
 \end{equation}
-siendo a el coeficiente de la variable x y c constante, y A el conjunto de valores desde i hasta n. Esto se traduce como n-i restricciones, pues una restricción lineal realmente es el conjunto de restricciones de ese tipo desde i hasta n.\\
+siendo a el coeficiente de la variable x, c constante, y A el conjunto de valores desde i hasta n. Esto se traduce como n-i restricciones, pues una restricción lineal realmente es el conjunto de restricciones de ese tipo desde i hasta n.\\
 \section{Programación Lineal}
 La programación lineal~\cite{Loom64} tiene como objetivo optimizar una función lineal cuyas variables están sujetas a un conjunto de restricciones lineales.
-Se trata de un campo de la matemática muy efectivo para la resolución de este tipo de problemas. Históricamente, el concepto de programación lineal debe su nombre a John Von Neumann (1947), uno de los matemáticos más importantes del siglo XX gracias a sus contribuciones en las ciencias de la computación; y a George Dantzig (1947), cuyo trabajo intentaba asignar 70 puestos de trabajo a 70 personas mediante programación lineal. Las permutaciones necesarias para la asignación óptima de dichos puestos era igual a factorial de 70 (70!), algo muy grande, pues el número de combinaciones de variables es exponencial. Curiosamente, mediante programación lineal el problema se resuelve de manera eficiente pues el número de combinaciones se reduce en su mayor parte. La programación lineal puede ser aplicable a numerosos problemas comunes tales como:
+Se trata de un campo de la matemática muy efectivo para la resolución de este tipo de problemas. Históricamente, el concepto de programación lineal debe su nombre a John Von Neumann (1947), uno de los matemáticos más importantes del siglo XX gracias a sus contribuciones en las ciencias de la computación; y a George Dantzig (1947), cuyo trabajo intentaba asignar 70 puestos de trabajo a 70 personas mediante programación lineal. Las permutaciones necesarias para la asignación óptima de dichos puestos era igual al factorial de 70 (70!). Curiosamente, mediante programación lineal el problema se resuelve de manera eficiente pues el número de combinaciones se reduce en su mayor parte. La programación lineal puede ser aplicable a numerosos problemas comunes tales como:
 \begin{itemize}
 \item Asignación de horarios a profesores en un centro educativo para obtener la mayor productividad a la par que comodidad para profesor y alumno.
 \item Distribución de elementos en almacenes de tal modo que se reduzca el costo de almacenamiento teniendo en cuenta la capacidad limitada.
@@ -49,21 +49,21 @@ Se trata de un campo de la matemática muy efectivo para la resolución de este 
 \end{itemize}
 Como se puede observar, el problema de este \gls{TFG} está muy relacionado con el último ejemplo, pues se distribuye cantidad de energía entre fuentes de entrada y fuentes de salida de manera óptima para garantizar un gasto mínimo de consumo energético.\\
 
-Para un problema de programación lineal pueden existir varios casos en su resolución:
+En un problema de programación lineal puede ocurrir que:
 \begin{itemize}
-\item Existe una solución óptima.
-\item Existen varias soluciones óptimas.
-\item No existe solución.
-\item Existen infinitas soluciones.
+\item Exista una solución óptima.
+\item Existan varias soluciones óptimas.
+\item No exista solución.
+\item Existan infinitas soluciones.
 \end{itemize}
 La situación deseada es la primera, pero puede ocurrir alguno de los otro casos. Estas situaciones pueden resolverse convirtiendo las restricciones que son inecuaciones (desigualdades) en igualdades.\\
 
-Existen varios métodos de programación lineal. El más utilizado es conocido como el \textbf{método Simplex}, que se basa en evaluar solo algunos puntos extremos mediante dos condiciones:
+Existen varios métodos de programación lineal. El más utilizado es el conocido como el \textbf{método Simplex}, que se basa en evaluar solo algunos puntos extremos mediante dos condiciones:
 \begin{itemize}
 \item \textbf{Optimalidad}. La solución inferior relativa al punto de solución actual no se tiene en cuenta.
   \item \textbf{Factibilidad}. Una vez se encuentra una solución básica factible, sólo apareceran soluciones factibles.
 \end{itemize}
-Otro método de programación lineal es el método de ramificación y acotamiento \textit{branch and bound}, el cuál divide el problema en varios subproblemas de programación lineal, acotamiento que permite obtener soluciones óptimas que se mejora por cada subproblema.\\
+Otro método de programación lineal es el método de ramificación y acotamiento \textit{branch and bound}, el cuál divide el problema en varios subproblemas de programación lineal, acotamiento que permite obtener soluciones óptimas que se mejoran por cada subproblema.\\
 
 \section{Estado del Arte}
 Tal y como se ha comentado en el Capítulo~\ref{cap:Introduccion}, existe una gran demanda energética que desemboca en un encarecimiento de la energía eléctrica cada vez mayor. Esto hace que sea una problemática en la que se ha trabajado tanto en el ámbito comercial como en la investigación.\\

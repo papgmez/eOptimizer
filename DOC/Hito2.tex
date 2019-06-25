@@ -1,5 +1,5 @@
-Tal y como se comentó en la iteración anterior (sección~\ref{sec:hito1}, la respuesta procesada en cada caso a la petición \textit{requests} consta de estados meteorológicos en formato de cadena de texto. Un ejemplo de respuesta del tipo texto en lenguaje natural se vió en el Listado~\ref{lst:APIresponse2}. En el Listado~\ref{lst:APIresponse1} se muestra (simplificada) la respuesta recibida en el caso de la consulta del día en curso (\textcopyright AEMET)
-\begin{lstlisting}[numbers=none,float=ht,caption={Ejemplo de respuesta de la API - AEMET para el día en curso},label={lst:APIresponse1}]
+Tal como se comentó en la iteración anterior (sección~\ref{sec:hito1}, la respuesta procesada en cada caso a la petición \textit{requests} consta de estados meteorológicos en formato de cadena de texto. Un ejemplo de respuesta del tipo texto en lenguaje natural se vió en el Listado~\ref{lst:APIresponse2}. En el Listado~\ref{lst:APIresponse1} se muestra (simplificada) la respuesta recibida en el caso de la consulta del día en curso (\textcopyright AEMET)
+\begin{lstlisting}[numbers=none,float=ht,caption={Ejemplo de respuesta de la API-AEMET para el día en curso},label={lst:APIresponse1}]
 {
  origen: {
 	productor: "Agencia Estatal de Meteorología - AEMET. Gobierno de España",
@@ -48,7 +48,7 @@ Los humanos son capaces de interpretar estos valores rápidamente. Sin embargo, 
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width=10cm]{figs/tipos_logica.png}
-	\caption{Lógica clásica vs lógica difusa}
+	\caption{Lógica clásica vs. lógica difusa}
         \label{fig:ejemplo_logica}
 \end{figure}
 
@@ -61,7 +61,7 @@ Así pues, hay un claro ejemplo de conjuntos difusos con los estados meteorológ
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=17cm]{figs/estadoCieloAEMET.png}
-	\caption{Estados del cielo posibles AEMET}
+	\caption{Posibles estados del cielo en AEMET}
 	\label{fig:estadoCielo}
 \end{figure}
 Como se puede observar existe un gran número de estados meteorológicos posibles, y en un gran número de ellos un módulo fotovoltaico no genera energía. En estos estados el valor máximo a generar por los módulos será de 0 watios. Los estados favorables (donde un módulo genera una potencia mayor a 0 watios) serán representados como conjuntos difusos. En la Tabla~\ref{tab:estadosFavorables} se muestran cuáles son estos estados. Por ejemplo, no se puede determinar cuantos watios se producen como máximo con un tiempo \textit{Despejado} o \textit{Cubierto con nubes altas}, pero podemos mostrar los conjuntos difusos y gráficamente comprobar su distribución, para obtener un valor discreto de cada conjunto difuso, denominado el \textbf{centroide} o centro de gravedad del conjunto difuso. Este proceso es conocido como razonamiento aproximado a partir de inferencia difusa. La inferencia difusa permite obtener un valor de salida para un valor de entrada empleando la teoría de conjuntos difusos. Un ejemplo de cuestión a resolver es: \textit{¿Qué potencia pico se puede obtener de un módulo fotovoltaico si hay intervalos nubosos?}. Cómo hemos comentado anteriormente, la respuesta sería el centroide del conjunto difuso \textit{Intervalos Nubosos}. El centroide es el punto que divide el conjunto difuso en dos partes de igual masa. En la Ecuación~\ref{eq:centroide} se muestra el procedimiento para calcularlo, realizando el sumatorio de las potencias tomadas por su grado de pertenencia al conjunto dividido entre el sumatorio de dichos grados de pertenencia. En la Tabla~\ref{tab:estadosFavorables} se incluye el valor del centroide de cada conjunto difuso.\\

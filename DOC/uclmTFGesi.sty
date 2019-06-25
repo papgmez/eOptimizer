@@ -1,10 +1,10 @@
 %%%%%%%%%%%%%%
 % Fichero: uclmTFGesy.sty
 % Autor: Jesús Salido Tercero (http://www.uclm.es/profesorado/jsalido)
-% Fecha (creación): Febrero 2018 
+% Fecha (creación): Febrero 2018
 % Descripción: Paquete para el TFG de la ESI-UCLM
-% (Escuela Sup. de Informática, UCLM). Creada para el curso 
-% “LaTeX esencial para preparación de TFG, Tesis y otros documentos 
+% (Escuela Sup. de Informática, UCLM). Creada para el curso
+% “LaTeX esencial para preparación de TFG, Tesis y otros documentos
 % académicos” (Esc. Sup. Informática-UCLM)
 %%%%%%%%%%%%%%%% -------------------------
 
@@ -28,10 +28,10 @@
 % RE-\dedicado{texto}			: Genera pág. de dedicatoria con texto
 % RE-\creditos{texto}{imagen}	: Añade pág. de créditos con el texto y la imagen
 % OB-\abstract{texto}			: Añade abstract (no definido en clase book)
-% OP-\tecla{texto}				: Genera un borde de tecla en torno al texto		
+% OP-\tecla{texto}				: Genera un borde de tecla en torno al texto
 % OP-\nodivide[penalty]		: Penaliza la división de palabras. Máx. (n=10000) sin arg.
 % OP-\nowidowandorphan[penalty]: Penaliza las viudas y huérfanas. (sólo si necesario)
-% OP-\nodividenotes[]penalty]	: Penaliza la división de notas al pié entre págs.	(sólo si necesario)	
+% OP-\nodividenotes[]penalty]	: Penaliza la división de notas al pié entre págs.	(sólo si necesario)
 % OP-\savepagecnt				: Salva en un contador interno el nº de pág. actual
 % OP-\contpagination			: Recupera el valor de pág. previamente salvado en el cont. interno.
 % RE-\cleanhdfirst				: Elimina la cabecera en la primera página de capítulo.
@@ -54,7 +54,7 @@
 % -------------------------
 %\setlength{\parskip}{1.3ex plus 0.2ex minus 0.2ex} % Espacio entre párrafos (más versatil cuando se fija como una rubber length (longitud elástica)
 \setlength{\parskip}{1ex plus 0.2ex minus 0.2ex} % Espacio entre párrafos (más versatil cuando se fija como una rubber length (longitud elástica)
-%\setlength{\parindent}{8ex} % Valor por defecto de la indentación en español. 
+%\setlength{\parindent}{8ex} % Valor por defecto de la indentación en español.
 %Sólo es preciso activar para modificar el valor por defecto (indicar valor cero para anular)
 % -------------------------
 
@@ -66,26 +66,26 @@
 % -------------------------
 \fancyhf{} % Reset de la cabecera y pie
 % En las páginas impares, parte izquierda del encabezado, aparecerá el nombre de capítulo
-\fancyhead[LO]{\sffamily\leftmark} 
+\fancyhead[LO]{\sffamily\leftmark}
 % En las páginas pares, parte derecha del encabezado, aparecerá el nombre de sección
-\fancyhead[RE]{\sffamily\rightmark} 
+\fancyhead[RE]{\sffamily\rightmark}
 % Números de página en las esquinas de los encabezados
 \fancyhead[RO,LE]{\sffamily\thepage}
 
 % Formato para el capítulo: N. Nombre
 \renewcommand{\chaptermark}[1]{\markboth{\textbf{\thechapter.#1}}{}}
 % Formato para la sección: N.M. Nombre
-\renewcommand{\sectionmark}[1]{\markright{\textbf{\thesection. #1}}} 
+\renewcommand{\sectionmark}[1]{\markright{\textbf{\thesection. #1}}}
 
 % Ancho de la línea horizontal bajo el encabezado
-\renewcommand{\headrulewidth}{0.6pt} 
+\renewcommand{\headrulewidth}{0.6pt}
 % Ancho de la línea horizontal sobre el pie (en este ejemplo está vacío)
-%\renewcommand{\footrulewidth}{0.6pt} 
+%\renewcommand{\footrulewidth}{0.6pt}
 
 %\setlength{\headheight}{16pt} % Por defecto \headheight 12pt, pero se agranda al emplear fancyhdr
 \setlength{\headheight}{1.5\headheight} % Aumenta la altura del encabezado en una vez y media
 
-% Evita que la última página de cap. tenga cabecera y pie 
+% Evita que la última página de cap. tenga cabecera y pie
 % si dicha página está en blanco (para clase book)
 %\makeatletter
 \def\cleardoublepage{\clearpage\if@twoside
@@ -138,7 +138,7 @@
 
 
 % -------------------------
-% AJUSTES DE COLOR 
+% AJUSTES DE COLOR
 % -------------------------
 \definecolor{gris97}{gray}{.97}
 \definecolor{gris95}{gray}{.95}
@@ -186,12 +186,12 @@
 	stringstyle={\color{Red1}\ttfamily\bfseries},
 	commentstyle={\color{Green4}\sffamily\bfseries},% Estilo para los comentarios
 	keywordstyle={\color{Blue1}\bfseries},% Estilo para las palabras clave
-	%	keywordstyle=[1]\textbf,    % Posibilidad de particularizar el estilo 
+	%	keywordstyle=[1]\textbf,    % Posibilidad de particularizar el estilo
 	%	keywordstyle=[2]\textbf,    %
 	%	keywordstyle=[3]\textbf,    %
 	%	keywordstyle=[4]\textbf,    %
 	%	deletekeywords={}, 			% Quita keywords separadas por comas
-	captionpos=t,               % Ajusta la posición de títulos 
+	captionpos=t,               % Ajusta la posición de títulos
 	numbers=left,               % Posición de números de línea
 	numberstyle={\color{DarkSlateGray}\tiny\sffamily\bfseries},          % Tamaño del número de línea
 	numberfirstline=false,
@@ -199,17 +199,17 @@
 	stepnumber=1,               % Paso de línea numerada
 	numbersep=10pt,             % Separación del texto al número de línea
 	tabsize=2,                  % Tamaño del tabulador
-	extendedchars=true,         % Gestiona en empleo de caracteres 	
+	extendedchars=true,         % Gestiona en empleo de caracteres
 	%	extendedchars=\true,        % Gestiona en empleo de caracteres extendidos utf8 % Hack-
 	texcl=true,				    % Necesario para unicode en los comentarios
 	breaklines=true,            % Ajusta división automática de líneas
 	breakatwhitespace=true,     % Indica si la división automática sólo ocurre en los espacios en blanco
-	frame=single,               % none, leftline, topline, bottomline, lines, single, shadowbox 
+	frame=single,               % none, leftline, topline, bottomline, lines, single, shadowbox
 	frameround=tttt, 			% Redondea los bordes del frame
 	rulecolor={\color{DarkSlateGray}},    % Color del frame
 	showspaces=false,           % Muestra espacios en blanco
 	showtabs=false,             % Muestra tabuladores
-	showstringspaces=true,      % Muestra espacios en blanco en las cadenas        
+	showstringspaces=true,      % Muestra espacios en blanco en las cadenas
 	xleftmargin=1cm,xrightmargin=1cm,
 	breaklines=true,
 	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}, % Flecha al saltar de linea
@@ -234,8 +234,8 @@
 %\lstdefinestyle{consola}{%
 %	basicstyle=\scriptsize\bf\ttfamily
 %}
-  
- 
+
+
 \lstdefinestyle{C-ruled}{%
 	language=C,
 	frame=L,
@@ -266,9 +266,9 @@
 \lstdefinestyle{Python-color}{%
 	language=Python,
 	basicstyle=\scriptsize,
-	otherkeywords={self},          
+	otherkeywords={self},
 	keywordstyle=\bfseries\color{NavyBlue},
-	emphstyle=\bfseries\color{DarkRed},    
+	emphstyle=\bfseries\color{DarkRed},
 	stringstyle=\color{ForestGreen}
 }
 
@@ -278,7 +278,7 @@
 %	escapeinside={(*@}{@*)},
 %	keywordstyle=\bfseries
 %}
-	
+
 
 %\lstdefinestyle{C++-color}{%
 %  	breaklines=true,
@@ -289,8 +289,8 @@
 %  	identifierstyle=\color{blue},
 %  	stringstyle=\color{orange}
 %}
-    
-	
+
+
 %\lstdefinestyle{PHP-color}{%
 %	basicstyle=\scriptsize,
 %	language=PHP,
@@ -303,8 +303,8 @@
 %  	emph            =[2]{if,and,or,else},
 %  	emphstyle       =[2]\color{Gold}
 %}
-  
-	
+
+
 %\lstdefinestyle{Latex-color}{%
 %	language=[LaTeX]{Tex},
 %    basicstyle=\scriptsize,
@@ -329,11 +329,11 @@
 
 
 %\lstdefinestyle{R-color}{%
-%	language=R,                     
+%	language=R,
 %  	basicstyle=\scriptsize,
-%  	keywordstyle=\bfseries\color{RoyalBlue}, 
+%  	keywordstyle=\bfseries\color{RoyalBlue},
 %  	commentstyle=\color{YellowGreen},
-%  	stringstyle=\color{ForestGreen}  
+%  	stringstyle=\color{ForestGreen}
 %}
 % -------------------------
 
@@ -353,7 +353,7 @@
 % COMANDOS DE USUARIO
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
- 
+
 % -------------------------
 % DEFINICIÓN DE DATOS DEL DOCUMENTO
 %\makeatletter % Estas declaraciones son precisas fuera del paquete
@@ -393,25 +393,25 @@
 	\begin{titlepage}
 		\begin{center}
 			\includegraphics[width=3.5cm]{\@escudo}\vspace{1cm}
-			
+
 			{\LARGE \textbf{\@instEdu\\[1.5\parskip]
 					\@centroEdu\\[2cm]
 					\@titulacion}}\\[0.5cm]
 			{\large \textbf{\@especialidad}}\\[1.5cm]
 			{\LARGE \textbf{\@tipoDoc}}\\[1cm]
-			
-			{\LARGE \@tituloPrimera}\\ \smallskip%			
+
+			{\LARGE \@tituloPrimera}\\ \smallskip%
 			\ifdefined\@tituloSegunda{\LARGE	\@tituloSegunda}\\[3cm]
 			\else \vspace{3cm}
 			\fi
-			
+
 			{\Large \@autor}\vfill%
 		\end{center}
-		
+
 		\begin{flushright}
 			{\Large \@fechaDef}
 		\end{flushright}
-		
+
 		\cleardoublepage
 \end{titlepage}}
 %\makeatother
@@ -427,36 +427,36 @@
 \newcommand{\portadillaTFG}{%
 	\begin{center}
 		\includegraphics[width=3.5cm]{\@escudo}\\[1.5cm]
-		
+
 		{\LARGE \textbf{\@instEdu \\[1.5\parskip]
-				\@centroEdu}}\\[0.5cm]
+				\@centroEdu}}\\[0.8cm]
 		{\Large \textbf{\@deptoEduPrimera}}\\ \smallskip%
-		\ifdefined\@deptoEduSegunda{\Large \textbf{\@deptoEduSegunda}}\\[0.5cm]
-		\else \vspace{0.5cm}
+		\ifdefined\@deptoEduSegunda{\Large \textbf{\@deptoEduSegunda}}\\[0.8cm]
+		\else \vspace{0.8cm}
 		\fi
-		{\large \textbf{\@especialidad}}\\[1.5cm]
-		
-		{\LARGE \textbf{\@tipoDoc}}\\[1cm]
-		
-		
-		{\LARGE \textbf{\@tituloPrimera}}\\ \smallskip%		
-		\ifdefined\@tituloSegunda{\LARGE \textbf{\@tituloSegunda}}\\[3cm]
-		\else \vspace{3cm}
+		{\large \textbf{\@especialidad}}\\[1.8cm]
+
+		{\LARGE \textbf{\@tipoDoc}}\\[1.3cm]
+
+
+		{\LARGE \textbf{\@tituloPrimera}}\\ \smallskip%
+		\ifdefined\@tituloSegunda{\LARGE \textbf{\@tituloSegunda}}\\[3.3cm]
+		\else \vspace{3.3cm}
 		\fi
 	\end{center}
-	
+
 	\begin{flushleft}
-		{\Large Autor(a): \@autor} \\ \bigskip%
-		{\Large Director(a): \@director} \\ \bigskip%
+		{\Large Autor: \@autor} \\ \bigskip%
+		{\Large Director: \@director} \\ \bigskip%
 		% Si hay definido un codirector se añade automáticamente la línea siguiente
-		\ifdefined\@codirector {\Large Director(a): \@codirector} \fi 
+		\ifdefined\@codirector {\Large Director: \@codirector} \fi
 	\end{flushleft}
 	\vfill%
-	
+
 	\begin{flushright}
 		{\Large \@fechaDef}
 	\end{flushright}
-	
+
 	\newpage}
 %\makeatother
 % -------------------------
@@ -474,27 +474,27 @@
 %\makeatletter
 \newcommand{\tribunalTFG}{
 	{\flushright \LARGE \textsc{Tribunal:}}
-	
+
 	\vspace*{\stretch{0.5}}
 	\hspace*{1cm}{\Large Presidente: \hrulefill}
-	
+
 	\vspace*{\stretch{0.5}}
 	\hspace*{1cm}{\Large Vocal: \hrulefill}
-	
+
 	\vspace*{\stretch{0.5}}
 	\hspace*{1cm}{\Large Secretario: \hrulefill}
-	
+
 	\vspace*{\stretch{0.5}}
 	{\flushright \LARGE \textsc{Fecha de defensa:} \hrulefill}
-	
+
 	\vspace*{\stretch{1.5}}
 	{\flushright \LARGE \textsc{Calificación:} \hrulefill}
-	
+
 	\vspace*{\stretch{2.5}}
 	\begin{center}
 		\begin{tabularx}{\linewidth}{X X X}
 			{\large \textsc{Presidente}} & {\large \textsc{Vocal}} & {\large \textsc{Secretario}}\\[2.5cm]
-			Fdo.: & Fdo.: & Fdo.:		
+			Fdo.: & Fdo.: & Fdo.:
 		\end{tabularx}
 	\end{center}
 	\cleardoublepage}
@@ -534,12 +534,12 @@
 % Todas las obras en gral. deberían presentar información relativa a la propiedad intelectual del contenido y condiciones bajo las cuales se puede distribuir y reproducir
 %\makeatletter
 \newcommand{\creditos}[2]{%
-	\null\vspace{6cm}
+	\null\vspace{15cm}
 	{\small \noindent \@titulo\\
 	\textcopyright{} \@autor, \@yearDef\\[1cm]
 	#1}\\
 	\includegraphics[width=0.15\linewidth]{#2}
-	
+
 	\clearpage
 }
 %\makeatother
@@ -558,7 +558,7 @@
 %
 % Para crear indicaciones de pulsación de teclas
 %\usetikzlibrary{shadows} % Necesario para poder crear nuevo comando de indicación de pulsación de tecla.
-%\newcommand*\tecla[1]{%   
+%\newcommand*\tecla[1]{%
 %  \tikz[baseline=(key.base)]
 %    \node[%
 %      draw,
@@ -585,7 +585,7 @@
 
 
 % -------------------------
-% DESACTIVACIÓN DE DIVISIÓN DE PALABRAS 
+% DESACTIVACIÓN DE DIVISIÓN DE PALABRAS
 % -------------------------
 % Uso: \nodivide o \nodivide[<n>]
 \newcommand{\nodivide}[1][10000]{%
@@ -694,7 +694,3 @@
 {\cleardoublepage\null \vfill\begin{center}%
 \bfseries \sffamily \abstractname \end{center}}%
 {\vfill \null}
-
-
-
-
