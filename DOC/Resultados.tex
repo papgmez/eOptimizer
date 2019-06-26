@@ -69,7 +69,7 @@ En la primera iteración se busca identificar cada una de las variables en el si
 \input{Hito1.tex}
 \section{Aplicación de lógica difusa para la determinación de los estados meteorológicos}
 \label{sec:hito2}
-En la segunda iteración se describe el procedimiento llevado a cabo para el uso de los estados meteorológicos obtenidos de la \gls{API} de \gls{AEMET}~\cite{Aemet}.\\
+En la segunda iteración se describe el procedimiento llevado a cabo para el uso de los estados meteorológicos obtenidos de la \gls{API} de \gls{AEMET}~\cite{Aemet}. Tal como se comentó en la Sección~\ref{sec:hito1}, la respuesta obtenida en cada caso a la petición \textit{requests} consta de estados meteorológicos en formato de cadena de texto.\\
 
 \textbf{Historias de Usuario}\\
 
@@ -78,7 +78,7 @@ En la segunda iteración se describe el procedimiento llevado a cabo para el uso
         \begin{tabular}{|p{0.3\linewidth}|p{0.3\linewidth}|}
           \hline
           \multicolumn{2}{|c|}{Historia de usuario}\\ \hline
-          \multicolumn{2}{|c|}{\textbf{Hallar los conjuntos difusos que se deben tratar}}\\ \hline
+          \multicolumn{2}{|c|}{\textbf{Construcción de los conjuntos difusos}}\\ \hline
           \textbf{Número:} 4 & \textbf{Prioridad:} Alta\\ \hline
           \textbf{Estimación:} 2 días & \textbf{Iteración:} 2\\ \hline
           \multicolumn{2}{|l|}{\textbf{Desarrollador responsable:} Pablo Palomino Gómez}\\ \hline
@@ -114,7 +114,7 @@ En esta iteración se describen las variables, restricciones y función objetivo
         \begin{tabular}{|p{0.3\linewidth}|p{0.3\linewidth}|}
           \hline
           \multicolumn{2}{|c|}{Historia de usuario}\\ \hline
-          \multicolumn{2}{|c|}{\textbf{Identificar las restricciones y función objetivo del PSR}}\\ \hline
+          \multicolumn{2}{|c|}{\textbf{Identificar las restricciones y definición de la función objetivo del PSR}}\\ \hline
           \textbf{Número:} 6 & \textbf{Prioridad:} Alta\\ \hline
           \textbf{Estimación:} 3 días & \textbf{Iteración:} 3\\ \hline
           \multicolumn{2}{|l|}{\textbf{Desarrollador responsable:} Pablo Palomino Gómez}\\ \hline
@@ -128,11 +128,11 @@ En esta iteración se describen las variables, restricciones y función objetivo
         \begin{tabular}{|p{0.3\linewidth}|p{0.3\linewidth}|}
           \hline
           \multicolumn{2}{|c|}{Historia de usuario}\\ \hline
-          \multicolumn{2}{|c|}{\textbf{Implementar la clase Simulation }}\\ \hline
+          \multicolumn{2}{|c|}{\textbf{Implementar una clase de la que instanciar las simulaciones}}\\ \hline
           \textbf{Número:} 7 & \textbf{Prioridad:} Alta\\ \hline
           \textbf{Estimación:} 5 días & \textbf{Iteración:} 3\\ \hline
           \multicolumn{2}{|l|}{\textbf{Desarrollador responsable:} Pablo Palomino Gómez}\\ \hline
-          \multicolumn{2}{|p{0.6\linewidth}|}{\textbf{Descripción:} Implementar la clase de la que se instanciarán objetos que representarán simulaciones. Debe estudiarse la información que ha de contener un objeto Simulation.}\\ \hline
+          \multicolumn{2}{|p{0.6\linewidth}|}{\textbf{Descripción:} Implementar la clase de la que se instanciarán objetos que representarán simulaciones. Debe estudiarse la información que se necesita en esa clase para realizar una optimización.}\\ \hline
         \end{tabular}
         \caption{Historia de usuario 7}
         \label{tab:hist7}
@@ -142,7 +142,7 @@ En esta iteración se describen las variables, restricciones y función objetivo
 \input{Hito3.tex}
 \section{Generación optimizada de energía mediante programación lineal}
 \label{sec:hito4}
-Como se comentó en la sección~\ref{sec:hito3}, este \gls{PSR} dispone de 81 restricciones. Además, no interesa cualquiera de las soluciones posibles si no que debe buscarse la solución más óptima de todas. Por lo tanto para su resolución deberá emplearme algún procedimiento lo suficientemente potente para soportar ambos requisitos, como es la \textbf{programación lineal}.\\
+Como se comentó en la Sección~\ref{sec:hito3}, este \gls{PSR} dispone de 81 restricciones. Además, no interesa cualquiera de las soluciones posibles si no que debe buscarse la solución óptima. Por lo tanto para su resolución deberá emplearse alguna metodología de programación lo suficientemente potente para soportar ambos requisitos, como es la \textbf{programación lineal}.\\
 
 \textbf{Historias de Usuario}\\
 
@@ -151,7 +151,7 @@ Como se comentó en la sección~\ref{sec:hito3}, este \gls{PSR} dispone de 81 re
         \begin{tabular}{|p{0.3\linewidth}|p{0.3\linewidth}|}
           \hline
           \multicolumn{2}{|c|}{Historia de usuario}\\ \hline
-          \multicolumn{2}{|c|}{\textbf{Hallar un medio de optimización del PSR}}\\ \hline
+          \multicolumn{2}{|c|}{\textbf{Hallar una metodología de programación para la resolución del PSR}}\\ \hline
           \textbf{Número:} 8 & \textbf{Prioridad:} Alta\\ \hline
           \textbf{Estimación:} 5 días & \textbf{Iteración:} 4\\ \hline
           \multicolumn{2}{|l|}{\textbf{Desarrollador responsable:} Pablo Palomino Gómez}\\ \hline
@@ -165,7 +165,7 @@ Como se comentó en la sección~\ref{sec:hito3}, este \gls{PSR} dispone de 81 re
         \begin{tabular}{|p{0.3\linewidth}|p{0.3\linewidth}|}
           \hline
           \multicolumn{2}{|c|}{Historia de usuario}\\ \hline
-          \multicolumn{2}{|c|}{\textbf{Implementar las restricciones identificadas anteriormente}}\\ \hline
+          \multicolumn{2}{|c|}{\textbf{Implementar el código de las restricciones del PSR}}\\ \hline
           \textbf{Número:} 9 & \textbf{Prioridad:} Alta\\ \hline
           \textbf{Estimación:} 7 días & \textbf{Iteración:} 4\\ \hline
           \multicolumn{2}{|l|}{\textbf{Desarrollador responsable:} Pablo Palomino Gómez}\\ \hline
@@ -179,11 +179,11 @@ Como se comentó en la sección~\ref{sec:hito3}, este \gls{PSR} dispone de 81 re
         \begin{tabular}{|p{0.3\linewidth}|p{0.3\linewidth}|}
           \hline
           \multicolumn{2}{|c|}{Historia de usuario}\\ \hline
-          \multicolumn{2}{|c|}{\textbf{Implementar la optimización y realizar una simulación}}\\ \hline
+          \multicolumn{2}{|c|}{\textbf{Implementar el procedimiento para resolver el PSR y realizar una simulación}}\\ \hline
           \textbf{Número:} 10 & \textbf{Prioridad:} Alta\\ \hline
           \textbf{Estimación:} 10 días & \textbf{Iteración:} 4\\ \hline
           \multicolumn{2}{|l|}{\textbf{Desarrollador responsable:} Pablo Palomino Gómez}\\ \hline
-          \multicolumn{2}{|p{0.6\linewidth}|}{\textbf{Descripción:} Implementar un método en la clase simulation llamado \textit{optimize()} que realice la optimización a través de las variables de clase, restricciones y valores necesarios. Además debe procesar el resultado en un fichero de informe con la información asociada.}\\ \hline
+          \multicolumn{2}{|p{0.6\linewidth}|}{\textbf{Descripción:} Implementar un método en la clase simulation llamado \textit{optimize()} que realice la optimización a través de las variables de clase, restricciones y valores necesarios. Además debe procesar el resultado en un fichero con la información asociada.}\\ \hline
         \end{tabular}
         \caption{Historia de usuario 10}
         \label{tab:hist10}
@@ -193,7 +193,7 @@ Como se comentó en la sección~\ref{sec:hito3}, este \gls{PSR} dispone de 81 re
 \input{Hito4.tex}
 \section{Persistencia de datos y creación de la aplicación web}
 \label{sec:hito5}
-Una vez implementada la funcionalidad de simulación, debe pensarse en añadir una persistencia al proyecto de los elementos que intervienen. Esto es necesario y primordial si se pretende crear una aplicación web para realizar simulaciones. Esta iteración es la de mayor duración debido a que implica la construcción al completo de una aplicación web.\\
+Una vez implementada la capacidad para realizar optimizaciones, debe pensarse en añadir una persistencia al proyecto de los elementos que intervienen. Esto es necesario si se pretende crear una aplicación web para realizar simulaciones. Esta iteración es la de mayor duración debido a que implica la construcción al completo de una aplicación web.\\
 
 \textbf{Historias de Usuario}\\
 
@@ -202,7 +202,7 @@ Una vez implementada la funcionalidad de simulación, debe pensarse en añadir u
         \begin{tabular}{|p{0.3\linewidth}|p{0.3\linewidth}|}
           \hline
           \multicolumn{2}{|c|}{Historia de usuario}\\ \hline
-          \multicolumn{2}{|c|}{\textbf{Investigar y elegir un \textit{framework} de base de datos para Python}}\\ \hline
+          \multicolumn{2}{|c|}{\textbf{Seleccionar un \textit{framework} de base de datos para Python}}\\ \hline
           \textbf{Número:} 11 & \textbf{Prioridad:} Media\\ \hline
           \textbf{Estimación:} 2 días & \textbf{Iteración:} 5\\ \hline
           \multicolumn{2}{|l|}{\textbf{Desarrollador responsable:} Pablo Palomino Gómez}\\ \hline
@@ -230,7 +230,7 @@ Una vez implementada la funcionalidad de simulación, debe pensarse en añadir u
         \begin{tabular}{|p{0.3\linewidth}|p{0.3\linewidth}|}
           \hline
           \multicolumn{2}{|c|}{Historia de usuario}\\ \hline
-          \multicolumn{2}{|c|}{\textbf{Implementar las rutas y lógica de la aplicación Flask}}\\ \hline
+          \multicolumn{2}{|c|}{\textbf{Implementar las rutas y la lógica de la aplicación Flask}}\\ \hline
           \textbf{Número:} 13 & \textbf{Prioridad:} Media\\ \hline
           \textbf{Estimación:} 10 días & \textbf{Iteración:} 5\\ \hline
           \multicolumn{2}{|l|}{\textbf{Desarrollador responsable:} Pablo Palomino Gómez}\\ \hline
@@ -244,7 +244,7 @@ Una vez implementada la funcionalidad de simulación, debe pensarse en añadir u
         \begin{tabular}{|p{0.3\linewidth}|p{0.3\linewidth}|}
           \hline
           \multicolumn{2}{|c|}{Historia de usuario}\\ \hline
-          \multicolumn{2}{|c|}{\textbf{Implementar la autenticación en la aplicación}}\\ \hline
+          \multicolumn{2}{|c|}{\textbf{Implementar un mecanismo de autenticación en la aplicación}}\\ \hline
           \textbf{Número:} 14 & \textbf{Prioridad:} Media\\ \hline
           \textbf{Estimación:} 7 días & \textbf{Iteración:} 5\\ \hline
           \multicolumn{2}{|l|}{\textbf{Desarrollador responsable:} Pablo Palomino Gómez}\\ \hline

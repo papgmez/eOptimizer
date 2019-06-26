@@ -1,44 +1,43 @@
 \chapter{Objetivos}
 \label{cap:Objetivo}
-A continuación se expone el objetivo de este trabajo así como una serie de objetivos parciales que se pretenden alcanzar durante el desarrollo y que toman parte en el objetivo principal.
+A continuación se expone el objetivo de este trabajo así como una serie de objetivos parciales que se pretenden alcanzar durante el desarrollo de este \gls{TFG}.
 \section{Objetivo Principal}
-El objetivo principal de este \gls{TFG} es la construcción de un sistema inteligente para la simulación de la \textbf{distribución óptima} de energía entre \textbf{elementos generadores} y \textbf{elementos consumidores} en el hogar.\\
-Las fuentes de suministro de energía (elementos generadores) son:
+El objetivo principal de este \gls{TFG} es la construcción de un sistema para la simulación de la \textbf{distribución óptima} de energía entre \textbf{elementos generadores} y \textbf{elementos consumidores} en el hogar. Las fuentes de suministro de energía (elementos generadores) consideradas son:
 \begin{itemize}
-	\item Módulos fotovoltaicos
-	\item Red eléctrica
-	\item Baterías de almacenaje
+	\item Módulos fotovoltaicos.
+	\item Red eléctrica.
+	\item Baterías de almacenaje.
 \end{itemize}
-Como fuentes de consumo (elementos consumidores) existen:
+Como fuentes de consumo (elementos consumidores) se tendrán en cuenta:
 \begin{itemize}
-	\item Consumo energético del hogar
-	\item Consumo propio del sistema que se propone
-	\item Carga de baterías de almacenaje
-	\item Venta al mercado eléctrico como particular
+	\item Consumo energético del hogar.
+	\item Consumo propio del sistema que se propone.
+	\item Carga de baterías de almacenaje.
+	\item Venta al mercado eléctrico como particular.
 \end{itemize}
-En la Figura~\ref{fig:schema} se muestra un esquema del sistema para facilitar la compresión de su funcionalidad. El sistema debe ser capaz de ajustar automáticamente en cada momento la cantidad de energía obtenida de los mencionados anteriormente con el objetivo de minimizar el gasto económico dedicado en el hogar.
+En la Figura~\ref{fig:schema} se muestra un esquema del sistema para facilitar su compresión: El sistema debe ser capaz de simular el flujo de energía entre las fuentes de entrada (\gls{EF}, \gls{ER} y \gls{EB}) y las salidas (\gls{CR}, \gls{CB}, consumo del hogar (C) y consumo propio del sistema ($ C_{int} $)). Esto se hará de manera óptima con el objetivo de minimizar el gasto económico dedicado en el hogar.
 
-\begin{figure}[!h]
+\begin{figure}[H]
 	\centering
-	\includegraphics[width=7cm]{figs/Esquema.png}
+	\includegraphics[width=10cm]{figs/System.jpg}
 	\caption{Esquema del sistema}
         \label{fig:schema}
 \end{figure}
 
 \section{Objetivos Parciales}
-A lo largo del trabajo habrá que satisfacer una serie de subobjetivos necesarios para lograr el objetivo principal tales como:
+A lo largo del trabajo habrá que satisfacer una serie de subobjetivos.
 \begin{enumerate}
 	\item \textbf{Identificación y adquisición de los datos y variables que definen el sistema:}
-	Estudio de las entradas del sistema y el grado de importancia que tiene cada una en cada situación. La información meteorológica será obtenida utilizando una \gls{API} oficial de \gls{AEMET}~\cite{Aemet}, y los datos del mercado eléctrico serán obtenidos utilizando la \gls{API} oficial e-sios de \gls{REE} S.A.~\cite{Ree}
+	Estudio de las entradas y salidas del sistema y el grado de importancia que tiene cada una en cada situación. La información meteorológica será obtenida utilizando una \gls{API} oficial de \gls{AEMET}~\cite{Aemet}, y los datos del mercado eléctrico serán obtenidos utilizando la \gls{API} oficial e-sios de \gls{REE}~\cite{Ree}.
 
-	\item \textbf{Establecer las relaciones y restricciones propias del modelo:}
-	Las variables obtenidas en el objetivo anterior estarán sujetas a unas restricciones que nos permitirán conocer las combinaciones posibles de valores, teniendo en cuenta que toda la energía generada debe ser consumida de alguna forma, ya sea por medio de venta a la red, o cargada en baterías de almacenaje en caso de superar la energía demandada por el consumo que se realiza.
+	\item \textbf{Establecer las relaciones entre las variables y restricciones que determinan el sistema:}
+	Las variables obtenidas en el objetivo anterior estarán sujetas a unas restricciones que siempre vienen determinadas por la configuración de la instalación y por las propias propiedades físicas de generación y consumo de la energía, así como de las condiciones climáticas.
 
-	\item \textbf{Añadir una inteligencia artificial para la generación optimizada de energía y dar lugar a una planificación:}
-	Una vez obtenidos los datos y variables del problema y conociendo el grado de implicación de los mismos, se creará un modelo del sistema que dará una planificación temporal de 24 horas. Esto se podrá llevar a cabo incorporando inteligencia artificial.
+	\item \textbf{Implementar la generación optimizada de energía teniendo en cuenta las relaciones y restricciones existentes:}
+	Una vez obtenidas las variables y restricciones que determinan el problema y conociendo su grado de implicación, se implementará la generación optimizada de energía en el sistema empleando algoritmos de optimización. Esto permitirá realizar simulaciones de optimización energética en un hogar y día determinados. Estas simulaciones darán como resultado la distribución energética que debería tener ese día para permitir el máximo aprovechamiento de la energía lo que redundaría en un coste económico mínimo para el hogar.
 
       \item \textbf{Hacer usable el sistema para realizar simulaciones a demanda:}
-        Una vez se disponga de la funcionalidad de realizar simulaciones, se creará una aplicación web que permitirá interactuar a usuarios con el sistema, pudiendo realizar simulaciones de un día concreto y comparar los resultados obtenidos con lo ocurrido realmente a través de la compañía eléctrica.
+        Una vez se disponga de la funcionalidad de realizar simulaciones de optimización energética, se creará una aplicación web que permitirá interactuar a los usuarios con el sistema, configurando las características de su hogar y pudiendo realizar simulaciones de un día concreto. Gracias a los resultados de estas simulaciones, los usuarios podrán comparar la distribución energética y gasto económico que se hubiera producido empleando el sistema propuesto frente a lo ocurrido realmente con el consumo exclusivo de la red eléctrica.
 
       \item \textbf{Integración del sistema en la nube:}
         Cuando se cuente con una aplicación funcional, deberá integrarse en la nube para no tener dependencia de una máquina concreta haciendo honor a la tendencía cada vez más extendida del \textit{cloud computing}.
