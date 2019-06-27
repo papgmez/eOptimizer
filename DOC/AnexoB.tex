@@ -24,13 +24,13 @@ La factoría de modelos (\textit{factory\_models}) se encarga de generar un usua
 
 Los tests de API se encargan de comprobar la funcionalidad de las APIs empleadas en el sistema (Esios y AEMET). Las peticiones son probadas ejecutando las funciones de cada módulo y comprobando si el resultado obtenido es un buffer de 24 posiciones en caso de probar el éxito, o un buffer vacío en caso de probar el fallo.
 
-Los tests de modelos comprueban la correción de cada uno de los modelos \textit{User} y \textit{Home} realizando inserciones correctas, erróneas, borrados, y demás operaciones en la base de datos de test. Para ello se configura la aplicación en modo test mediante el fichero de configuración \textit{test\_config}.
+Los tests de modelos comprueban la corrección de cada uno de los modelos \textit{User} y \textit{Home} realizando inserciones correctas, erróneas, borrados, y demás operaciones en la base de datos de test. Para ello se configura la aplicación en modo test mediante el fichero de configuración \textit{test\_config}.
 
-El módulo de test \textit{tests\_app} tiene una gran importancia, pues contiene los casos de prueba unitarios referentes al \textit{routing} y vistas de la aplicación web. Para el primer tipo, se realizan casos de prueba cuyos \textit{asserts} comprueba los códigos http de retorno de cada una de las peticiones posibles a los \textit{endpoints} de la aplicación. Para el segundo tipo, los test de vistas, se comprueba si la información mostrada en la respuesta a una petición contiene lo esperado mediante \textit{assertIn}.
+El módulo de test \textit{tests\_app} tiene una gran importancia, pues contiene los casos de prueba unitarios referentes al \textit{routing} y vistas de la aplicación web. Para el primer tipo, se realizan casos de prueba cuyos \textit{asserts} comprueban los códigos http de retorno de cada una de las peticiones posibles a los \textit{endpoints} de la aplicación. Para el segundo tipo, los test de vistas, se comprueba si la información mostrada en la respuesta a una petición contiene lo esperado mediante \textit{assertIn}.
 
 Cada módulo de test tiene dos funciones auxiliares \textit{setUp} y \textit{tearDown} cuyo objetivo es preparar la aplicación para efectuar los siguientes casos de prueba, y regenerar la base de datos de test y limpiar la basura generada en los tests.
 
-Nose cuenta con una opción \textbf{--with-coverage} que permite comprobar la cobertura de código alcanzada en cada uno de los ficheros del proyecto. Esto es importante pues si existe una gran proporción de líneas de código probadas es mucho más dificil que un error inesperado ocurra. En la tabla~\ref{tab:testcover} se muestra la cobertura alcanzada mediante la ejecución de los tests en el proyecto.
+Nose cuenta con una opción \textbf{--with-coverage} que permite comprobar la cobertura de código alcanzada en cada uno de los ficheros del proyecto. Esto es importante pues si existe una gran proporción de líneas de código probadas es mucho más dificil que un error inesperado ocurra. En la Tabla~\ref{tab:testcover} se muestra la cobertura alcanzada mediante la ejecución de los tests en el proyecto.
 \begin{table}[hp]
         \centering
         \begin{tabular}{|l|c|}
