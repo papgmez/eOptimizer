@@ -4,16 +4,16 @@ A continuación se expone el objetivo de este trabajo así como una serie de obj
 \section{Objetivo Principal}
 El objetivo principal de este \gls{TFG} es la construcción de un sistema inteligente para la simulación de la \textbf{distribución óptima} de energía entre \textbf{elementos generadores} y \textbf{elementos consumidores} en el hogar. Las fuentes de suministro de energía (elementos generadores) consideradas son:
 \begin{itemize}
-	\item Módulos fotovoltaicos.
-	\item Red eléctrica.
-	\item Baterías de almacenaje.
+	\item Módulos fotovoltaicos (\gls{EF}).
+	\item Red eléctrica (\gls{ER}).
+	\item Baterías de almacenaje (\gls{EB}).
 \end{itemize}
 Como fuentes de consumo (elementos consumidores) se tendrán en cuenta:
 \begin{itemize}
-	\item Consumo energético del hogar.
-	\item Consumo propio del sistema que se propone.
-	\item Carga de baterías de almacenaje.
-	\item Venta al mercado eléctrico como particular.
+	\item Consumo energético del hogar (C).
+	\item Consumo propio del sistema que se propone ($ C_{int} $).
+	\item Carga de baterías de almacenaje (\gls{CB}).
+	\item Venta al mercado eléctrico como particular (\gls{CR}).
 \end{itemize}
 En la Figura~\ref{fig:schema} se muestra un esquema del sistema para facilitar su compresión: El sistema debe ser capaz de simular el flujo de energía entre las fuentes de entrada (\gls{EF}, \gls{ER} y \gls{EB}) y las salidas (\gls{CR}, \gls{CB}, consumo del hogar (C) y consumo propio del sistema ($ C_{int} $)). Esto se hará de manera óptima con el objetivo de minimizar el gasto económico dedicado en el hogar.
 
@@ -40,6 +40,6 @@ A lo largo del trabajo habrá que satisfacer una serie de subobjetivos.
         Una vez se disponga de la funcionalidad de realizar simulaciones de optimización energética, se creará una aplicación web que permitirá interactuar a los usuarios con el sistema, configurando las características de su hogar y pudiendo realizar simulaciones de un día concreto. Gracias a los resultados de estas simulaciones, los usuarios podrán comparar la distribución energética y gasto económico que se hubiera producido empleando el sistema propuesto frente a lo ocurrido realmente con el consumo exclusivo de la red eléctrica.
 
       \item \textbf{Integración del sistema en la nube:}
-        Cuando se cuente con una aplicación funcional, deberá integrarse en la nube para no tener dependencia de una máquina concreta haciendo honor a la tendencía cada vez más extendida del \textit{cloud computing}.
+        Cuando se cuente con una aplicación funcional, deberá integrarse en la nube para no depender de una máquina concreta haciendo honor a la tendencía cada vez más extendida del \textit{cloud computing}.
 
 \end{enumerate}

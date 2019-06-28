@@ -114,7 +114,7 @@ Las restricciones de tipo R5 se encargan de que el consumo para cargar la bater√
   CB_{0} - EB_{0} <= capacity - initial\_level
   -EB_{0} + CB_{0} \leq capacity - initial\_level
 \end{equation}
-\begin{lstlisting}[language=Python,float=ht,caption={Restricciones del tipo 5},label={lst:restr5}]
+\begin{lstlisting}[language=Python,float=ht,caption={Restricciones del tipo R5},label={lst:restr5}]
 def generate_restriction_5(self):
     for i in range(1, 24):
         restr_coef = [0]*5*24

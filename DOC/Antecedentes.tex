@@ -1,9 +1,9 @@
 \chapter{Antecedentes}
 \label{cap:Antecedentes}
-En este capítulo se exponen los conceptos de ciencias de la computación más importantes relacionados con este trabajo y el estado del arte actual.\\
+En este capítulo se exponen los conceptos de ciencias de la computación más importantes relacionados con este trabajo y una breve revisión de trabajos similares.\\
 
 \section{Sistema Inteligente}
-Un agente inteligente es aquel que emprende la mejor acción posible ante una situación dada. El campo de la inteligencia artificial~\cite{Russ06} se centra en construir sistemas inteligentes que piensan como humanos, actúan como humanos, piensan racionalmente y actúan racionalmente. Como se puede observar, los cuatro enfoques están divididos en dos grupos: el primero se centra en los humanos y el segundo en la racionalidad. Un agente es racional si hace lo correcto en base a su conocimiento.El enfoque humano debe ser una ciencia empírica mientras que el enfoque racional se basa en una combinación de matemáticas e ingeniería. Estos cuatro enfoques de la inteligencia artificial han coexistido a lo largo de la historia.\\
+Un agente inteligente es aquel que emprende la mejor acción posible ante una situación dada. El campo de la inteligencia artificial~\cite{Russ06} se centra en construir sistemas inteligentes que piensan como humanos, actúan como humanos, piensan racionalmente y actúan racionalmente. Como se puede observar, los cuatro enfoques están divididos en dos grupos: el primero se centra en los humanos y el segundo en la racionalidad. Un agente es racional si hace lo correcto en base a su conocimiento. El enfoque humano debe ser una ciencia empírica mientras que el enfoque racional se basa en una combinación de matemáticas e ingeniería. Estos cuatro enfoques de la inteligencia artificial han coexistido a lo largo de la historia.\\
 \begin{itemize}
 \item{El enfoque de la prueba de Turing (Actuar como humanos).}\\
 
@@ -18,7 +18,7 @@ Para determinar si una máquina es capaz de pensar de forma similar a un humano 
 
   Un agente racional actúa intentando alcanzar el mejor resultado y, en caso de haber incertidumbre, el mejor resultado esperado.
 \end{itemize}
-La inteligencia artificial y por ende los sistemas inteligentes tienen aplicación en numerosos ámbitos:
+La inteligencia artificial y por ende los sistemas inteligentes tienen aplicación en numerosos ámbitos como:
 \begin{itemize}
 \item{Resolución de problemas.}
 \item{Teoría de juegos.}
@@ -65,29 +65,29 @@ Existen varios métodos de programación lineal. El más utilizado es el conocid
 \end{itemize}
 Otro método de programación lineal es el método de ramificación y acotamiento \textit{branch and bound}, el cuál divide el problema en varios subproblemas de programación lineal, acotamiento que permite obtener soluciones óptimas que se mejoran por cada subproblema.\\
 
-\section{Estado del Arte}
-Tal y como se ha comentado en el Capítulo~\ref{cap:Introduccion}, existe una gran demanda energética que desemboca en un encarecimiento de la energía eléctrica cada vez mayor. Esto hace que sea una problemática en la que se ha trabajado tanto en el ámbito comercial como en la investigación.\\
+\section{Trabajos relacionados}
+Tal y como se ha comentado en el Capítulo~\ref{cap:Introduccion}, existe una gran demanda energética que desemboca en un encarecimiento de la energía eléctrica. Esto hace que sea una problemática en la que se ha trabajado tanto en el ámbito comercial como en la investigación.\\
 
-En el ámbito de la investigación se han encontrado varios estudios relacionados. Uno de ellos es una tesis doctoral perteneciente a la Universidad de Alicante: Modelado y simulación de la distribución de energía eléctrica en sistemas genéricos consistentes en diversas fuentes y múltiples modos de transmisión~\cite{Valdi13}. El trabajo de investigación de esta tesis doctoral aborda el problema de la distribución eléctrica en sistemas genéricos con varias fuentes de energía (eólica, hidroeléctrica, solar, etc). En este caso el sistema se implementa como un sistema multiagente en el que existen, cooperan y se comunican agentes que representan las fuentes energéticas, los consumos y los servicios. En la Figura~\ref{fig:tesis} se muestra la interfaz de usuario de este sistema, donde mediante unos parámetros de configuración se realiza la distribución de energía entre cada uno de los agentes involucrados.\\
+En el ámbito de la investigación se han encontrado varios estudios relacionados. Uno de ellos es una tesis doctoral perteneciente a la Universidad de Alicante: ``Modelado y simulación de la distribución de energía eléctrica en sistemas genéricos consistentes en diversas fuentes y múltiples modos de transmisión''~\cite{Valdi13}. El trabajo de investigación de esta tesis doctoral aborda el problema de la distribución eléctrica en sistemas genéricos con varias fuentes de energía (eólica, hidroeléctrica, solar, etc). En este caso el sistema se implementa como un sistema multiagente en el que existen, cooperan y se comunican agentes que representan las fuentes energéticas, los consumos y los servicios. En la Figura~\ref{fig:tesis} se muestra la interfaz de usuario de este sistema, donde mediante unos parámetros de configuración se realiza la distribución de energía entre cada uno de los agentes involucrados.\\
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=10cm]{figs/tesis.png}
-	\caption{Formulario de optimización de la aplicación perteneciente a la tesis doctoral de la Universidad de Alicante}
+	\caption{Formulario de optimización de la aplicación perteneciente a~\cite{Valdi13}}
         \label{fig:tesis}
 \end{figure}
 
 En el ámbito comercial, existen varias aplicaciones móviles y web relacionadas con esta temática. A continuación se exponen algunas de ellas:
 \begin{itemize}
-  \item \textbf{Mi.Luz:} Se trata de una aplicación móvil disponible para iOS y Android que permite conocer el precio del KWh en cada momento del día, para que así el usuario establezca el consumo eléctrico en su hogar en las horas más baratas (Figura~\ref{fig:miluz}).
+  \item \textbf{Mi.Luz}~\cite{MiLu}: Se trata de una aplicación móvil disponible para iOS y Android que permite conocer el precio del KWh en cada momento del día, para que así el usuario establezca el consumo eléctrico en su hogar.(Figura~\ref{fig:miluz}).
     \begin{figure}[!h]
 	\centering
 	\includegraphics[width=4cm]{figs/miluz.png}
 	\caption{Dashboard de la aplicación Mi.Luz}
         \label{fig:miluz}
 \end{figure}
-\item \textbf{Área Personal - Endesa:} Endesa brinda a sus clientes un área personal donde permite consultar el consumo realizado en un día determinado en su hogar, desglosado en horas. Además permite la descarga de ficheros con el consumo del hogar. Esta funcionalidad será de utilidad en este \gls{TFG}.
-\item \textbf{Virtual Energy Advisor:} Aplicación ganadora del premio \textit{Barcelona Smart City App Hack}. Mediante la introducción de facturas del hogar y perfil, la aplicación ofrece información adaptada en tiempo real, previsiones de consumo y alertas en las horas de menor precio.
-\item \textbf{Mirubee:} Es una aplicación móvil disponible para iOS y Android. Mediante la instalación de un medidor inteligente en el cuadro eléctrico del hogar, la aplicación analiza el patrón de consumo que se produce y a partir de ello proporciona indicaciones personalizadas para ahorrar en la factura de la luz. Mirubee fue creado por una \textit{start-up} española en 2011 con el objetivo de facilitar la monitorización de energía en las casas mediante una plataforma de prestaciones profesionales (Figura~\ref{fig:mirubee}).
+\item \textbf{Área Personal - Endesa}~\cite{End}: Endesa brinda a sus clientes un área personal donde permite consultar el consumo realizado en un día determinado en su hogar, desglosado en horas. Además permite la descarga de ficheros con el consumo del hogar. Esta funcionalidad será de utilidad en este \gls{TFG}.
+\item \textbf{Virtual Energy Advisor}~\cite{Vea}: Aplicación ganadora del premio \textit{Barcelona Smart City App Hack}. Mediante la introducción de facturas del hogar y perfil, la aplicación ofrece información adaptada en tiempo real, previsiones de consumo y alertas en las horas de menor precio.
+\item \textbf{Mirubee}~\cite{MiRu}: Es una aplicación móvil disponible para iOS y Android. Mediante la instalación de un medidor inteligente en el cuadro eléctrico del hogar, la aplicación analiza el patrón de consumo que se produce y a partir de ello proporciona indicaciones personalizadas para ahorrar en la factura de la luz. Mirubee fue creado por una \textit{start-up} española en 2011 con el objetivo de facilitar la monitorización de energía en las casas mediante una plataforma de prestaciones profesionales (Figura~\ref{fig:mirubee}).
   \begin{figure}[!h]
 	\centering
 	\includegraphics[width=4cm]{figs/mirubee.png}
