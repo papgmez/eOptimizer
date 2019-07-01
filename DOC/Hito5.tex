@@ -52,7 +52,7 @@ class Users(Base):
         return (u'<{self.__class__.__name__}: {self.id}, name= {self.name} {self.lastname},' \
                 ' email= {self.email}>'.format(self=self))
 \end{lstlisting}
-\item \textbf{Modelo Home}
+\item \textbf{Modelo Home}\\
 La tabla \textit{Homes} representa la casa de cada usuario. Los atributos que tendrá cada registro de esta tabla en la base de datos son los siguientes:
 \begin{itemize}
 \item \textit{city\_code}: Atributo de tipo String que hace referencia a la ciudad donde se encuentra la casa. Esto es necesario a la hora de realizar las llamadas a la API AEMET~\cite{Aemet} pues se debe proporcionar dicho código, por lo tanto este atributo no puede ser nulo.
@@ -95,7 +95,7 @@ A partir de esta integración, se permite realizar simulaciones dependientes de 
 El siguiente paso tras la integración de persistencia y la implementación de la lógica o \textit{backend} es crear una aplicación web siguiendo la arquitectura \textbf{cliente-servidor}~\cite{Goer04}.\\
 
 En la arquitectura Cliente-Servidor cada una de las máquinas que realiza una demanda de información al sistema toma el rol de cliente, y la que responde a estas demandas toma el rol de servidor (Figura~\ref{fig:client-server}). Esto permitirá que exista un servidor el cuál realiza simulaciones a petición de clientes, de los que previamente se ha almacenado la información necesaria en la base de datos mediante un registro.
-\begin{figure}[!h]
+\begin{figure}[H]
             \centering
             \includegraphics[width=11cm]{figs/client-server.png}
             \caption{Esquema Cliente-Servidor}
@@ -103,7 +103,7 @@ En la arquitectura Cliente-Servidor cada una de las máquinas que realiza una de
 \end{figure}
 
 El nombre que tomará dicha aplicación web será \textbf{eOptimizer}, haciendo referencia a su objetivo principal: realizar simulaciones por medio de una optimización. En la Figura~\ref{fig:logo} se muestra el logo creado para la aplicación. Dicho logo ha sido diseñado por el propio alumno y se inspira en el objetivo de eficiencia energética que tiene el sistema.
-\begin{figure}[!h]
+\begin{figure}[H]
             \centering
             \includegraphics[width=4cm]{figs/logo.png}
             \caption{Logo de eOptimizer}
@@ -125,7 +125,7 @@ Lo primero que debe hacer un cliente es identificarse, pues en el servidor debe 
 
 Una vez haya introducido la información de usuario para su registro, esta se insertará en la base de datos y si todo va correctamente, el siguiente paso es introducir la información asociada a su hogar, que será empleada para realizar sus simulaciones. Cuando se haya introducido se insertará en la base de datos, teniendo almacenada toda la información necesaria del usuario en curso, por lo que se permitiría el acceso al índice o \textit{dashboard} de la web.\\
 
-Desde el \textit{dashboard} un usuario podrá realizar simulaciones, introduciendo los datos necesarios para la misma, como son la fecha que desea simular y el fichero de consumo de Endesa de ese día. Si esta información es correcta, el \textit{backend} realizará la optimización obteniendo previamente la información de las APIs AEMET y Esios relativa al día de simulación y mostrando los resultados obtenidos al cliente.\\
+Desde el \textit{dashboard} un usuario podrá realizar simulaciones, introduciendo los datos necesarios para la misma, como son la fecha que desea simular y el fichero de consumo de Endesa de ese día. Si esta información es correcta, el \textit{backend} realizará la optimización obteniendo previamente la información de las APIs AEMET y e-sios relativa al día de simulación y mostrando los resultados obtenidos al cliente.\\
 
 En la Figura~\ref{fig:diagrama-flujo} se muestra el diagrama de flujo de la aplicación que permite visualizar todo el funcionamiento de manera mas sencilla. Nótese que en color azul se muestran la entrada y salida del flujo, en color morado se muestran las decisiones, en color amarillo los datos de entrada, en color naranja los procesos y en color verde el acceso a la base de datos.\\
 \begin{figure}[H]

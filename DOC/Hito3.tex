@@ -36,34 +36,34 @@ Las restricciones estarán definidas en función de dichas variables y cada solu
 \subsection{Restricciones del PSR}
 A continuación se determinan las restricciones a las que está sometido el modelo en una hora t:
 \begin{itemize}
-\item \textbf{Toda la energía generada debe ser consumida} (Ecuación~\ref{eq:restr1}).\\ \\Hace referencia al principio básico de la energía, la energía que se produce se consume de un modo u otro, no es posible que la suma de las variables correspondientes a la generación de energía (EB, ER y EF) sea distinta a la suma de las variables que hacen referencia al consumo de energía (CR, CB, $ C_{int} $ y C). Esto debe producirse en cada una de las horas de la simulación. Así, tenemos una restricción lineal y n-aria correspondiente a las 24 horas correspondientes a la simulación de una optimización, por lo que estas restricciones a efectos prácticos es tomada como 24 restricciones a cumplir.
+\item \textbf{Toda la energía generada debe ser consumida} (Ecuación~\ref{eq:restr1}).\\ \\Hace referencia al principio básico de la energía, la energía que se produce se consume de un modo u otro, no es posible que la suma de las variables correspondientes a la generación de energía (EB, ER y EF) sea distinta a la suma de las variables que hacen referencia al consumo de energía (CR, CB, $ C_{int} $ y C). Esto debe producirse en cada una de las horas de la simulación. Así, tenemos una restricción n-aria correspondiente a las 24 horas correspondientes a la simulación de una optimización, por lo que estas restricciones a efectos prácticos es tomada como 24 restricciones a cumplir.
 \begin{equation}
         \label{eq:restr1}
-        \forall_{i} \in \left\{ 0, 1, 2, ..., 24 \right\} : EF_{i}+ER_{i}+EB_{i} = CR_{i}+CB_{i}+C_{int}+C
+        \forall_{t} \in \left\{ 0, 1, 2, ..., 23 \right\} : EF_{t}+ER_{t}+EB_{t} = CR_{t}+CB_{t}+C_{int}+C
 \end{equation}
 
 \item \textbf{No se puede producir energía fotovoltaica durante la noche} (Ecuación~\ref{eq:restr2}).\\ \\Algo obvio, pues sin luz solar la energía fotovoltaica no se genera. Esto no está controlado en la API AEMET, ya que devuelve los mismos valores independientemente de si existe luz solar, por lo que debe manejarse mediante una restricción. Para este trabajo las horas de la noche serán las pertenecientes al intervalo temporal desde las 22:00 hasta las 7:00. Como posible trabajo futuro, podría determinarse este intervalo en función de la estación del año. Se trata de una restricción unaria, donde para ciertos valores de t, EF debe ser 0. Es por esto que esta restricción a efectos prácticos es tomada como nueve restricciones (las nueve horas de noche definidas anteriormente)
 \begin{equation}
         \label{eq:restr2}
-       \forall_{i} \in \left\{ 22, 23, 0, 1, 2, 3, 4, 5, 6, 7 \right\} : EF_{i} = 0
+       \forall_{t} \in \left\{ 22, 23, 0, 1, 2, 3, 4, 5, 6, 7 \right\} : EF_{t} = 0
 \end{equation}
 
-\item \textbf{La energía fotovoltaica generada no puede ser mayor que la máxima energía fotovoltaica en t} (Ecuación~\ref{eq:restr3}).\\ \\No se puede superar el umbral de generación de energía fotovoltaica establecido por la potencia nominal máxima de esa hora t, pues se estaría violando la capacidad real de producción de los módulos fotovoltaicos del sistema. Es una restricción lineal unaria, ya que la energía fotovoltaica máxima de cada hora t es constante, pues como se comentó anteriormente, sólo es dependiente del número de módulos fotovoltaicos y la situación meteorológica (obtenida de la API AEMET). A efectos prácticos, esta restricción es tomada como 24 restricciones a cumplir referentes a las 24 horas de la simulación.
+\item \textbf{La energía fotovoltaica generada no puede ser mayor que la máxima energía fotovoltaica en t} (Ecuación~\ref{eq:restr3}).\\ \\No se puede superar el umbral de generación de energía fotovoltaica establecido por la potencia nominal máxima de esa hora t, pues se estaría violando la capacidad real de producción de los módulos fotovoltaicos del sistema. Es una restricción unaria, ya que la energía fotovoltaica máxima de cada hora t es constante, pues como se comentó anteriormente, sólo es dependiente del número de módulos fotovoltaicos y la situación meteorológica (obtenida de la API AEMET). A efectos prácticos, esta restricción es tomada como 24 restricciones a cumplir referentes a las 24 horas de la simulación.
 \begin{equation}
         \label{eq:restr3}
-        \forall_{i} \in \left\{ 0, 1, 2, ..., 24 \right\} : EF_{i} \leq EF_{i}^{max}
+        \forall_{t} \in \left\{ 0, 1, 2, ..., 23 \right\} : EF_{t} \leq EF_{t}^{max}
 \end{equation}
 
-\item \textbf{La energía obtenida de la batería no puede ser mayor que el nivel de batería actual teniendo en cuenta la profundidad máxima de descarga} (Ecuación~\ref{eq:restr4}).\\ \\Básicamente no se puede obtener una cantidad de energía mayor a la posible en esa hora t, que vendrá determinada por la diferencia entre el  nivel de carga disponible al comienzo de esa hora y la capacidad máxima de la batería por la profundidad de descarga (50\%), para evitar daños en su ciclo de vida útil. Restricción unaria, pues solo involucra la variable EB, ya que el resto de elementos de la restricción son constantes en una hora t (nivel de carga actual, capacidad máxima de la batería y profundida de descarga). Al igual que las restricciones anteriores es lineal y a efectos prácticos representa 24 restricciones a cumplir.
+\item \textbf{La energía obtenida de la batería no puede ser mayor que el nivel de batería actual teniendo en cuenta la profundidad máxima de descarga} (Ecuación~\ref{eq:restr4}).\\ \\Básicamente no se puede obtener una cantidad de energía mayor a la posible en esa hora t, que vendrá determinada por la diferencia entre el  nivel de carga disponible al comienzo de esa hora y la capacidad máxima de la batería por la profundidad de descarga (50\%), para evitar daños en su ciclo de vida útil. Restricción unaria, pues solo involucra la variable EB, ya que el resto de elementos de la restricción son constantes en una hora t (nivel de carga actual, capacidad máxima de la batería y profundida de descarga). Al igual que las restricciones anteriores a efectos prácticos representa 24 restricciones a cumplir.
 \begin{equation}
         \label{eq:restr4}
-        \forall_{i} \in \left\{ 0, 1, 2, ..., 24 \right\} : EB_{i} \leq nivel_{i-1} - (capacidad_{max} \cdot profundidad_{descarga})
+        \forall_{t} \in \left\{ 0, 1, 2, ..., 23 \right\} : EB_{t} \leq nivel_{t-1} - (capacidad_{max} \cdot profundidad_{descarga})
 \end{equation}
 
 \item \textbf{El consumo para cargar la batería no puede ser mayor que la capacidad de la misma menos el nivel restante después de t} (Ecuación~\ref{eq:restr5}).\\Parecido a la restricción anterior, en esta se modela el hecho de cargar la batería (CB) en cada hora t, el cuál está condicionado por la cantidad de batería restante para completar la carga (100\%), obtenido mediante la diferencia entre la capacidad máxima de la misma y lo consumido en la hora t (nivel de carga antes de comenzar la hora t menos la energía consumida de batería en t). Restricción binaria pues involucra tanto el consumo de batería (CB) como la energía de batería (EB), siendo la capacidad máxima de la batería y el nivel de carga en t constantes. Es tomado como 24 restricciones ya que debe cumplirse en cada una de las 24 horas de una simulación.
 \begin{equation}
         \label{eq:restr5}
-        \forall_{i} \in \left\{ 0, 1, 2, ..., 24 \right\} : CB_{i} \leq capacidad_{max}- (nivel_{i-1} - EB_{i})
+        \forall_{t} \in \left\{ 0, 1, 2, ..., 23 \right\} : CB_{t} \leq capacidad_{max}- (nivel_{t-1} - EB_{t})
 \end{equation}
 
 \end{itemize}
@@ -71,7 +71,7 @@ A continuación se determinan las restricciones a las que está sometido el mode
 Por lo tanto, a efectos prácticos, el PSR tiene 81 restricciones que satisfacer para determinar los valores de las variables.
 
 \subsection{Función Objetivo}
-Cómo se ha comentado antes, un problema de satisfacción de restricciones está determinado por un conjunto de variables y sus dominios, un conjunto de restricciones sobre esas variables y un objetivo. Por el momento se dispone de los dos primeros, por lo que en este apartado se procede a determinar el último, \textbf{la función objetivo}. Un PSR que cuenta únicamente con variables y restricciones para esas variables podrá tener numerosas soluciones, representadas como una tupla con valores para cada variable. Añadiendo un objetivo al PSR se consigue unificar la solución, pues de todas esas soluciones, sólo una optimizará un objetivo concreto, y contendrá los valores óptimos de cada variable para ello. Como se ha comentado a lo largo del desarrollo de este \gls{TFG}, el objetivo del problema es \textbf{minimizar el gasto económico} producido mediante la optimización de energía en cada simulación de 24 horas, por lo tanto se buscarán valores de las variables que, además de satisfacer el conjunto de restricciones, sean óptimos para que el gasto económico sea mínimo. Este gasto económico es dependiente del precio en la hora t de cada una de las energías que representan las variables. De estos precios se habló y se implementó la forma de obtenerlos en la Sección~\ref{sec:hito1}. Sus valores son constantes en cada hora t. Dicho esto, la función objetivo a minimizar está formada por el sumatorio de los costos económicos en cada hora t, por lo que representa el gasto económico de toda la simulación (Función~\ref{eq:funcionObjetivo}).
+Como se ha comentado antes, un problema de satisfacción de restricciones está determinado por un conjunto de variables y sus dominios, un conjunto de restricciones sobre esas variables y un objetivo. Por el momento se dispone de los dos primeros, por lo que en este apartado se procede a determinar el último, \textbf{la función objetivo}. Un PSR que cuenta únicamente con variables y restricciones para esas variables podrá tener numerosas soluciones, representadas como una tupla con valores para cada variable. Añadiendo un objetivo al PSR se consigue unificar la solución, pues de todas esas soluciones, sólo una optimizará un objetivo concreto, y contendrá los valores óptimos de cada variable para ello. Como se ha comentado a lo largo del desarrollo de este \gls{TFG}, el objetivo del problema es \textbf{minimizar el gasto económico} producido mediante la optimización de energía en cada simulación de 24 horas, por lo tanto se buscarán valores de las variables que, además de satisfacer el conjunto de restricciones, sean óptimos para que el gasto económico sea mínimo. Este gasto económico es dependiente del precio en la hora t de cada una de las energías que representan las variables. De estos precios se habló y se implementó la forma de obtenerlos en la Sección~\ref{sec:hito1}. Sus valores son constantes en cada hora t. Dicho esto, la función objetivo a minimizar está formada por el sumatorio de los costos económicos en cada hora t, por lo que representa el gasto económico de toda la simulación (Función~\ref{eq:funcionObjetivo}).
 \begin{equation}
 \label{eq:funcionObjetivo}
 \sum_{t=0}^{23} EF_{t}P_{t}^{F} + ER_{t}P_{t}^{R_{PVPC}} + EB_{t}P_{t}^{B_{out}} - CB_{t}P_{t}^{B_{in}} - CR_{t}P_{t}^{R_{SPOT}}
@@ -88,7 +88,7 @@ Siendo:
 En cada simulación se buscará que el valor de $ f(x) $ sea el menor posible y la solución al PSR en ese caso son los valores que deben tomar las variables para hacerlo posible.
 
 \subsection{Implementación de la clase de la que instanciar las simulaciones}
-Vistos los apartados anteriores, es la hora de implementar una clase para representar cada simulación y poder crear objetos que representan una simulación concreta. Esta clase se llama \textbf{Simulation} (Figura~\ref{fig:simulation} y está disponible en el módulo simulation. Los atributos de la clase Simulation serán las variables de control que tendrá cada objeto correspondiente a una simulación:
+Vistos los apartados anteriores, es la hora de implementar una clase para representar cada simulación y poder crear objetos que representan una simulación concreta. Esta clase se llama \textbf{Simulation} (Figura~\ref{fig:simulation}) y está disponible en el módulo simulation. Los atributos de la clase Simulation serán las variables de control que tendrá cada objeto correspondiente a una simulación:
 \begin{itemize}
         \item start: variable de control relativa a la fecha de inicio del día que se desea optimizar. Es de tipo datetime.
         \item end: variable de control relativa a la fecha de fin del día que se desea simular. Al igual que start, es una variable de formato fecha (datetime).
@@ -100,7 +100,7 @@ Vistos los apartados anteriores, es la hora de implementar una clase para repres
         \item battery\_capacity: variable de control referente a la capacidad total de la batería. Variable de tipo float.
         \item battery\_level: variable de control que representa el nivel inicial de carga de la batería. Variable de tipo float.
         \item discharge\_depth: variable de control referente a la profundidad de descarga permitida en la batería. Variable de tipo float.
-        \item max\_ef\_buffer: Más que una variable de control, representa los 24 valores máximos posibles de energía fotovoltaica, obtenidos de la API AEMET y el número de módulos fotovoltaicos, por tanto, se trata de una lista de 24 valores.
+        \item max\_ef\_buffer: más que una variable de control, representa los 24 valores máximos posibles de energía fotovoltaica, obtenidos de la API AEMET y el número de módulos fotovoltaicos, por tanto, se trata de una lista de 24 valores.
         \item c\_int: referente a la variable de control del consumo interno del sistema. Variable de tipo float.
         \item c: referente al consumo del hogar, lista de los 24 valores con el consumo del hogar en las 24 horas de la simulación.
 

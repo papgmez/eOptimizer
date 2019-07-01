@@ -33,14 +33,9 @@ La programación por restricciones es una metodología software que permite reso
 	\item Un conjunto de restricciones, que permite representar las posibles combinaciones de valores válidos de las variables.
 	\item La solución al \gls{PSR} será la asignación de valores a las variables de forma que se satisfacen las restricciones y se alcanza el objetivo, representado típicamente como una función a optimizar.
 \end{itemize}
-Las restricciones se caracterizan por su \textbf{aridad}, que viene a ser el número de variables que involucra. Pudiendo ser unarias, si solo involucran una variable; binarias, si involucran dos variables; y n-arias, si involucran más de dos variables. Además, existe un tipo de restricción adicional, como son las \textbf{restricciones lineales}, tal y como se representa en la Ecuación~\ref{eq:rest_lineal}.
-\begin{equation}
-  \label{eq:rest_lineal}
-  \forall_{i} \in A :  a_{i}x_{i} (<,\leq,=,\geq,>,\neq) c
-\end{equation}
-siendo a el coeficiente de la variable x, c constante, y A el conjunto de valores desde i hasta n. Esto se traduce como n-i restricciones, pues una restricción lineal realmente es el conjunto de restricciones de ese tipo desde i hasta n.\\
+Las restricciones se caracterizan por su \textbf{aridad}, que viene a ser el número de variables que involucra. Pudiendo ser unarias, si solo involucran una variable; binarias, si involucran dos variables; y n-arias, si involucran más de dos variables.\\
 \section{Programación Lineal}
-La programación lineal~\cite{Loom64} tiene como objetivo optimizar una función lineal cuyas variables están sujetas a un conjunto de restricciones lineales.
+La programación lineal~\cite{Loom64} tiene como objetivo optimizaAdiooor una función lineal cuyas variables están sujetas a un conjunto de restricciones.
 Se trata de un campo de la matemática muy efectivo para la resolución de este tipo de problemas. Históricamente, el concepto de programación lineal debe su nombre a John Von Neumann (1947), uno de los matemáticos más importantes del siglo XX gracias a sus contribuciones en las ciencias de la computación; y a George Dantzig (1947), cuyo trabajo intentaba asignar 70 puestos de trabajo a 70 personas mediante programación lineal. Las permutaciones necesarias para la asignación óptima de dichos puestos era igual al factorial de 70 (70!). Curiosamente, mediante programación lineal el problema se resuelve de manera eficiente pues el número de combinaciones se reduce en su mayor parte. La programación lineal puede ser aplicable a numerosos problemas comunes tales como:
 \begin{itemize}
 \item Asignación de horarios a profesores en un centro educativo para obtener la mayor productividad a la par que comodidad para profesor y alumno.
