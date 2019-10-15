@@ -3,7 +3,7 @@
 # Fichero de Constantes
 # =====================
 # DB2 IBM Cloud
-IBM_USER = 'dwm91559'
+IBM_USER = 'xkg81414'
 IBM_HOSTNAME = 'dashdb-txn-sbox-yp-lon02-02.services.eu-gb.bluemix.net'
 IBM_PORT = '50000'
 IBM_DB = 'BLUDB'
