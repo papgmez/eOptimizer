@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" type="image/png" href="{{ url_for('static', filename='img/favicon.png') }}"/>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/form-elements.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <title>e-Optimizer</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-dark bg-navbar">
+      <a class="navbar-brand" href="{{ url_for('index') }}">
+	<img src="static/img/logo_white.png" width="30" height="30" class="d-inline-block align-top" alt="">
+	&nbsp e-Optimizer
+      </a>
+    </nav>
+    {% block body %}{% endblock %}
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <div class="footer-border"></div>
+            <div class="column_footer_left">
+	      <br/ >
+		<br/ >Trabajo Fin de Grado<br/ ><br>
+		    <b>Sistema Inteligente para<br/ >
+			Gestión y Optimización de Energía<br/ ></b>
+	    </div>
+	    <div class="column_footer">
+	      <br/ >
+		<p>
+		  <a href="https://github.com/pablopalomino96/TFG_PalominoGomez_Pablo.git"><img src="static/img/GitHub-Mark-Light-32px.png" alt=""></a>
+		  <br>
+		</p>
+		<text font-family="Roboto"><b>@e-Optimizer 2019</b></text><br/ >
+		  Pablo Palomino Gómez<br />
+		  Pablo.Palomino1@alu.uclm.es
+	    </div>
+	    <div class="column_footer_right">
+	      <p>
+		<br>
+		<a href="http://www.uclm.es"><img src="static/img/logoUCLM.png" alt=""></a>
+		<br><br>
+		<strong>Escuela Superior de Informática</strong><br />
+		Paseo de la Universidad, 4<br />
+		13071,
+		Ciudad Real<br />
+	      </p>
+	    </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='js/eoptimizer.js') }}"></script>
+  </body>
+</html>

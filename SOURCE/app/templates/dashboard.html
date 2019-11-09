@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block body %}
+<div class="top-content">
+  <div class="row">
+    <div class="col-8" style="text-align: left">
+	  <h1>&nbsp Dashboard</h1>
+    </div>
+    <div class="col-2" style="text-align: right ; color:#FFFFFF">
+      <br>
+      {{ user.name }} {{ user.lastname }} <br />
+      <strong>{{ user.email }}</strong>
+    </div>
+    <div class="col-2" style="text-align: left">
+      <br>
+      <a href="{{ url_for('do_logout') }}" class="btn btn-outline-light">Close session</a>
+    </div>
+  </div>
+  <div class="inner-bg">
+    <div class="container">
+      <div class="row">
+	<div class="col-5" style="text-align: center">
+	  <br><br>
+	  <h2>Your Home Data</h2>
+	  <br>
+	  <ul class="list-group" style="color: #000000">
+	    <li class="list-group-item d-flex justify-content-between align-items-center">
+	      <img src="static/img/pv_icon.png" style="width: 10%; height: 10%" alt=""/>
+	      Number of solar modules
+	      <span class="badge badge-primary badge-pill">{{ home.pv_modules }}</span>
+	    </li>
+	    <li class="list-group-item d-flex justify-content-between align-items-center">
+	      <img src="static/img/dollar_icon.png" style="width: 7%; height: 7%" alt=""/>
+	      Years to amortize modules
+	      <span class="badge badge-primary badge-pill">{{ home.amortization_years_pv }}</span>
+	    </li>
+	     <li class="list-group-item d-flex justify-content-between align-items-center">
+	      <img src="static/img/battery_icon.png" style="width: 8%; height: 8%" alt=""/>
+	      Battery capacity (KW)
+	      <span class="badge badge-primary badge-pill">21</span>
+	    </li>
+	    <li class="list-group-item d-flex justify-content-between align-items-center">
+	      <img src="static/img/dollar_icon.png" style="width: 7%; height: 7%" alt=""/>
+	      Years to amortize battery
+	      <span class="badge badge-primary badge-pill">{{ home.amortization_years_bat }}</span>
+	    </li>
+	  </ul>
+	</div>
+	<div class="col-1 middle-border"></div>
+	<div class="col-1"></div>
+	<div class="col-5" style="text-align: center">
+	  <div class="form-box">
+	    <div class="form-top">
+	      <div class="form-top-left">
+		<h3>New Simulation</h3>
+		<p>Create a simulation of a specific day and see the differences
+		  between actual consumption and <strong>e-Optimizer</strong> consumption</p>
+	      </div>
+	      <div class="form-top-right">
+		<img src="static/img/logo_white.png" style="width: 50%; height: 50%" alt="">
+	      </div>
+	    </div>
+	    <div class="form-bottom">
+	      <form action="{{ url_for('simulation') }}" method=post enctype=multipart/form-data>
+		<div class="form-group" style="color: #FFFFFF">
+		  <label for="form-start-date" class="form-label">&nbsp Simulation Date&nbsp&nbsp&nbsp &nbsp</label>
+		  <input class="col-7 col-form-control" type="date" name="form-start-date" id="form-start-date" max={{ max_date }}>
+		</div>
+		<div class="form-group">
+		  <div class="col-12 custom-file">
+		    <input type="file" class="custom-file-input" name="consumption-file" id="consumption-file">
+		    <label class="custom-file-label" for="consumption-file">Endesa consumption file ...</label>
+		  </div>
+		</div>
+		{% if errors %}
+		{% for error in errors %}
+		<div class="alert alert-danger" role="alert">
+		  {{ error }}
+		</div>
+		{% endfor %}
+		{% endif %}
+		<input class="btn btn-primary" type="submit" value="Start Simulation">
+	      </form>
+	    </div>
+	  </div>
+	</div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

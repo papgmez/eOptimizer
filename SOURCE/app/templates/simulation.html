@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+{% block body %}
+<div class="top-content">
+  <div class="row">
+    <div class="col-8" style="text-align: left">
+      <h1>&nbsp Simulation Report</h1>
+    </div>
+    <div class="col-2" style="text-align: right ; color:#FFFFFF">
+      <br>
+      {{ user.name }} {{ user.lastname }} <br />
+      <strong>{{ user.email }}</strong>
+    </div>
+    <div class="col-2" style="text-align: left">
+      <br>
+      <a href="{{ url_for('index') }}" class="btn btn-outline-light">Dashboard</a>
+    </div>
+  </div>
+  <div class="inner-bg">
+    <div class="container">
+      <div clas="row">
+	<div class="col-12">
+	  <div class="alert alert-success alert-dismissible fade show" role="alert">
+	    <h4 class="alert-heading">Simulation {{ simulation['date'] }} completed!</h4>
+	    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	      <span aria-hidden="true">&times;</span>
+	    </button>
+	    <p>The simulation was successful and results obtained are shown below.</p>
+	    <hr>
+	    <p class="mb-0">The day cost with e-Optimizer would have been <strong>{{ simulation['result'] }} €</strong></p>
+	  </div>
+	</div>
+	<div clas="row">
+	  <div class="col-12">
+	    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+	      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+	      </button>
+	      <p class="mb-0">The day cost with only grid energy was <strong>{{ simulation['comparable_result'] }} €</strong></p>
+	    </div>
+	  </div>
+	</div>
+      </div>
+    </div>
+    <div class="table-container">
+      <div id="accordion">
+	<h1>
+	  <img src="static/img/logo_white.png" style="width: 2.5%; height: 2.5%" alt=""/>
+	  <strong>&nbsp Energy Distribution &nbsp</strong>&nbsp &nbsp &nbsp
+	  <a class="btn btn-outline-light btn-lg" id="headingTable" data-toggle="collapse" data-target="#collapseTable" aria-expanded="true" aria-controls="collapseTable">Show / Hide</a></h1>
+	<br>
+	<div id="collapseTable" class="collapse" aria-labelledby="headingTable" data-parent="#accordion">
+	  <div class="row">
+	    <div class="col-12">
+	      <table class="table table-striped table-dark" name="simulation-results">
+		<thead>
+		  <tr>
+		    <th scope="col">Hour</th>
+		    <th scope="col" data-toggle="tooltip" data-placement="top" title="Photovoltaic energy">EF</th>
+		    <th scope="col" data-toggle="tooltip" data-placement="top" title="Power grid energy">ER</th>
+		    <th scope="col" data-toggle="tooltip" data-placement="top" title="Battery energy">EB</th>
+		    <th scope="col" data-toggle="tooltip" data-placement="bottom" title="Home Consumption">C</th>
+		    <th scope="col" data-toggle="tooltip" data-placement="bottom" title="Energy discharged into the grid">CR</th>
+		    <th scope="col" data-toggle="tooltip" data-placement="bottom" title="Energy to charge the battery">CB</th>
+		    <th scope="col" data-toggle="tooltip" data-placement="bottom" title="System consumption">C int</th>
+		    <th scope="col">Energy Generated</th>
+		    <th scope="col">Energy Consumed</th>
+		  </tr>
+		</thead>
+		<tbody>
+		  {% for i in range(0, 24) %}
+		  <tr>
+		    <th scope="row">{{ i }}:00</th>
+		    <td>{{ simulation['hours'][i]['EF'] }} Wh</td>
+		    <td>{{ simulation['hours'][i]['ER'] }} Wh</td>
+		    <td>{{ simulation['hours'][i]['EB'] }} Wh</td>
+		    <td>{{ simulation['hours'][i]['C'] }} Wh</td>
+		    <td>{{ simulation['hours'][i]['CR'] }} Wh</td>
+		    <td>{{ simulation['hours'][i]['CB'] }} Wh</td>
+		    <td>{{ simulation['hours'][i]['C_int'] }} Wh</td>
+		    <td>
+		      <div class="progress">
+			<div class="progress-bar progress-bar-striped progress-bar-animated bg-success" name="progress-bar-ef" role="progressbar" style="width: {{ simulation['hours'][i]['EF_rate'] }}%" data-toggle="tooltip" data-placement="top" title="Photovoltaic energy"> <strong>EF</strong></div>
+			<div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" name="progress-bar-er" role="progressbar" style="width: {{ simulation['hours'][i]['ER_rate'] }}%" data-toggle="tooltip" data-placement="top" title="Power grid energy"> <strong>ER</strong></div>
+			<div class="progress-bar progress-bar-striped progress-bar-animated" name="progress-bar-eb" role="progressbar" style="width: {{ simulation['hours'][i]['EB_rate'] }}%" data-toggle="tooltip" data-placement="top" title="Battery energy"><strong>EB</strong></div>
+		      </div>
+		    </td>
+		    <td>
+		      <div class="progress">
+			<div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" name="progress-bar-c" role="progressbar" style="width: {{ simulation['hours'][i]['C_rate'] }}%" data-toggle="tooltip" data-placement="bottom" title="Home Consumption"><strong>C</strong></div>
+			<div class="progress-bar progress-bar-striped progress-bar-animated" name="progress-bar-cr" role="progressbar" style="width: {{ simulation['hours'][i]['CR_rate'] }}%" data-toggle="tooltip" data-placement="bottom" title="Energy discharged into the grid"><strong>CR</strong></div>
+			<div class="progress-bar progress-bar-striped progress-bar-animated bg-success" name="progress-bar-cb" role="progressbar" style="width: {{ simulation['hours'][i]['CB_rate'] }}%" data-toggle="tooltip" data-placement="bottom" title="Energy to charge the battery"><strong>CB</strong></div>
+			<div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" name="progress-bar-cint" role="progressbar" style="width: {{ simulation['hours'][i]['Cint_rate'] }}%" data-toggle="tooltip" data-placement="bottom" title="System consumption"><strong>Cint</strong></div>
+		      </div>
+		    </td>
+		  </tr>
+		  {% endfor %}
+		</tbody>
+	      </table>
+	    </div>
+	  </div>
+	</div>
+	<h1>
+	  <img src="static/img/euro_icon.png" style="width: 2%; height: 2%" alt=""/>
+	  <strong>&nbsp  &nbsp Prices Values &nbsp </strong>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+	  <a class="btn btn-outline-light btn-lg" id="headingGraph" data-toggle="collapse" data-target="#collapseGraph" aria-expanded="false" aria-controls="collapseGraph">Show / Hide</a></h1>
+	<br>
+	<div id="collapseGraph" class="collapse" aria-labelledby="headingGraph" data-parent="#accordion">
+	  <div class="row">
+	    <div class="col-12">
+	      <table class="table table-striped table-dark" name="simulation-prices">
+		<thead>
+		  <tr>
+		    <th scope="col">Hour</th>
+		    <th scope="col" data-toggle="tooltip" data-placement="top" title="Price of generate photovoltaic energy">EF price</th>
+		    <th scope="col" data-toggle="tooltip" data-placement="top" title="Price of power grid energy (PVPC)">ER</th>
+		    <th scope="col" data-toggle="tooltip" data-placement="top" title="Price of discharge the battery">EB</th>
+		    <th scope="col" data-toggle="tooltip" data-placement="bottom" title="Price of discharge energy into the grid (SPOT)">CR</th>
+		    <th scope="col" data-toggle="tooltip" data-placement="bottom" title="Price of charge the battery">CB</th>
+		    <th scope="col">Energy Generated</th>
+		    <th scope="col">Energy Consumed</th>
+		  </tr>
+		</thead>
+		<tbody>
+		  {% for i in range(0, 24) %}
+		  <tr>
+		    <th scope="row">{{ i }}:00</th>
+		    <td>{{ simulation['hours'][i]['EF_price'] }} €/KWh</td>
+		    <td>{{ simulation['hours'][i]['ER_price'] }} €/KWh</td>
+		    <td>{{ simulation['hours'][i]['EB_price'] }} €/KWh</td>
+		    <td>{{ simulation['hours'][i]['CR_price'] }} €/KWh</td>
+		    <td>{{ simulation['hours'][i]['CB_price'] }} €/KWh</td>
+		    <td>
+		      <div class="progress">
+			<div class="progress-bar progress-bar-striped progress-bar-animated bg-success" name="progress-bar-ef" role="progressbar" style="width: {{ simulation['hours'][i]['EF_rate'] }}%" data-toggle="tooltip" data-placement="top" title="Photovoltaic energy"> <strong>EF</strong></div>
+			<div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" name="progress-bar-er" role="progressbar" style="width: {{ simulation['hours'][i]['ER_rate'] }}%" data-toggle="tooltip" data-placement="top" title="Power grid energy"> <strong>ER</strong></div>
+			<div class="progress-bar progress-bar-striped progress-bar-animated" name="progress-bar-eb" role="progressbar" style="width: {{ simulation['hours'][i]['EB_rate'] }}%" data-toggle="tooltip" data-placement="top" title="Battery energy"><strong>EB</strong></div>
+		      </div>
+		    </td>
+		    <td>
+		      <div class="progress">
+			<div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" name="progress-bar-c" role="progressbar" style="width: {{ simulation['hours'][i]['C_rate'] }}%" data-toggle="tooltip" data-placement="bottom" title="Home Consumption"> <strong>C</strong></div>
+			<div class="progress-bar progress-bar-striped progress-bar-animated" name="progress-bar-cr" role="progressbar" style="width: {{ simulation['hours'][i]['CR_rate'] }}%" data-toggle="tooltip" data-placement="bottom" title="Energy discharged into the grid"> <strong>CR</strong></div>
+			<div class="progress-bar progress-bar-striped progress-bar-animated bg-success" name="progress-bar-cb" role="progressbar" style="width: {{ simulation['hours'][i]['CB_rate'] }}%" data-toggle="tooltip" data-placement="bottom" title="Energy to charge the battery"><strong>CB</strong></div>
+			<div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" name="progress-bar-cint" role="progressbar" style="width: {{ simulation['hours'][i]['Cint_rate'] }}%" data-toggle="tooltip" data-placement="bottom" title="System consumption"><strong>Cint</strong></div>
+		      </div>
+		    </td>
+		  </tr>
+		  {% endfor %}
+		</tbody>
+	      </table>
+	    </div>
+	  </div>
+	</div>
+	<h1>
+	  <img src="static/img/document_icon.png" style="width: 2%; height: 2%" alt=""/>
+	  <strong>&nbsp Simulation Report File &nbsp</strong>  &nbsp
+	  <a class="btn btn-outline-light btn-lg" id="download-file" href="{{ url_for('download_file', filename='simulation_%s.txt' % simulation['created_at']) }}" download>Download</a></h1>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
