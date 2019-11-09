@@ -19,13 +19,11 @@ db = SQLAlchemy()
 
 currentUser = None
 currentHome = None
-today = dt.datetime.now()
 
 @app.route('/')
 def index():
     global currentUser
     global currentHome
-    global today
 
     if currentUser is None or not session.get('logged_in'):
         return render_template('login.html', flag='login')
@@ -33,7 +31,7 @@ def index():
         return render_template('new_home.html')
     else:
         return render_template('dashboard.html', user=currentUser, home=currentHome,
-                               max_date=today.strftime("%Y-%m-%d"))
+                               max_date=dt.datetime.now().strftime("%Y-%m-%d"))
 
 @app.route('/signup', methods=['POST'])
 def sign_up():
@@ -123,7 +121,6 @@ def do_login():
 def simulation():
     global currentUser
     global currentHome
-    global today
 
     if currentUser and currentHome:
         errors = []
@@ -133,9 +130,9 @@ def simulation():
             errors.append('You must select a simulation date')
         else:
             start_date = dt.datetime.strptime(simulation_date, '%Y-%m-%d')
-            if 'consumption-file' not in request.files and start_date.date() != today.date():
+            if 'consumption-file' not in request.files and start_date.date() != dt.datetime.now().date():
                 errors.append('You must upload your Endesa consumption')
-            elif start_date.date() == today.date():
+            elif start_date.date() == dt.datetime.now().date():
                 consumption = c_utils.get_random_values()
             else:
                 upload_file = request.files['consumption-file']
@@ -154,7 +151,7 @@ def simulation():
             return render_template('simulation.html', simulation=result, user=currentUser)
         else:
             return render_template('dashboard.html', user=currentUser, home=currentHome,
-                                   errors=errors, max_date=today.strftime("%Y-%m-%d"))
+                                   errors=errors, max_date=dt.datetime.now().strftime("%Y-%m-%d"))
     else:
         return redirect(url_for('index'))
 
